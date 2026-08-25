@@ -14,27 +14,37 @@ A clean, highly organized, and fully-featured LaTeX template designed for underg
 
 ## 📁 Project Structure
 
+This repo holds both the thesis manuscript and the research code behind it, kept in
+separate top-level folders since they use different toolchains:
+
 ```text
-thesis_template/
-├── main.tex                        # The main file (Compile this!)
-├── frontmatter/                    # Pre-chapter pages
-│   ├── cover.tex                   # Title page / Cover
-│   ├── lembar_pengesahan.tex       # Approval page
-│   ├── pernyataan_keaslian.tex     # Declaration of originality
-│   ├── abstrak.tex                 # Abstract (ID & EN)
-│   └── kata_pengantar.tex          # Acknowledgements
-├── chapters/                       # Main content chapters
-│   ├── bab1.tex                    # Bab 1: Pendahuluan
-│   ├── bab2.tex                    # Bab 2: Tinjauan Pustaka
-│   ├── bab3.tex                    # Bab 3: Metodologi Penelitian
-│   ├── bab4.tex                    # Bab 4: Perancangan Sistem
-│   ├── bab5.tex                    # Bab 5: Implementasi
-│   ├── bab6.tex                    # Bab 6: Pengujian & Analisis
-│   └── bab7.tex                    # Bab 7: Kesimpulan & Saran
-├── backmatter/                     # Post-chapter pages
-│   └── referensi.tex               # References / Bibliography
-└── assets/                         # Images and graphics
-    └── ub-logo-small.png           # Your university logo here
+skripsi/
+├── thesis/                         # LaTeX manuscript — see below
+│   ├── main.tex                    # The main file (Compile this!)
+│   ├── frontmatter/                # Pre-chapter pages
+│   │   ├── cover.tex                   # Title page / Cover
+│   │   ├── lembar_pengesahan.tex       # Approval page
+│   │   ├── pernyataan_keaslian.tex     # Declaration of originality
+│   │   ├── abstrak.tex                 # Abstract (ID & EN)
+│   │   └── kata_pengantar.tex          # Acknowledgements
+│   ├── chapters/                   # Main content chapters
+│   │   ├── bab1.tex                    # Bab 1: Pendahuluan
+│   │   ├── bab2.tex                    # Bab 2: Tinjauan Pustaka
+│   │   ├── bab3.tex                    # Bab 3: Metodologi Penelitian
+│   │   ├── bab4.tex                    # Bab 4: Perancangan Sistem
+│   │   ├── bab5.tex                    # Bab 5: Implementasi
+│   │   ├── bab6.tex                    # Bab 6: Pengujian & Analisis
+│   │   └── bab7.tex                    # Bab 7: Kesimpulan & Saran
+│   ├── backmatter/                 # Post-chapter pages
+│   │   └── referensi.tex               # References / Bibliography
+│   └── assets/                     # Images and graphics
+│       └── ub-logo-small.png           # Your university logo here
+└── experiments/                    # Research code backing Bab 3–6 (see experiments/README.md)
+    ├── data/                           # raw/ + processed/ (gitignored, not committed)
+    ├── notebooks/                      # exploratory analysis
+    ├── src/                            # reusable pipeline code
+    ├── configs/                        # one config per experiment run
+    └── results/                        # metrics/figures per run (committed — cited in the thesis)
 ```
 
 ## 🚀 Getting Started
@@ -48,9 +58,10 @@ You will need a TeX distribution installed on your system.
 Alternatively, you can upload this entire folder to [Overleaf](https://www.overleaf.com/) to work entirely in the browser without installing anything!
 
 ### 2. Compilation
-To generate the PDF, you must compile `main.tex`. It's recommended to run the compiler **twice** to ensure the table of contents and cross-references are accurately generated.
+To generate the PDF, compile `thesis/main.tex`. It's recommended to run the compiler **twice** to ensure the table of contents and cross-references are accurately generated.
 
 ```bash
+cd thesis
 pdflatex -interaction=nonstopmode main.tex
 pdflatex -interaction=nonstopmode main.tex
 ```
@@ -59,10 +70,10 @@ pdflatex -interaction=nonstopmode main.tex
 
 Before you begin writing, make sure to personalize the template:
 
-1. [ ] **Logo:** Replace `assets/ub-logo-small.png` with your university's official logo.
-2. [ ] **Cover Page:** Edit `frontmatter/cover.tex` and replace all `[...]` placeholders with your actual details (Name, NIM, Program, etc.).
-3. [ ] **PDF Metadata:** Update `main.tex` at the `\title{...}` and `\author{...}` block so your final PDF file has the correct metadata.
-4. [ ] **Write your Thesis:** Go through each file in the `chapters/` folder and replace the placeholder text with your actual research content.
+1. [ ] **Logo:** Replace `thesis/assets/ub-logo-small.png` with your university's official logo.
+2. [ ] **Cover Page:** Edit `thesis/frontmatter/cover.tex` and replace all `[...]` placeholders with your actual details (Name, NIM, Program, etc.).
+3. [ ] **PDF Metadata:** Update `thesis/main.tex` at the `\title{...}` and `\author{...}` block so your final PDF file has the correct metadata.
+4. [ ] **Write your Thesis:** Go through each file in the `thesis/chapters/` folder and replace the placeholder text with your actual research content.
 
 ## 📐 Formatting Reference
 

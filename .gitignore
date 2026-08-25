@@ -9,3 +9,25 @@
 *.fdb_latexmk
 *.bbl
 *.blg
+
+# Python / experiments
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Experiment data — regenerate/fetch, don't commit (see experiments/data/*/README.md)
+experiments/data/raw/*
+!experiments/data/raw/README.md
+experiments/data/processed/*
+!experiments/data/processed/README.md
+
+# Large experiment artifacts — keep results/ to small metrics & figures only
+experiments/results/**/*.ckpt
+experiments/results/**/*.pt
+experiments/results/**/*.pth
+experiments/results/**/*.h5
+experiments/results/**/*.pkl
+experiments/results/**/*.joblib
