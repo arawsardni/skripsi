@@ -1,25 +1,42 @@
 % =====================================================================
-%  TEMPLATE TESIS — BERKAS INDUK
-%  Kompilasi: pdflatex -interaction=nonstopmode main.tex  (jalankan 2x)
+%  PROPOSAL SKRIPSI FILKOM UB — BERKAS INDUK
+%  Diadaptasi dari template tesis generik agar sesuai Panduan Skripsi
+%  Filkom UB v3.0 (Calibri, spasi tunggal, "Landasan Kepustakaan").
+%
+%  Kompilasi (WAJIB XeLaTeX — bukan pdflatex — karena pakai fontspec):
+%    xelatex -interaction=nonstopmode main.tex   (jalankan 2x)
+%
 %  Struktur:
 %    main.tex                    ← berkas ini (preamble + \include)
 %    frontmatter/abstrak.tex     ← abstrak + kata pengantar
-%    chapters/bab1–bab7.tex      ← bab-bab tesis
-%    backmatter/referensi.tex    ← daftar pustaka (Harvard ARU)
+%    chapters/bab1–bab3.tex      ← Pendahuluan, Landasan Kepustakaan, Metodologi
+%    backmatter/referensi.tex    ← daftar pustaka (Harvard, gaya UB)
 %    assets/                     ← gambar (.png/.pdf)
+%
+%  Cakupan proposal skripsi FILKOM = Bab 1–3 + Daftar Referensi saja
+%  (Bab 4 dst. baru ditulis setelah proposal disetujui pembimbing).
 % =====================================================================
 
 \documentclass[12pt,a4paper]{report}
 
 % ── Bahasa & font ────────────────────────────────────────────────────
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
 \usepackage[indonesian]{babel}   % otomatis: Bab / Gambar / Tabel / Daftar Isi
-\usepackage[scaled=1.0]{helvet}  % Helvetica ≈ Arial (pdflatex tidak bisa embed Arial asli)
-\renewcommand{\familydefault}{\sfdefault}
-\usepackage{sansmathfonts}       % math sans-serif, tanpa konflik arevmath
+\usepackage{fontspec}            % wajib XeLaTeX/LuaLaTeX, bukan pdflatex
+% Calibri adalah font proprietary Microsoft dan tidak bisa di-embed langsung
+% oleh XeLaTeX di lingkungan non-Windows. Carlito adalah pengganti
+% metrik-kompatibel resmi untuk Calibri (dipakai LibreOffice sebagai
+% substitusi Calibri), sehingga tata letak/line-break identik.
+% Jika Calibri asli TERSEDIA di sistem Anda (mis. Windows + MS Office),
+% cukup ganti "Carlito" menjadi "Calibri" pada baris \setmainfont di bawah.
+\setmainfont{Carlito}
+% Catatan: paket sansmathfonts (font matematika sans-serif) tidak tersedia
+% di lingkungan kompilasi ini dan dihapus. Simbol matematika pada equation
+% akan memakai font matematika default (Latin Modern Math, serif tipis)
+% sementara badan teks tetap Carlito — ini perilaku standar LaTeX dan tetap
+% rapi dibaca. Jika ingin font matematika sans-serif penuh, pasang paket
+% "sansmath" atau "unicode-math" secara manual di sistem Anda.
 \usepackage{setspace}
-\onehalfspacing                  % spasi 1,5
+\singlespacing                   % spasi 1 — Panduan Skripsi Filkom UB v3.0, Lampiran A.4
 
 % ── Tata letak halaman ───────────────────────────────────────────────
 \usepackage[a4paper,left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
@@ -94,10 +111,12 @@
 % ── Mikrografi & hyperlink ───────────────────────────────────────────
 \usepackage{microtype}
 \setlength{\emergencystretch}{3em}
+\usepackage{url}                 % \url{} bisa memecah baris di URL/DOI panjang
+\PassOptionsToPackage{hyphens}{url}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
-  pdftitle={Judul Tesis Anda},
-  pdfauthor={Nama Anda},
+  pdftitle={Analisis Pengaruh Strategi Fine-Tuning Dua Tahap terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia},
+  pdfauthor={Gaung Taqwa Indraswara},
 }
 
 % ── Warna ────────────────────────────────────────────────────────────
@@ -177,11 +196,9 @@
   \adjustbox{max width=\textwidth, max totalheight=0.82\textheight, center}{#1}}
 
 % ── Metadata dokumen ─────────────────────────────────────────────────
-\title{%
-  Judul Tesis\\
-  \large Subjudul (jika ada)%
-}
-\author{Nama Mahasiswa}
+\title{Analisis Pengaruh Strategi Fine-Tuning Dua Tahap terhadap Akurasi
+  Pengenalan Emosi Ucapan Berbahasa Indonesia}
+\author{Gaung Taqwa Indraswara}
 \date{\the\year}
 
 % ═════════════════════════════════════════════════════════════════════
@@ -192,13 +209,27 @@
 \include{frontmatter/cover}
 
 % ── Front matter (nomor halaman romawi) ──────────────────────────────
+% CATATAN PENTING: keempat \include di bawah ini dinonaktifkan karena
+% isinya khas SKRIPSI FINAL pasca-sidang, bukan tahap proposal:
+%   - lembar_pengesahan : berisi "telah diuji dan dinyatakan lulus" +
+%                          tanda tangan pembimbing pasca-ujian
+%   - pernyataan_keaslian: pernyataan orisinalitas karya (baru relevan
+%                          setelah naskah lengkap, bukan saat proposal)
+%   - abstrak            : mensyaratkan "hasil utama" dan "kesimpulan",
+%                          yang belum ada karena penelitian belum jalan
+%   - kata_pengantar     : bernada "tesis ini dapat diselesaikan"
+% Menurut Panduan Skripsi Filkom UB v3.0, proposal skripsi hanya
+% mencakup Pendahuluan, Landasan Kepustakaan, Metodologi Penelitian,
+% dan Daftar Referensi — tanpa keempat elemen di atas.
+% Aktifkan kembali (hapus tanda %) saat naskah menjadi skripsi lengkap
+% pasca-penelitian dan sidang.
 \pagenumbering{roman}
 \setcounter{page}{1}
 
-\include{frontmatter/lembar_pengesahan}
-\include{frontmatter/pernyataan_keaslian}
-\include{frontmatter/abstrak}
-\include{frontmatter/kata_pengantar}
+% \include{frontmatter/lembar_pengesahan}
+% \include{frontmatter/pernyataan_keaslian}
+% \include{frontmatter/abstrak}
+% \include{frontmatter/kata_pengantar}
 
 \tableofcontents
 \listoffigures
@@ -209,13 +240,17 @@
 \setcounter{page}{1}
 
 % ── Bab-bab utama ────────────────────────────────────────────────────
+% Proposal skripsi Filkom UB hanya mencakup Bab 1-3 + Daftar Referensi.
+% Bab 4 dst. (Perancangan, Implementasi, Pengujian, Penutup) baru ditulis
+% setelah proposal ini disetujui pembimbing — aktifkan kembali baris di
+% bawah pada tahap penulisan skripsi penuh.
 \include{chapters/bab1}
 \include{chapters/bab2}
 \include{chapters/bab3}
-\include{chapters/bab4}
-\include{chapters/bab5}
-\include{chapters/bab6}
-\include{chapters/bab7}
+% \include{chapters/bab4}
+% \include{chapters/bab5}
+% \include{chapters/bab6}
+% \include{chapters/bab7}
 
 % ── Daftar pustaka ───────────────────────────────────────────────────
 \include{backmatter/referensi}

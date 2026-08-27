@@ -1,16 +1,19 @@
 # 🎓 Indonesian University Thesis LaTeX Template
 
-A clean, highly organized, and fully-featured LaTeX template designed for undergraduate, graduate, and doctoral theses at Indonesian universities. It strictly adheres to the standard academic formatting guidelines (4-3-3-3 margins, 1.5 spacing, Arial/Helvetica typography) so you can focus entirely on writing your research.
+A clean, highly organized LaTeX thesis manuscript, adapted from a generic Indonesian
+university template to comply with **Panduan Skripsi Filkom UB v3.0** (4-3-3-3 margins,
+single spacing, Calibri/Carlito typography). See [`thesis/CATATAN_PERUBAHAN.md`](thesis/CATATAN_PERUBAHAN.md)
+for the full list of deviations from the generic template and why.
 
 ## ✨ Key Features
 
 - **Standardized Layout:** A4 paper with precise margins (Left 4 cm; Top, Right, Bottom 3 cm).
-- **Typography:** Uses Helvetica (Arial equivalent) 12pt font with 1.5 line spacing and proper 1.27 cm paragraph indentation.
-- **Pre-configured Chapters:** A 7-chapter structure ready to be populated.
+- **Typography:** Carlito (Calibri-metric-compatible) 12pt font, single line spacing, 1.27 cm paragraph indentation.
+- **Pre-configured Chapters:** A 7-chapter structure, currently scoped to Bab 1–3 (proposal stage).
 - **Figures & Tables:** Centered captions, bold labels, and beautifully formatted tables (`booktabs`).
 - **Diagrams & Charts:** Out-of-the-box support for `tikz` flowcharts and `pgfplots` data visualizations with predefined clean color palettes.
 - **Code Listings:** Professional syntax highlighting for source code (`listings`).
-- **Citation:** Ready for standard citation management (Harvard ARU style).
+- **Citation:** Harvard-style bibliography (supervisor-approved variant, not Harvard ARU).
 
 ## 📁 Project Structure
 
@@ -29,7 +32,7 @@ skripsi/
 │   │   └── kata_pengantar.tex          # Acknowledgements
 │   ├── chapters/                   # Main content chapters
 │   │   ├── bab1.tex                    # Bab 1: Pendahuluan
-│   │   ├── bab2.tex                    # Bab 2: Tinjauan Pustaka
+│   │   ├── bab2.tex                    # Bab 2: Landasan Kepustakaan
 │   │   ├── bab3.tex                    # Bab 3: Metodologi Penelitian
 │   │   ├── bab4.tex                    # Bab 4: Perancangan Sistem
 │   │   ├── bab5.tex                    # Bab 5: Implementasi
@@ -58,30 +61,30 @@ You will need a TeX distribution installed on your system.
 Alternatively, you can upload this entire folder to [Overleaf](https://www.overleaf.com/) to work entirely in the browser without installing anything!
 
 ### 2. Compilation
-To generate the PDF, compile `thesis/main.tex`. It's recommended to run the compiler **twice** to ensure the table of contents and cross-references are accurately generated.
+To generate the PDF, compile `thesis/main.tex` with **XeLaTeX** (not pdflatex — the preamble
+uses `fontspec` for the Carlito font). Run it **twice** so the table of contents and
+cross-references are accurately generated.
 
 ```bash
 cd thesis
-pdflatex -interaction=nonstopmode main.tex
-pdflatex -interaction=nonstopmode main.tex
+xelatex -interaction=nonstopmode main.tex
+xelatex -interaction=nonstopmode main.tex
 ```
 
-## 🛠️ Customization Checklist
+## 🛠️ Status
 
-Before you begin writing, make sure to personalize the template:
-
-1. [ ] **Logo:** Replace `thesis/assets/ub-logo-small.png` with your university's official logo.
-2. [ ] **Cover Page:** Edit `thesis/frontmatter/cover.tex` and replace all `[...]` placeholders with your actual details (Name, NIM, Program, etc.).
-3. [ ] **PDF Metadata:** Update `thesis/main.tex` at the `\title{...}` and `\author{...}` block so your final PDF file has the correct metadata.
-4. [ ] **Write your Thesis:** Go through each file in the `thesis/chapters/` folder and replace the placeholder text with your actual research content.
+Cover, Bab 1–3, and the reference list are filled in (based on an approved praproposal).
+Known remaining gap: Bab 3 §3.9.2 (Perangkat Keras) is still a `[...]` placeholder pending
+the final GPU/compute spec. Bab 4–7 stay as the generic placeholder scaffold, commented out
+in `main.tex`, until the proposal is approved and the research is carried out.
 
 ## 📐 Formatting Reference
 
 | Setting | Value |
 | :--- | :--- |
 | **Paper Size** | A4 |
-| **Font** | Helvetica / Arial (12pt) |
-| **Line Spacing** | 1.5 |
+| **Font** | Carlito / Calibri (12pt) |
+| **Line Spacing** | Single |
 | **Margins** | Left: 4 cm, Right: 3 cm, Top: 3 cm, Bottom: 3 cm |
 | **Paragraph Indent** | 1.27 cm |
 | **Table Captions** | Above the table, bold, centered |
