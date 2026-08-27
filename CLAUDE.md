@@ -10,32 +10,37 @@ generation logic in `thesis/`, and don't put manuscript prose in `experiments/`.
 
 ## Build
 
-Compile with **XeLaTeX**, not pdflatex — the preamble uses `fontspec` for the Carlito font:
+Compile with **XeLaTeX**, not pdflatex — the preamble uses `fontspec` for the Calibri font.
+There are two independent entry points, both compilable at any time (no comment/uncomment
+dance needed to switch between them):
 
 ```bash
 cd thesis
-xelatex -interaction=nonstopmode main.tex
-xelatex -interaction=nonstopmode main.tex   # run twice — TOC/refs need two passes
+xelatex -interaction=nonstopmode main_proposal.tex   # proposal: Bab 1-3 + referensi + lampiran
+xelatex -interaction=nonstopmode main_proposal.tex   # run twice — TOC/refs need two passes
+
+xelatex -interaction=nonstopmode main_skripsi.tex    # full skripsi (not the current focus)
+xelatex -interaction=nonstopmode main_skripsi.tex
 ```
 
-Requires the Carlito font (a metric-compatible Calibri substitute — swap to real Calibri via
-the `\setmainfont` line in `main.tex` if it's installed) and, on minimal TeX installs, the
-`texlive-lang-other` package for Indonesian babel support. Full rationale for these deviations
-from the generic template: `thesis/CATATAN_PERUBAHAN.md`.
+Requires the Calibri font. On a machine without it (e.g. Overleaf, Linux), swap the
+`\setmainfont` line in `preamble.tex` to Carlito, a metric-compatible substitute, so line
+breaks stay identical. Minimal TeX installs also need the `texlive-lang-other` package for
+Indonesian babel support. Full rationale for these deviations from the generic template:
+`thesis/CATATAN_PERUBAHAN.md`.
 
 ## Structure
 
-- `thesis/main.tex` — root file; compile this. Contains all preamble packages and `\include` calls.
-- `thesis/frontmatter/cover.tex` — active. The other frontmatter files (approval page, originality
-  statement, abstract, acknowledgements) are commented out in `main.tex` — they're post-sidang
-  artifacts, not relevant at proposal stage; re-enable once the manuscript is a full skripsi.
-- `thesis/chapters/bab1–bab3.tex` — Pendahuluan, Landasan Kepustakaan, Metodologi Penelitian — the
-  full current scope, since a Filkom UB proposal covers only Bab 1–3 + referensi.
-- `thesis/chapters/bab4–bab7.tex` — still the generic placeholder scaffold, commented out in
-  `main.tex`. Fill in and re-enable only after the proposal is approved and the research is
-  actually carried out.
+- `thesis/preamble.tex` — all preamble packages/styles, shared via `\input` by both entry points below. Edit here, not per-entry-point, for anything that should apply to both.
+- `thesis/main_proposal.tex` — entry point for the proposal (Bab 1–3 + referensi + Lampiran A/B, no pengesahan/orisinalitas/abstrak/prakata). This is the one to compile right now.
+- `thesis/main_skripsi.tex` — entry point for the full skripsi later (adds the four frontmatter pages and, eventually, Bab 4+). Not the current focus — its frontmatter files are still generic-template placeholders, see Known gaps.
+- `thesis/frontmatter/cover.tex` — shared cover; `\doctypelabel`/`\doctypesubtitle` (set by whichever main file is compiled) control the "PROPOSAL SKRIPSI" vs "SKRIPSI" text, so this file itself never needs edits for that.
+- `thesis/frontmatter/lembar_pengesahan.tex`, `pernyataan_keaslian.tex`, `abstrak.tex`, `kata_pengantar.tex` — only pulled in by `main_skripsi.tex`; not relevant while working on the proposal.
+- `thesis/chapters/bab1–bab3.tex` — Pendahuluan, Landasan Kepustakaan, Metodologi Penelitian — filled in, current scope of `main_proposal.tex`.
+- `thesis/chapters/bab4–bab7.tex` — still the generic placeholder scaffold, commented out in `main_skripsi.tex`. Chapter count/titles for this range are not yet decided — see Known gaps before assuming these four filenames are final.
 - `thesis/backmatter/referensi.tex` — bibliography, Harvard style (the supervisor-approved variant
   used in the praproposal — not Harvard ARU; see `CATATAN_PERUBAHAN.md`).
+- `thesis/backmatter/lampiran_a.tex`, `lampiran_b.tex` — Persyaratan Fisik dan Tata Letak / Penggunaan Bahasa, required appendices per Panduan Skripsi Filkom UB v3.0 (verbatim from the guide — don't paraphrase). Included by both entry points.
 - `thesis/assets/` — images referenced via `\includegraphics`; `\graphicspath{{assets/}}` set in preamble
 - `thesis/CATATAN_PERUBAHAN.md` — every deviation from the generic template (font, spacing, compiler,
   chapter scope, terminology) made to comply with Panduan Skripsi Filkom UB v3.0, and why.
@@ -55,6 +60,16 @@ from the generic template: `thesis/CATATAN_PERUBAHAN.md`.
 
 - Bab 3, subbab 3.9.2 (Perangkat Keras) is still a `[...]` placeholder — fill in with the actual
   GPU/compute spec once the experiment environment is finalized (see `experiments/`).
+- Bab 4–7 chapter count/titles are undecided. Panduan Skripsi Filkom UB v3.0 gives a
+  "Nonimplementatif Eksperimental" example structure (Bab 4 Hasil, Bab 5 Pembahasan, Bab 6
+  Penutup — optionally merging 4+5 into one "Hasil dan Pembahasan" chapter) which matches this
+  thesis's research type better than the generic template's 7-chapter implementatif-style
+  scaffold currently sitting in `chapters/bab4.tex`–`bab7.tex`. The guide explicitly allows
+  thematic/descriptive chapter titles instead of the literal words "Hasil"/"Pembahasan" — don't
+  rename these files to force a specific title without the user's say-so.
+- `thesis/frontmatter/lembar_pengesahan.tex`, `pernyataan_keaslian.tex`, `abstrak.tex`,
+  `kata_pengantar.tex` are still generic-template content, not yet adapted to Filkom UB v3.0
+  wording the way Bab 1–3 and the cover were. Not urgent — only pulled in by `main_skripsi.tex`.
 
 ## Experiments → thesis convention
 

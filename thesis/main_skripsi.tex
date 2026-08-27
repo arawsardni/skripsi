@@ -1,0 +1,75 @@
+% =====================================================================
+%  SKRIPSI (NASKAH PENUH) FILKOM UB — BERKAS INDUK
+%
+%  Kompilasi (WAJIB XeLaTeX — bukan pdflatex — karena pakai fontspec):
+%    xelatex -interaction=nonstopmode main_skripsi.tex   (jalankan 2x)
+%
+%  Belum untuk dipakai sekarang — proposal (main_proposal.tex) yang
+%  dikumpulkan duluan. Berkas ini disiapkan supaya begitu proposal
+%  disetujui, tidak perlu comment/uncomment manual: tinggal lanjutkan
+%  menulis Bab 4 dst. dan compile berkas ini.
+%
+%  BELUM DIKERJAKAN (masih placeholder generik, bukan isi Filkom UB):
+%    - frontmatter/lembar_pengesahan.tex, pernyataan_keaslian.tex,
+%      abstrak.tex, kata_pengantar.tex — isinya masih dari template
+%      generik awal, belum disesuaikan Panduan Skripsi Filkom UB v3.0.
+%    - chapters/bab4.tex–bab7.tex — masih placeholder kosong. Jumlah dan
+%      judul bab akhirnya (Hasil/Pembahasan/Penutup atau nama tematik
+%      lain) BELUM ditentukan; lihat CATATAN_PERUBAHAN.md. Judul bab
+%      tidak wajib literal "Hasil"/"Pembahasan" per Panduan Skripsi
+%      Filkom UB v3.0 — boleh diganti nama yang lebih deskriptif.
+%
+%  Struktur:
+%    preamble.tex                ← paket & style, dipakai bareng main_proposal.tex
+%    frontmatter/                ← cover + 4 halaman khusus skripsi final (lihat atas)
+%    chapters/bab1–bab7.tex      ← Bab 1–3 aktif; Bab 4+ masih di-comment
+%    backmatter/referensi.tex    ← daftar pustaka (Harvard, gaya UB)
+%    backmatter/lampiran_a.tex   ← Persyaratan Fisik dan Tata Letak
+%    backmatter/lampiran_b.tex   ← Penggunaan Bahasa
+% =====================================================================
+
+\input{preamble.tex}
+\renewcommand{\doctypelabel}{SKRIPSI}
+\renewcommand{\doctypesubtitle}{Untuk memenuhi sebagian persyaratan\\ memperoleh gelar Sarjana Komputer}
+
+\begin{document}
+
+% ── Cover (tidak bernomor halaman) ───────────────────────────────────
+\pagenumbering{gobble}
+\include{frontmatter/cover}
+
+% ── Front matter (nomor halaman romawi) ──────────────────────────────
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\include{frontmatter/lembar_pengesahan}
+\include{frontmatter/pernyataan_keaslian}
+\include{frontmatter/abstrak}
+\include{frontmatter/kata_pengantar}
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+\clearpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ── Bab-bab utama ────────────────────────────────────────────────────
+\include{chapters/bab1}
+\include{chapters/bab2}
+\include{chapters/bab3}
+% Bab 4 dst. belum ditulis dan jumlah/judulnya belum final — lihat
+% catatan di atas. Aktifkan baris di bawah begitu ditulis dan diberi
+% judul definitif.
+% \include{chapters/bab4}
+% \include{chapters/bab5}
+% \include{chapters/bab6}
+% \include{chapters/bab7}
+
+% ── Daftar pustaka & lampiran ────────────────────────────────────────
+\include{backmatter/referensi}
+\include{backmatter/lampiran_a}
+\include{backmatter/lampiran_b}
+
+\end{document}
