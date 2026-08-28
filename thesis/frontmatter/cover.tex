@@ -6,14 +6,17 @@
 \begin{titlepage}
 \centering
 
-% ── Judul ─────────────────────────────────────────────────────────────
+% ── Judul (lebih besar dari label jenis karya di bawahnya) ─────────────
 \vspace*{1cm}
-{\normalsize\bfseries Analisis Pengaruh Strategi Fine-Tuning Dua Tahap
+{\large\bfseries Analisis Pengaruh Strategi Fine-Tuning Dua Tahap
   terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia}\\[1.2cm]
 
 % ── Jenis karya (diisi oleh main_proposal.tex atau main_skripsi.tex) ──
 {\normalsize\bfseries \doctypelabel}\\[0.3cm]
-{\normalsize \doctypesubtitle}\\[2.2cm]
+\ifdoctypesubtitle
+  {\normalsize \doctypesubtitle}\\[0.3cm]
+\fi
+\vspace{1.9cm}
 
 % ── Penulis ───────────────────────────────────────────────────────────
 {\normalsize Disusun oleh:}\\[0.2cm]

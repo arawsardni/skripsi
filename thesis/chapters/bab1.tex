@@ -184,10 +184,30 @@ dasar teori. Kajian pustaka berisi referensi mengenai
 penelitian-penelitian sebelumnya yang terkait dengan SER, representasi
 \emph{self-supervised}, dan \emph{cross-lingual transfer}. Dasar teori
 membahas konsep-konsep yang mendasari metode yang digunakan, meliputi
-Wav2Vec2/XLSR, strategi \emph{fine-tuning} dua tahap, \emph{Low-Rank
-Adaptation} (LoRA), serta metrik evaluasi akurasi dan F1-score.
+pembelajaran \emph{self-supervised}, Wav2Vec2/XLSR, \emph{cross-lingual
+transfer}, strategi \emph{fine-tuning} dua tahap, \emph{Low-Rank
+Adaptation} (LoRA), validasi silang k-fold dan pengujian signifikansi
+statistik, serta metrik evaluasi akurasi dan F1-score.
 
 \textbf{Bab 3 Metodologi Penelitian} membahas tipe penelitian serta
 tahapan penelitian yang dilaksanakan mulai dari studi literatur,
 pengumpulan data, \emph{fine-tuning} sumber, \emph{fine-tuning} target,
 evaluasi k-fold, hingga analisis hasil dan penarikan kesimpulan.
+
+\textbf{Bab 4 Hasil} menyajikan hasil pelaksanaan setiap strategi
+\emph{fine-tuning} yang diuji, meliputi observasi akurasi dan F1-score
+per fold dari skema validasi silang k-fold untuk keempat kombinasi
+strategi (\emph{single-stage}, dua tahap dengan \emph{full fine-tuning},
+dua tahap dengan LoRA, dan \emph{single-stage} dengan LoRA), beserta
+hasil pengujian normalitas dan signifikansi statistiknya.
+
+\textbf{Bab 5 Pembahasan} menerjemahkan makna dari hasil yang diperoleh
+pada Bab 4 untuk menjawab rumusan masalah penelitian, mencakup
+interpretasi perbedaan performa antarstrategi \emph{fine-tuning},
+konsistensi hasil antar-fold, serta kaitannya dengan landasan teori dan
+penelitian terdahulu yang telah diuraikan pada Bab 2.
+
+\textbf{Bab 6 Penutup} memuat kesimpulan yang menjawab rumusan masalah
+berdasarkan hasil dan pembahasan penelitian, serta saran untuk
+pengembangan penelitian selanjutnya, misalnya perluasan cakupan korpus
+sumber atau backbone model yang diuji.

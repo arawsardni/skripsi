@@ -113,111 +113,359 @@ silang k-fold dan diuji signifikansi statistiknya.
 
 \emph{Speech emotion recognition} (SER) adalah bidang kajian yang
 berupaya mengenali kondisi emosi seseorang secara otomatis dari sinyal
-ucapannya. Dar and Delhibabu (2024) melakukan tinjauan sistematis
-terhadap basis data ucapan, fitur ucapan, dan pengklasifikasi yang umum
-digunakan dalam SER, dan menunjukkan bahwa bidang ini telah menjadi
-perhatian penting dalam pengembangan sistem interaksi manusia-mesin dan
-komputasi afektif, dengan cakupan penerapan yang terus meluas mulai dari
-asisten virtual, layanan pelanggan otomatis, hingga sistem kesehatan
-mental.
+ucapannya, dengan memanfaatkan ciri-ciri akustik seperti intonasi, nada
+dasar (\emph{pitch}), energi, dan ritme bicara yang secara empiris
+berkorelasi dengan keadaan emosional penutur (Dar and Delhibabu, 2024).
+Secara umum, sistem SER bekerja melalui tiga tahap utama: (1) ekstraksi
+representasi dari sinyal ucapan mentah, baik berupa fitur akustik
+tangan (\emph{hand-crafted features}) maupun representasi yang
+dipelajari (\emph{learned representations}); (2) pemetaan representasi
+tersebut ke ruang fitur yang relevan dengan kelas emosi; dan (3)
+klasifikasi ke salah satu kategori emosi yang telah ditentukan (mis.
+senang, sedih, marah, netral). Gambar \ref{fig:2.ser} menggambarkan alur
+umum tersebut.
 
-% ── 2.3 Pembelajaran Self-Supervised dan Wav2Vec2/XLSR ───────────────
-\section{Pembelajaran Self-Supervised dan Wav2Vec2/XLSR}
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=10mm]
+    \node[io]        (sinyal) {Sinyal Ucapan};
+    \node[procplain]  (fitur)  [right=of sinyal] {Ekstraksi Representasi};
+    \node[procplain]  (model)  [right=of fitur]  {Model Klasifikasi};
+    \node[io]        (label)  [right=of model] {Label Emosi};
+
+    \draw[arr] (sinyal) -- (fitur);
+    \draw[arr] (fitur)  -- (model);
+    \draw[arr] (model)  -- (label);
+  \end{tikzpicture}
+  }
+  \caption{Alur umum sistem speech emotion recognition}
+  \label{fig:2.ser}
+\end{figure}
+
+Cakupan penerapan SER terus meluas, mulai dari asisten virtual yang
+responsif terhadap keadaan pengguna, layanan pelanggan otomatis yang
+dapat mendeteksi frustrasi penelepon, hingga sistem pemantauan kesehatan
+mental yang menandai perubahan pola emosi dari waktu ke waktu.
+Perkembangan representasi \emph{self-supervised} seperti Wav2Vec2/XLSR,
+yang dibahas pada Subbab \ref{sec:2.4}, menjadi salah satu pendorong
+utama peningkatan akurasi SER dibandingkan pendekatan fitur tangan
+konvensional.
+
+% ── 2.3 Pembelajaran Self-Supervised ─────────────────────────────────
+\section{Pembelajaran Self-Supervised}
 \label{sec:2.3}
 
-Perkembangan pengenalan ucapan berbasis transformer dan pembelajaran
-\emph{self-supervised} telah menggeser paradigma dari ekstraksi fitur
-tangan (\emph{hand-crafted features}) menuju representasi yang
-dipelajari langsung dari sinyal mentah (Eljinini and Al-Momani, 2025).
-Wav2Vec2 adalah model \emph{self-supervised} yang dilatih pada volume
-data ucapan tanpa label berskala besar, sehingga menghasilkan
-representasi akustik yang kaya dan dapat diadaptasi ke berbagai tugas
-hilir (\emph{downstream task}). XLSR merupakan varian multibahasa dari
-Wav2Vec2 yang dilatih pada data ucapan dari banyak bahasa sekaligus,
-sehingga representasinya lebih mampu menggeneralisasi lintas bahasa
-dibandingkan model yang hanya dilatih pada satu bahasa saja.
-Karakteristik inilah yang mendasari pemilihan Wav2Vec2/XLSR sebagai
-backbone dalam penelitian ini, karena representasi yang dihasilkan
-berpotensi menjadi dasar yang baik untuk \emph{fine-tuning} lintas
-bahasa pada tugas SER.
+Pembelajaran \emph{self-supervised} adalah paradigma pembelajaran mesin
+yang melatih model pada data tanpa label dengan cara menciptakan sinyal
+pengawasan (\emph{supervision signal}) dari data itu sendiri, alih-alih
+memerlukan label yang dianotasi manusia (Liu et al., 2023). Model
+dilatih untuk menyelesaikan \emph{pretext task}, yaitu tugas bantu yang
+dirancang agar penyelesaiannya mengharuskan model mempelajari struktur
+dan pola yang mendasari data, misalnya memprediksi bagian data yang
+disembunyikan dari bagian yang tersisa. Representasi yang dipelajari
+selama proses ini kemudian dapat digunakan atau diadaptasi
+(\emph{fine-tuned}) untuk tugas hilir (\emph{downstream task}) yang
+sesungguhnya, seperti klasifikasi emosi pada penelitian ini. Gambar
+\ref{fig:2.ssl} menggambarkan alur umum tersebut.
 
-% ── 2.4 Cross-Lingual Transfer ───────────────────────────────────────
-\section{Cross-Lingual Transfer pada Pemrosesan Ucapan}
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=10mm]
+    \node[io]        (data)   {Data Tanpa Label};
+    \node[procplain]  (pretext)[right=of data]  {Pra-latih \emph{Pretext Task}};
+    \node[io]        (repr)   [right=of pretext] {Representasi Umum};
+    \node[procplain]  (ft)     [right=of repr]    {\emph{Fine-Tuning} Hilir};
+
+    \draw[arr] (data)    -- (pretext);
+    \draw[arr] (pretext) -- (repr);
+    \draw[arr] (repr)    -- (ft);
+  \end{tikzpicture}
+  }
+  \caption{Alur umum pembelajaran self-supervised}
+  \label{fig:2.ssl}
+\end{figure}
+
+Keunggulan utama paradigma ini adalah kemampuannya memanfaatkan data
+tanpa label dalam jumlah besar, yang jauh lebih mudah dan murah diperoleh
+dibandingkan data berlabel. Karakteristik inilah yang mendasari
+penggunaannya secara luas pada domain ucapan, termasuk pada backbone
+Wav2Vec2/XLSR yang digunakan dalam penelitian ini, sebagaimana diuraikan
+pada Subbab \ref{sec:2.4}.
+
+% ── 2.4 Wav2Vec2/XLSR ─────────────────────────────────────────────────
+\section{Wav2Vec2/XLSR}
 \label{sec:2.4}
+
+Wav2Vec2 adalah arsitektur pembelajaran \emph{self-supervised} untuk
+representasi ucapan yang dilatih pada volume data ucapan tanpa label
+berskala besar (Baevski et al., 2020). Arsitekturnya terdiri atas tiga
+komponen utama, sebagaimana digambarkan pada Gambar \ref{fig:2.wav2vec2}:
+(1) \emph{feature encoder} berbasis \emph{convolutional neural network}
+(CNN) yang mengubah gelombang ucapan mentah menjadi representasi laten
+$Z$ pada resolusi waktu yang lebih rendah; (2) \emph{context network}
+berbasis Transformer yang mengolah $Z$ (dengan sebagian di antaranya
+disembunyikan/\emph{masked}) menjadi representasi terkontekstualisasi
+$C$; dan (3) modul kuantisasi yang mendiskretkan $Z$ menjadi target
+kuantisasi $Q$, khusus digunakan pada tahap pra-latih untuk menghitung
+\emph{contrastive loss} yang mendorong model membedakan representasi
+kuantisasi yang benar dari sejumlah pengganggu (\emph{distractors}).
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=9mm]
+    \node[io]        (wave)  {Gelombang Ucapan Mentah};
+    \node[procplain]  (cnn)   [right=of wave] {\emph{CNN Feature Encoder}};
+    \node[procplain]  (ctx)   [right=of cnn, xshift=6mm]  {\emph{Transformer Context Network}};
+    \node[io]        (out)   [right=of ctx, xshift=6mm]  {Representasi $C$};
+    \node[procplain]  (quant) [below=of cnn] {Modul Kuantisasi};
+    \node[io]        (q)     [below=of ctx]  {Target $Q$};
+
+    \draw[arr] (wave) -- (cnn);
+    \draw[arr] (cnn)  -- node[flbl,above]{$Z$} (ctx);
+    \draw[arr] (ctx)  -- (out);
+    \draw[arr] (cnn)  -- (quant);
+    \draw[arr] (quant)-- (q);
+    \draw[arr, dashed] (q) -- node[flbl,below]{\emph{contrastive loss} (pra-latih)} (ctx);
+  \end{tikzpicture}
+  }
+  \caption{Arsitektur Wav2Vec2}
+  \label{fig:2.wav2vec2}
+\end{figure}
+
+XLSR merupakan varian multibahasa dari Wav2Vec2 yang dilatih pada data
+ucapan tanpa label dari banyak bahasa sekaligus, menggunakan arsitektur
+dan tujuan pra-latih yang sama, namun dengan korpus pra-latih gabungan
+lintas bahasa (Conneau et al., 2021). Karena dilatih lintas bahasa,
+representasi yang dihasilkan XLSR cenderung menangkap struktur akustik
+yang lebih umum dan dapat menggeneralisasi lintas bahasa dibandingkan
+model yang hanya dilatih pada satu bahasa saja. Karakteristik inilah
+yang mendasari pemilihan Wav2Vec2/XLSR sebagai backbone dalam penelitian
+ini, karena representasi $C$ yang dihasilkan berpotensi menjadi titik
+awal (\emph{initialization}) yang baik untuk \emph{fine-tuning} lintas
+bahasa pada tugas SER, sebagaimana diuraikan pada Subbab \ref{sec:2.6}.
+
+% ── 2.5 Cross-Lingual Transfer ───────────────────────────────────────
+\section{Cross-Lingual Transfer pada Pemrosesan Ucapan}
+\label{sec:2.5}
 
 \emph{Cross-lingual transfer} adalah strategi memindahkan pengetahuan
 yang dipelajari model dari bahasa bersumber daya besar ke bahasa
-bersumber daya terbatas (Wu et al., 2021). Strategi ini banyak ditempuh
-untuk mengatasi kesenjangan sumber daya pada bahasa yang kurang
-terwakili dalam teknologi bahasa, karena memungkinkan model memanfaatkan
-representasi ucapan yang telah dipelajari secara luas tanpa membangun
-ulang pembelajaran dari data yang masih terbatas pada bahasa target.
-Arisaputra and Zahra (2023) membuktikan bahwa penerapan strategi ini
-pada tugas \emph{automatic speech recognition} (ASR) berbahasa Indonesia
-menghasilkan \emph{word error rate} yang lebih rendah meski data
-latihnya lebih sedikit dibandingkan pelatihan dari awal, yang
-menunjukkan bahwa representasi lintas bahasa dapat mengurangi kebutuhan
-data pada bahasa target.
+bersumber daya terbatas (Wu et al., 2021). Strategi ini bekerja dengan
+memanfaatkan representasi yang telah dipelajari model pada data bahasa
+sumber sebagai titik awal, alih-alih melatih model dari awal
+(\emph{from scratch}) pada data bahasa target yang terbatas jumlahnya.
+Gambar \ref{fig:2.transfer} menggambarkan alur umum tersebut: model
+dilatih terlebih dahulu pada bahasa sumber yang memiliki data melimpah,
+kemudian representasi yang dihasilkan diadaptasi ke bahasa target.
 
-% ── 2.5 Strategi Fine-Tuning Dua Tahap ───────────────────────────────
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=10mm]
+    \node[io]        (sumber) {Bahasa Sumber \\ (data melimpah)};
+    \node[procplain]  (repr)   [right=of sumber] {Representasi Terlatih};
+    \node[procplain]  (adapt)  [right=of repr]   {Adaptasi / \emph{Transfer}};
+    \node[io]        (target) [right=of adapt]  {Bahasa Target \\ (data terbatas)};
+
+    \draw[arr] (sumber) -- (repr);
+    \draw[arr] (repr)   -- (adapt);
+    \draw[arr] (adapt)  -- (target);
+  \end{tikzpicture}
+  }
+  \caption{Alur umum cross-lingual transfer}
+  \label{fig:2.transfer}
+\end{figure}
+
+Pendekatan ini banyak ditempuh untuk mengatasi kesenjangan sumber daya
+pada bahasa yang kurang terwakili dalam teknologi bahasa, karena
+memungkinkan model memanfaatkan pola akustik atau linguistik yang telah
+dipelajari secara luas tanpa membangun ulang pembelajaran dari data yang
+masih terbatas pada bahasa target. Pada konteks penelitian ini, bahasa
+sumber adalah bahasa Inggris (dengan korpus emosi RAVDESS/CREMA-D yang
+tersedia luas) dan bahasa target adalah Bahasa Indonesia (dengan korpus
+emosi yang relatif terbatas), sebagaimana diuraikan lebih lanjut pada
+Subbab \ref{sec:2.6}.
+
+% ── 2.6 Strategi Fine-Tuning Dua Tahap ───────────────────────────────
 \section{Strategi Fine-Tuning Dua Tahap}
-\label{sec:2.5}
-
-Strategi \emph{fine-tuning} dua tahap merupakan pendekatan yang
-mengadaptasi model secara bertahap, yaitu dengan melatih model terlebih
-dahulu pada korpus sumber yang berbeda bahasa namun memiliki tugas
-serupa (dalam hal ini, klasifikasi emosi), sebelum diadaptasi lebih
-lanjut ke data target berbahasa Indonesia. Pendekatan ini diharapkan
-memungkinkan model mempelajari pola akustik emosi yang bersifat lebih
-umum pada tahap pertama, sebelum menyesuaikan pola tersebut dengan
-karakteristik spesifik Bahasa Indonesia pada tahap kedua. Tang et al.
-(2023) menunjukkan bahwa pendekatan \emph{transfer learning end-to-end}
-yang bersifat \emph{speaker-independent}, lintas bahasa, dan lintas
-korpus memiliki potensi generalisasi yang baik untuk tugas SER, yang
-mendukung kelayakan skema dua tahap sebagai strategi adaptasi lintas
-bahasa.
-
-% ── 2.6 Low-Rank Adaptation (LoRA) ───────────────────────────────────
-\section{Low-Rank Adaptation (LoRA)}
 \label{sec:2.6}
 
-\emph{Low-Rank Adaptation} (LoRA) adalah strategi \emph{fine-tuning}
-efisien-parameter yang bekerja dengan hanya memperbarui sejumlah kecil
-parameter tambahan berupa matriks berperingkat rendah (\emph{low-rank}),
-sementara sebagian besar parameter model dasar dibekukan. Berbeda dengan
-\emph{full fine-tuning} yang memperbarui seluruh parameter model, LoRA
-menawarkan efisiensi komputasi yang signifikan karena jumlah parameter
-yang dilatih jauh lebih sedikit. Efisiensi ini relevan bagi penelitian
-yang memiliki keterbatasan sumber daya komputasi, namun pengaruhnya
-terhadap akurasi klasifikasi emosi pada konteks SER berbahasa Indonesia
-belum banyak dikaji secara sistematis, sehingga menjadi salah satu
-perbandingan utama yang diuji dalam penelitian ini.
+Strategi \emph{fine-tuning} dua tahap merupakan bentuk penerapan
+\emph{cross-lingual transfer} (Subbab \ref{sec:2.5}) yang mengadaptasi
+model secara bertahap melalui dua kali proses \emph{fine-tuning}
+berurutan, alih-alih satu kali \emph{fine-tuning} langsung ke data
+target (Pan and Yang, 2010). Secara formal, jika $\theta_0$ menyatakan
+bobot Wav2Vec2/XLSR hasil pra-latih (Subbab \ref{sec:2.4}), maka tahap
+pertama melatih model pada korpus sumber $D_{\text{src}}$ untuk
+memperoleh bobot antara sebagaimana Persamaan \ref{eq:2.tahap1}.
 
-% ── 2.7 Validasi Silang K-Fold dan Uji Statistik ─────────────────────
-\section{Validasi Silang K-Fold dan Pengujian Signifikansi Statistik}
+\begin{equation}
+  \theta_1 = \arg\min_{\theta} \; \mathcal{L}_{\text{src}}(\theta; D_{\text{src}}),
+  \quad \theta \text{ diinisialisasi dari } \theta_0
+  \label{eq:2.tahap1}
+\end{equation}
+
+Tahap kedua kemudian mengadaptasi bobot antara $\theta_1$ tersebut ke
+korpus target $D_{\text{tgt}}$ untuk memperoleh bobot akhir sebagaimana
+Persamaan \ref{eq:2.tahap2}.
+
+\begin{equation}
+  \theta_2 = \arg\min_{\theta} \; \mathcal{L}_{\text{tgt}}(\theta; D_{\text{tgt}}),
+  \quad \theta \text{ diinisialisasi dari } \theta_1
+  \label{eq:2.tahap2}
+\end{equation}
+
+\noindent
+Gambar \ref{fig:2.twostage} menggambarkan alur dua tahap tersebut.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=9mm]
+    \node[io]        (backbone) {Backbone Pra-latih $\theta_0$};
+    \node[procplain]  (tahap1)   [right=of backbone] {Tahap 1: \emph{Fine-Tuning} Sumber};
+    \node[io]        (antara)   [right=of tahap1]    {Model Antara $\theta_1$};
+    \node[procplain]  (tahap2)   [right=of antara]    {Tahap 2: \emph{Fine-Tuning} Target};
+    \node[io]        (akhir)    [right=of tahap2]     {Model Akhir $\theta_2$};
+
+    \draw[arr] (backbone) -- (tahap1);
+    \draw[arr] (tahap1)   -- (antara);
+    \draw[arr] (antara)   -- (tahap2);
+    \draw[arr] (tahap2)   -- (akhir);
+  \end{tikzpicture}
+  }
+  \caption{Alur strategi fine-tuning dua tahap}
+  \label{fig:2.twostage}
+\end{figure}
+
+Pendekatan bertahap ini diharapkan memungkinkan model mempelajari pola
+akustik emosi yang bersifat lebih umum pada tahap pertama, sebelum
+menyesuaikan pola tersebut dengan karakteristik spesifik Bahasa
+Indonesia pada tahap kedua. Sebagai pembanding pada penelitian ini,
+disiapkan pula skema \emph{single-stage} yang melewati tahap pertama dan
+langsung melatih $\theta_0$ pada $D_{\text{tgt}}$, sebagaimana diuraikan
+pada Bab 3.
+
+% ── 2.7 Low-Rank Adaptation (LoRA) ───────────────────────────────────
+\section{Low-Rank Adaptation (LoRA)}
 \label{sec:2.7}
 
-Validasi silang k-fold adalah teknik evaluasi yang membagi data menjadi
-k bagian (\emph{fold}), dengan setiap bagian secara bergantian digunakan
-sebagai data uji sementara bagian lainnya digunakan sebagai data latih.
-Teknik ini menghasilkan beberapa observasi akurasi dan F1-score per fold
-untuk setiap strategi yang diuji, sehingga memungkinkan pengujian
-konsistensi performa antar-fold, bukan hanya satu nilai tunggal dari
-satu kali pengujian. Untuk menguji apakah perbedaan performa
-antarstrategi bersifat signifikan secara statistik, observasi tersebut
-terlebih dahulu diuji normalitasnya menggunakan uji Shapiro-Wilk.
-Apabila data berdistribusi normal, pengujian dilanjutkan dengan
-\emph{paired t-test}; apabila tidak, digunakan \emph{Wilcoxon
-signed-rank test} sebagai alternatif non-parametrik.
+\emph{Low-Rank Adaptation} (LoRA) adalah strategi \emph{fine-tuning}
+efisien-parameter yang membekukan seluruh bobot model dasar $W_0$ dan
+hanya melatih sepasang matriks tambahan berperingkat rendah
+(\emph{low-rank}) yang disisipkan secara paralel (Hu et al., 2022).
+Untuk suatu lapisan dengan bobot pra-latih $W_0 \in \mathbb{R}^{d \times
+k}$, LoRA merepresentasikan pembaruan bobot $\Delta W$ sebagai perkalian
+dua matriks berperingkat rendah $B \in \mathbb{R}^{d \times r}$ dan $A
+\in \mathbb{R}^{r \times k}$, dengan $r \ll \min(d, k)$, sehingga keluaran
+lapisan tersebut untuk masukan $x$ dihitung sebagaimana Persamaan
+\ref{eq:2.lora}.
 
-% ── 2.8 Akurasi dan F1-Score ──────────────────────────────────────────
-\section{Akurasi dan F1-Score}
+\begin{equation}
+  h = W_0 x + \Delta W x = W_0 x + BA x
+  \label{eq:2.lora}
+\end{equation}
+
+\noindent
+Gambar \ref{fig:2.lora} menggambarkan arsitektur tersebut: masukan $x$
+diproses melalui dua jalur paralel, yaitu bobot dasar $W_0$ yang beku
+dan jalur berperingkat rendah $A$ diikuti $B$, yang hasilnya dijumlahkan
+menjadi keluaran $h$.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=9mm]
+    \node[io]        (x)     {Masukan $x$};
+    \node[procplain]  (w0)    [above right=6mm and 16mm of x] {$W_0$ (beku)};
+    \node[procplain]  (a)     [below right=6mm and 16mm of x] {$A$ (turun-peringkat)};
+    \node[procplain]  (b)     [right=of a]                     {$B$ (naik-peringkat)};
+    \node[io]        (h)     [right=28mm of w0 |- x]           {Keluaran $h$};
+
+    \draw[arr] (x) -- (w0);
+    \draw[arr] (x) -- (a);
+    \draw[arr] (a) -- (b);
+    \draw[arr] (w0) -- node[flbl,above]{$+$} (h);
+    \draw[arr] (b)  -- (h);
+  \end{tikzpicture}
+  }
+  \caption{Arsitektur Low-Rank Adaptation (LoRA)}
+  \label{fig:2.lora}
+\end{figure}
+
+Karena jumlah parameter pada $A$ dan $B$ jauh lebih sedikit daripada
+jumlah parameter $W_0$, LoRA menawarkan efisiensi komputasi dan memori
+yang signifikan dibandingkan \emph{full fine-tuning}, yang memperbarui
+seluruh parameter $W_0$ secara langsung. Efisiensi ini relevan bagi
+penelitian dengan keterbatasan sumber daya komputasi, namun pengaruhnya
+terhadap akurasi klasifikasi emosi pada konteks SER berbahasa Indonesia
+belum banyak dikaji secara sistematis, sehingga menjadi salah satu
+perbandingan utama yang diuji dalam penelitian ini, sebagaimana
+diuraikan pada Bab 3.
+
+% ── 2.8 Validasi Silang K-Fold dan Uji Statistik ─────────────────────
+\section{Validasi Silang K-Fold dan Pengujian Signifikansi Statistik}
 \label{sec:2.8}
 
+Validasi silang k-fold adalah teknik evaluasi yang membagi data menjadi
+$k$ bagian (\emph{fold}) berukuran relatif sama, dengan setiap bagian
+secara bergantian digunakan sebagai data uji sementara $k-1$ bagian
+lainnya digunakan sebagai data latih, sehingga setiap bagian data pernah
+menjadi data uji tepat satu kali (Kohavi, 1995). Gambar
+\ref{fig:2.kfold} menggambarkan skema tersebut untuk $k=5$.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=3mm, every node/.style={minimum width=20mm, minimum height=9mm}]
+    \node[io]        (f1) {Fold 1 (uji)};
+    \node[procplain]  (f2) [right=of f1] {Fold 2 (latih)};
+    \node[procplain]  (f3) [right=of f2] {Fold 3 (latih)};
+    \node[procplain]  (f4) [right=of f3] {Fold 4 (latih)};
+    \node[procplain]  (f5) [right=of f4] {Fold 5 (latih)};
+  \end{tikzpicture}
+  }
+  \caption{Ilustrasi satu putaran validasi silang k-fold ($k=5$); peran
+    fold sebagai data uji bergantian pada setiap putaran hingga kelima
+    fold pernah menjadi data uji}
+  \label{fig:2.kfold}
+\end{figure}
+
+Teknik ini menghasilkan $k$ observasi akurasi dan F1-score, satu untuk
+setiap fold, sehingga memungkinkan pengujian konsistensi performa
+antar-fold untuk setiap strategi yang diuji, bukan hanya satu nilai
+tunggal dari satu kali pengujian. Untuk menguji apakah perbedaan
+performa antarstrategi bersifat signifikan secara statistik, $k$
+observasi tersebut terlebih dahulu diuji normalitasnya menggunakan uji
+Shapiro-Wilk (Shapiro and Wilk, 1965). Apabila data berdistribusi
+normal, pengujian dilanjutkan dengan \emph{paired t-test}, yang
+menghitung statistik uji $t$ dari selisih berpasangan $d_i$ antara dua
+strategi pada fold yang sama, sebagaimana Persamaan \ref{eq:2.ttest}.
+
+\begin{equation}
+  t = \frac{\bar{d}}{s_d / \sqrt{n}}
+  \label{eq:2.ttest}
+\end{equation}
+
+\noindent
+di mana $\bar{d}$ adalah rata-rata selisih berpasangan, $s_d$ adalah
+simpangan baku selisih tersebut, dan $n$ adalah jumlah fold. Apabila
+data tidak berdistribusi normal, digunakan \emph{Wilcoxon signed-rank
+test} sebagai alternatif non-parametrik yang tidak mengasumsikan
+distribusi tertentu (Wilcoxon, 1945).
+
+% ── 2.9 Akurasi dan F1-Score ──────────────────────────────────────────
+\section{Akurasi dan F1-Score}
+\label{sec:2.9}
+
 Akurasi dan F1-score adalah dua metrik yang umum digunakan untuk
-mengevaluasi performa model klasifikasi. Akurasi mengukur proporsi
-prediksi yang benar terhadap keseluruhan data uji, sehingga memberikan
-gambaran umum performa model, sebagaimana Persamaan \ref{eq:2.akurasi}.
+mengevaluasi performa model klasifikasi (Powers, 2011). Akurasi mengukur
+proporsi prediksi yang benar terhadap keseluruhan data uji, sehingga
+memberikan gambaran umum performa model, sebagaimana Persamaan
+\ref{eq:2.akurasi}.
 
 \begin{equation}
   \text{Akurasi} = \frac{TP + TN}{TP + TN + FP + FN}
@@ -229,9 +477,12 @@ di mana $TP$ = \emph{True Positive}, $TN$ = \emph{True Negative}, $FP$ =
 \emph{False Positive}, $FN$ = \emph{False Negative}.
 
 Akan tetapi, pada data dengan sebaran kelas yang tidak seimbang, akurasi
-dapat memberikan gambaran yang menyesatkan. F1-score mengatasi
-keterbatasan tersebut dengan merepresentasikan rata-rata harmonis antara
-presisi dan recall, sebagaimana Persamaan \ref{eq:2.f1}.
+dapat memberikan gambaran yang menyesatkan, karena model yang selalu
+memprediksi kelas mayoritas tetap dapat memperoleh akurasi tinggi tanpa
+benar-benar mengenali kelas minoritas. F1-score mengatasi keterbatasan
+tersebut dengan merepresentasikan rata-rata harmonis antara presisi
+(proporsi prediksi positif yang benar) dan recall (proporsi kasus
+positif yang berhasil dikenali), sebagaimana Persamaan \ref{eq:2.f1}.
 
 \begin{equation}
   F_1 = 2 \cdot \frac{\text{Presisi} \times \text{Recall}}{\text{Presisi} + \text{Recall}}
@@ -240,4 +491,5 @@ presisi dan recall, sebagaimana Persamaan \ref{eq:2.f1}.
 
 Kedua metrik ini digunakan bersama dalam penelitian ini untuk memberikan
 gambaran performa yang lebih menyeluruh terhadap setiap strategi
-\emph{fine-tuning} yang dibandingkan.
+\emph{fine-tuning} yang dibandingkan, mengingat skema kelas emosi yang
+digunakan berpotensi tidak seimbang antarkelas.

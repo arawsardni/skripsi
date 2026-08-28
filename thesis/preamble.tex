@@ -76,8 +76,15 @@
 
 % ── Heading bab & subbab ─────────────────────────────────────────────
 \usepackage{titlesec}
+\usepackage{indentfirst}         % inden paragraf pertama juga (bukan cuma paragraf ke-2 dst),
+                                  % standar konvensi Indonesia -- default LaTeX tidak begini
 % Bab: "BAB X JUDUL" satu baris, centered, bold, normal size
-\titleformat{\chapter}[block]
+% CATATAN: JANGAN pakai shape [block] di sini -- kombinasi [block] + \chapter
+% di kelas report bikin \tableofcontents/\listoffigures/\listoftables render
+% KOSONG (isi .toc/.lof/.lot tetap benar, cuma tidak ke-render ke halaman).
+% Tanpa opsi shape (default titlesec), tampilan visualnya identik tapi TOC
+% normal. Sudah diverifikasi lewat isolasi bug, jangan tambahkan [block] lagi.
+\titleformat{\chapter}
   {\normalfont\normalsize\bfseries\centering}
   {BAB \thechapter\space}
   {0pt}
@@ -184,9 +191,14 @@
 
 % ── Jenis dokumen (diisi beda oleh main_proposal.tex / main_skripsi.tex) ──
 % \doctypelabel: label besar di cover ("PROPOSAL SKRIPSI" atau "SKRIPSI").
-% \doctypesubtitle: baris kecil di bawahnya, cuma dipakai skripsi penuh.
+% \doctypesubtitle + \ifdoctypesubtitle: baris kecil di bawahnya, cuma
+% dipakai skripsi penuh -- boolean-nya yang menentukan baris itu dicetak
+% atau tidak (bukan sekadar dikosongkan), supaya versi proposal tidak
+% menyisakan jarak kosong dari baris yang seharusnya tidak ada.
 \newcommand{\doctypelabel}{}
 \newcommand{\doctypesubtitle}{}
+\newif\ifdoctypesubtitle
+\doctypesubtitlefalse
 
 % ── Metadata dokumen ─────────────────────────────────────────────────
 \title{Analisis Pengaruh Strategi Fine-Tuning Dua Tahap terhadap Akurasi

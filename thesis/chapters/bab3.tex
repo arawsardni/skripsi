@@ -85,6 +85,46 @@ kelas emosi pada kedua kelompok data disamakan terlebih dahulu agar
 konsisten antarkorpus, sehingga perbandingan antarstrategi
 \emph{fine-tuning} dapat dilakukan secara adil.
 
+Karakteristik masing-masing korpus dijelaskan sebagai berikut. RAVDESS
+adalah korpus ucapan emosional berbahasa Inggris yang direkam oleh 24
+aktor profesional (12 perempuan, 12 laki-laki), mencakup 8 kategori
+emosi (netral, tenang, senang, sedih, marah, takut, jijik, dan terkejut)
+(Livingstone and Russo, 2018). CREMA-D adalah korpus ucapan emosional
+berbahasa Inggris yang direkam oleh 91 aktor dengan latar belakang usia
+dan etnis yang beragam, mencakup 6 kategori emosi (marah, jijik, takut,
+senang, netral, dan sedih) (Cao et al., 2014). Kedua korpus ini dipilih
+sebagai sumber karena tersedia secara publik, telah banyak digunakan
+pada penelitian SER sebelumnya, dan mencakup kategori emosi yang secara
+umum beririsan dengan skema kelas pada dataset target. Tabel
+\ref{tab:3.dataset} merangkum karakteristik keempat dataset yang
+digunakan.
+
+\begin{table}[H]
+  \centering
+  \caption{Karakteristik dataset yang digunakan}
+  \label{tab:3.dataset}
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{p{3.8cm} l l p{2.6cm} p{1.8cm}}
+    \toprule
+    \textbf{Dataset} & \textbf{Peran} & \textbf{Bahasa} & \textbf{Jumlah Sampel} & \textbf{Jumlah Kelas} \\
+    \midrule
+    RAVDESS & Sumber & Inggris & 1.440 & 8 \\
+    CREMA-D & Sumber & Inggris & 7.442 & 6 \\
+    E-SERAVD & Target & Indonesia & [\emph{lihat Santoso et al., 2026}] & [...] \\
+    IndoWaveSentiment & Target & Indonesia & [\emph{lihat Nugroho et al., 2025}] & [...] \\
+    \bottomrule
+  \end{tabular}
+  \end{adjustbox}
+\end{table}
+
+\noindent
+Jumlah sampel dan kelas untuk RAVDESS dan CREMA-D di atas mengacu pada
+dokumentasi resmi masing-masing korpus; angka untuk E-SERAVD dan
+IndoWaveSentiment perlu disesuaikan dengan dokumentasi resmi dataset
+tersebut sebagaimana dilaporkan oleh Santoso, Budianto and Dutono (2026)
+dan Nugroho et al. (2025) sebelum dataset benar-benar diperoleh dan
+diverifikasi.
+
 \section{Fine-Tuning Sumber}
 \label{sec:3.4}
 
