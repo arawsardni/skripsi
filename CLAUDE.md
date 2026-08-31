@@ -40,7 +40,7 @@ Indonesian babel support. Full rationale for these deviations from the generic t
 - `thesis/chapters/bab4–bab7.tex` — still the generic placeholder scaffold, commented out in `main_skripsi.tex`. Chapter count/titles for this range are not yet decided — see Known gaps before assuming these four filenames are final.
 - `thesis/backmatter/referensi.tex` — bibliography, Harvard style (the supervisor-approved variant
   used in the praproposal — not Harvard ARU; see `CATATAN_PERUBAHAN.md`).
-- `thesis/backmatter/lampiran_a.tex`, `lampiran_b.tex` — Persyaratan Fisik dan Tata Letak / Penggunaan Bahasa, required appendices per Panduan Skripsi Filkom UB v3.0 (verbatim from the guide — don't paraphrase). Included by both entry points.
+- `thesis/backmatter/lampiran.tex` — the Lampiran section, intentionally left as an empty page (see `CATATAN_PERBAIKAN.md`, Review Iterasi 2 item 1): the Lampiran A/B text in the official template docx documents the template's *own* formatting/language conventions, it isn't meant to be copied verbatim into each student's submission. `lampiran_a.tex`/`lampiran_b.tex` still exist with that earlier (now unused) content — not `\include`d by either entry point, kept only as a reference in case that reading gets revisited.
 - `thesis/assets/` — images referenced via `\includegraphics`; `\graphicspath{{assets/}}` set in preamble
 - `thesis/CATATAN_PERUBAHAN.md` — every deviation from the generic template (font, spacing, compiler,
   chapter scope, terminology) made to comply with Panduan Skripsi Filkom UB v3.0, and why.
@@ -58,8 +58,11 @@ Indonesian babel support. Full rationale for these deviations from the generic t
 
 ## Known gaps
 
-- Bab 3, subbab 3.9.2 (Perangkat Keras) is still a `[...]` placeholder — fill in with the actual
-  GPU/compute spec once the experiment environment is finalized (see `experiments/`).
+- Bab 3, subbab 3.10.2 (Perangkat Keras) is filled in (2× RTX 3060 6GB + VRAM analysis) but its
+  RAM/storage line is still a `[...]` placeholder — fill in once known.
+- Bab 3's dataset table (§3.3) has a `[...]` for E-SERAVD's exact sample count — a related
+  5,049-sample figure is noted in prose but hedged as possibly not the exact right dataset;
+  needs verification against the source paper before submission.
 - Bab 4–7 chapter count/titles are undecided. Panduan Skripsi Filkom UB v3.0 gives a
   "Nonimplementatif Eksperimental" example structure (Bab 4 Hasil, Bab 5 Pembahasan, Bab 6
   Penutup — optionally merging 4+5 into one "Hasil dan Pembahasan" chapter) which matches this

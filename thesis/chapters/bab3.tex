@@ -29,7 +29,8 @@ observasi tersebut, bukan sebagai produk/artefak utama penelitian.
     \node[proc] (sumber)  [below=of data]     {Fine-Tuning Sumber};
     \node[proc] (target)  [below=of sumber]   {Fine-Tuning Target};
     \node[proc] (evaluasi)[below=of target]   {Evaluasi K-Fold};
-    \node[proc] (analisis)[below=of evaluasi] {Analisis Hasil};
+    \node[proc] (kinerja) [below=of evaluasi] {Analisis Kinerja Komputasi};
+    \node[proc] (analisis)[below=of kinerja]  {Analisis Hasil};
     \node[term] (selesai) [below=of analisis] {Selesai};
 
     \draw[arr] (mulai)    -- (studi);
@@ -37,7 +38,8 @@ observasi tersebut, bukan sebagai produk/artefak utama penelitian.
     \draw[arr] (data)     -- (sumber);
     \draw[arr] (sumber)   -- (target);
     \draw[arr] (target)   -- (evaluasi);
-    \draw[arr] (evaluasi) -- (analisis);
+    \draw[arr] (evaluasi) -- (kinerja);
+    \draw[arr] (kinerja)  -- (analisis);
     \draw[arr] (analisis) -- (selesai);
   \end{tikzpicture}
   \caption{Diagram alir metode penelitian}
@@ -57,9 +59,11 @@ emosi secara umum. Setelah itu dilakukan \emph{fine-tuning} target untuk
 mengadaptasi model dasar ke data Indonesia melalui beberapa skema
 strategi. Tahap berikutnya adalah evaluasi k-fold untuk menilai performa
 setiap strategi menggunakan skema validasi silang dan pengujian
-signifikansi statistik. Hasil evaluasi tersebut kemudian digunakan
-sebagai dasar pada tahap analisis hasil, yang merangkum temuan
-penelitian serta menjawab rumusan masalah yang telah dipaparkan.
+signifikansi statistik, dilanjutkan analisis kinerja komputasi untuk
+membandingkan waktu pelatihan dan penggunaan memori antarkondisi. Hasil
+kedua evaluasi tersebut kemudian digunakan sebagai dasar pada tahap
+analisis hasil, yang merangkum temuan penelitian serta menjawab rumusan
+masalah yang telah dipaparkan.
 
 \section{Studi Literatur}
 \label{sec:3.2}
@@ -82,8 +86,10 @@ Inggris sebagai sumber pada tahap \emph{fine-tuning} pertama
 (RAVDESS/CREMA-D), dan dataset SER berbahasa Indonesia sebagai target
 pada tahap \emph{fine-tuning} kedua (E-SERAVD/IndoWaveSentiment). Skema
 kelas emosi pada kedua kelompok data disamakan terlebih dahulu agar
-konsisten antarkorpus, sehingga perbandingan antarstrategi
-\emph{fine-tuning} dapat dilakukan secara adil.
+konsisten antarkorpus -- penelitian ini menggunakan skema empat kelas
+emosi (marah, senang, netral, sedih) mengikuti kelas yang tersedia pada
+dataset target, sehingga perbandingan antarstrategi \emph{fine-tuning}
+dapat dilakukan secara adil.
 
 Karakteristik masing-masing korpus dijelaskan sebagai berikut. RAVDESS
 adalah korpus ucapan emosional berbahasa Inggris yang direkam oleh 24
@@ -110,7 +116,7 @@ digunakan.
     \midrule
     RAVDESS & Sumber & Inggris & 1.440 & 8 \\
     CREMA-D & Sumber & Inggris & 7.442 & 6 \\
-    E-SERAVD & Target & Indonesia & [\emph{lihat Santoso et al., 2026}] & [...] \\
+    E-SERAVD & Target & Indonesia & [\emph{lihat Santoso et al., 2026}] & 4 \\
     IndoWaveSentiment & Target & Indonesia & [\emph{lihat Nugroho et al., 2025}] & [...] \\
     \bottomrule
   \end{tabular}
@@ -118,64 +124,119 @@ digunakan.
 \end{table}
 
 \noindent
-Jumlah sampel dan kelas untuk RAVDESS dan CREMA-D di atas mengacu pada
-dokumentasi resmi masing-masing korpus; angka untuk E-SERAVD dan
-IndoWaveSentiment perlu disesuaikan dengan dokumentasi resmi dataset
-tersebut sebagaimana dilaporkan oleh Santoso, Budianto and Dutono (2026)
-dan Nugroho et al. (2025) sebelum dataset benar-benar diperoleh dan
-diverifikasi.
+Jumlah sampel untuk RAVDESS dan CREMA-D di atas mengacu pada dokumentasi
+resmi masing-masing korpus. Untuk dataset target, skala yang tersedia
+dari tim yang sama (kemungkinan besar E-SERAVD atau versi awalnya)
+adalah 5.049 sampel dengan distribusi 1.202 marah, 1.228 senang, 2.075
+netral, dan 899 sedih -- angka ini belum tentu utuh berlaku untuk
+E-SERAVD maupun IndoWaveSentiment secara spesifik, sehingga perlu
+diverifikasi ulang terhadap dokumentasi resmi masing-masing dataset
+sebagaimana dilaporkan oleh Santoso, Budianto and Dutono (2026) dan
+Nugroho et al. (2025) sebelum dataset benar-benar diperoleh.
 
 \section{Fine-Tuning Sumber}
 \label{sec:3.4}
 
+Backbone yang digunakan adalah model dasar XLSR-53
+(\path{facebook/wav2vec2-large-xlsr-53}) tanpa \emph{fine-tuning}
+tambahan dari pihak lain untuk Bahasa Indonesia -- berbeda dari
+pendekatan Nugroho et al. (2025) yang menguji model dasar XLSR-Wav2Vec2
+yang sudah di-\emph{fine-tune} untuk ucapan Indonesia (lihat Subbab
+\ref{sec:2.4}). Pemilihan ini disengaja: dengan titik awal yang identik
+di keempat kondisi eksperimen (Subbab \ref{sec:3.5}), perbedaan performa
+yang teramati dapat ditarik ke strategi \emph{fine-tuning} yang diuji
+dalam penelitian ini, bukan tercampur dengan efek \emph{fine-tuning}
+pihak lain yang sudah menempel pada checkpoint.
+
 Tahap ini melatih backbone \emph{self-supervised} (Wav2Vec2/XLSR-53)
 pada korpus emosi berbahasa Inggris agar model mampu mengenali pola
 akustik emosi secara umum, menghasilkan model dasar yang selanjutnya
-akan diadaptasi ke data target pada tahap berikutnya.
+akan diadaptasi ke data target pada tahap berikutnya. Tahap ini
+dijalankan sekali saja; bobot hasilnya dipakai ulang sebagai titik awal
+untuk semua fold pada Kondisi C dan D (Subbab \ref{sec:3.5}), bukan
+diulang per-fold, karena \emph{fine-tuning} tahap sumber tidak
+bergantung pada pembagian fold data target.
 
 \section{Fine-Tuning Target}
 \label{sec:3.5}
 
-Tahap ini mengadaptasi model dasar ke data Indonesia melalui dua skema,
-yaitu \emph{full fine-tuning} yang memperbarui seluruh parameter model,
-dan LoRA yang hanya memperbarui parameter tambahan berjumlah kecil.
-Sebagai pembanding, disiapkan pula model tahap tunggal
-(\emph{single-stage}) yang dilatih langsung pada data Indonesia tanpa
-melalui tahap sumber, sehingga diperoleh empat kombinasi strategi yang
-akan dibandingkan performanya:
+Tahap ini mengadaptasi model ke data Indonesia melalui dua axis desain
+yang independen: (1) \emph{stage}, yaitu apakah model melalui
+\emph{fine-tuning} dua tahap atau langsung dilatih pada data target
+(\emph{single-stage}); dan (2) metode adaptasi, yaitu \emph{full
+fine-tuning} yang memperbarui seluruh parameter model, atau LoRA yang
+hanya memperbarui parameter tambahan berjumlah kecil. Kombinasi kedua
+axis tersebut menghasilkan empat kondisi eksperimen sebagaimana
+dirangkum pada Tabel \ref{tab:3.kondisi}.
 
-\begin{enumerate}
-  \item \emph{Single-stage}, dilatih langsung pada data Indonesia.
-  \item Dua tahap dengan \emph{full fine-tuning} pada tahap adaptasi
-        target.
-  \item Dua tahap dengan LoRA pada tahap adaptasi target.
-  \item \emph{Single-stage} dengan LoRA, sebagai pembanding tambahan
-        untuk mengisolasi pengaruh LoRA di luar skema dua tahap.
-\end{enumerate}
+\begin{table}[H]
+  \centering
+  \caption{Empat kondisi eksperimen (desain 2$\times$2)}
+  \label{tab:3.kondisi}
+  \begin{tabular}{c l l}
+    \toprule
+    \textbf{Kondisi} & \textbf{Stage} & \textbf{Metode Adaptasi} \\
+    \midrule
+    A & Single-stage & Full Fine-Tuning \\
+    B & Single-stage & LoRA \\
+    C & Two-stage    & Full Fine-Tuning \\
+    D & Two-stage    & LoRA \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent
+Backbone yang digunakan sama persis (XLSR-53, Subbab \ref{sec:3.4}) di
+keempat kondisi -- yang berbeda hanya resep \emph{fine-tuning}-nya --
+supaya perbedaan hasil antarkondisi dapat ditarik ke strategi
+\emph{fine-tuning} yang diuji, bukan ke perbedaan arsitektur atau titik
+awal model. Kondisi A dan B tidak melalui tahap \emph{fine-tuning}
+sumber (Subbab \ref{sec:3.4}) dan langsung dilatih pada data target,
+sedangkan Kondisi C dan D memakai bobot hasil \emph{fine-tuning} sumber
+sebagai titik awal. Validasi silang k-fold (Subbab \ref{sec:3.6})
+diterapkan pada level adaptasi target ini untuk keempat kondisi.
 
 \section{Evaluasi K-Fold}
 \label{sec:3.6}
 
-Tahap ini mengevaluasi setiap strategi \emph{fine-tuning} menggunakan
-skema validasi silang k-fold, sehingga diperoleh beberapa observasi
-akurasi dan F1-score per fold untuk masing-masing strategi. Data hasil
-observasi tersebut kemudian diuji normalitasnya menggunakan uji
-Shapiro-Wilk. Jika data berdistribusi normal, pengujian dilanjutkan
-dengan \emph{paired t-test}; jika tidak, digunakan \emph{Wilcoxon
-signed-rank test}. Pengujian ini bertujuan untuk mengetahui signifikansi
-statistik perbedaan performa antarstrategi \emph{fine-tuning} yang
-dibandingkan.
+Tahap ini mengevaluasi setiap kondisi eksperimen menggunakan skema
+validasi silang k-fold, sehingga diperoleh beberapa observasi akurasi
+dan F1-score per fold untuk masing-masing kondisi. Data hasil observasi
+tersebut kemudian diuji normalitasnya menggunakan uji Shapiro-Wilk. Jika
+data berdistribusi normal, pengujian dilanjutkan dengan \emph{paired
+t-test}; jika tidak, digunakan \emph{Wilcoxon signed-rank test}.
+Pengujian ini bertujuan untuk mengetahui signifikansi statistik
+perbedaan performa antarkondisi, menjawab hipotesis yang telah
+dirumuskan pada Subbab 1.3.
 
-\section{Analisis Hasil}
+\section{Analisis Kinerja Komputasi}
 \label{sec:3.7}
 
-Tahap ini menafsirkan hasil pengujian signifikansi statistik untuk
-menjawab rumusan masalah penelitian, serta menyusun rekomendasi strategi
-\emph{fine-tuning} yang paling sesuai untuk pengembangan SER berbahasa
-Indonesia berdasarkan temuan yang diperoleh.
+Tahap ini menganalisis kinerja komputasi setiap kondisi eksperimen
+(Kondisi A--D), meliputi waktu pelatihan dan penggunaan memori (VRAM)
+sebagaimana didefinisikan pada Subbab \ref{sec:2.9.2}. Waktu pelatihan
+dicatat dari awal hingga akhir proses pelatihan pada tiap fold untuk
+tahap \emph{fine-tuning} target (Subbab \ref{sec:3.5}); durasi
+\emph{fine-tuning} sumber (Subbab \ref{sec:3.4}) dicatat terpisah karena
+hanya dijalankan sekali dan dipakai bersama oleh Kondisi C dan D.
+Penggunaan memori diukur sebagai puncak alokasi VRAM selama pelatihan
+pada tiap kondisi. Kedua metrik ini dibandingkan secara deskriptif
+antarkondisi, dengan perhatian khusus pada perbandingan Kondisi A vs B
+dan Kondisi C vs D (axis \emph{full fine-tuning} vs LoRA) untuk menjawab
+Rumusan Masalah 2 dari sisi efisiensi, melengkapi pengujian signifikansi
+statistik akurasi dan F1-score pada Subbab \ref{sec:3.6}.
+
+\section{Analisis Hasil}
+\label{sec:3.8}
+
+Tahap ini menafsirkan hasil pengujian signifikansi statistik dan
+analisis kinerja komputasi untuk menjawab rumusan masalah penelitian,
+serta menyusun rekomendasi strategi \emph{fine-tuning} yang paling
+sesuai untuk pengembangan SER berbahasa Indonesia berdasarkan temuan
+yang diperoleh.
 
 \section{Kesimpulan dan Saran}
-\label{sec:3.8}
+\label{sec:3.9}
 
 Penarikan kesimpulan dilaksanakan setelah seluruh tahap evaluasi dan
 analisis hasil selesai. Kesimpulan memuat jawaban atas rumusan masalah
@@ -186,13 +247,13 @@ pertimbangan dan perbaikan untuk penelitian selanjutnya, misalnya
 perluasan cakupan korpus sumber atau backbone model yang diuji.
 
 \section{Peralatan Pendukung}
-\label{sec:3.9}
+\label{sec:3.10}
 
 Peralatan pendukung yang digunakan dalam penelitian ini terdiri atas
 perangkat lunak (\emph{software}) dan perangkat keras (\emph{hardware}).
 
 \subsection{Perangkat Lunak (Software)}
-\label{sec:3.9.1}
+\label{sec:3.10.1}
 
 Perangkat lunak yang digunakan dalam mendukung penelitian ini sebagai
 berikut.
@@ -208,13 +269,61 @@ berikut.
 \end{enumerate}
 
 \subsection{Perangkat Keras (Hardware)}
-\label{sec:3.9.2}
+\label{sec:3.10.2}
 
 Perangkat keras yang digunakan dalam mendukung penelitian ini sebagai
 berikut.
 
 \begin{enumerate}
-  \item \emph{[Perlu diisi sesuai spesifikasi GPU/komputasi yang
-        sebenarnya digunakan, mis. tipe GPU, kapasitas VRAM, RAM, dan
-        penyimpanan.]}
+  \item 2 unit GPU NVIDIA GeForce RTX 3060 6GB (server lab, dipinjamkan).
+  \item RAM dan penyimpanan: [\emph{diisi sesuai spesifikasi server lab
+        yang sebenarnya dipakai}].
 \end{enumerate}
+
+Kecukupan VRAM \emph{per kartu} dianalisis terhadap ukuran backbone
+(sekitar 317 juta parameter), sebagaimana dirangkum pada Tabel
+\ref{tab:3.vram}.
+
+\begin{table}[H]
+  \centering
+  \caption{Estimasi kecukupan VRAM per kartu (6GB)}
+  \label{tab:3.vram}
+  \begin{tabular}{l l l}
+    \toprule
+    \textbf{Komponen} & \textbf{Full Fine-Tuning} & \textbf{LoRA} \\
+    \midrule
+    Bobot + master + gradien + optimizer Adam & $\sim$5 GB & $\sim$0,6--0,7 GB \\
+    Sisa untuk aktivasi (dari 6 GB)           & $\sim$1 GB & $\sim$5,3 GB \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent
+Sisa VRAM untuk aktivasi pada skema \emph{full fine-tuning} jauh lebih
+ketat dibandingkan LoRA, sehingga \emph{full fine-tuning} diperkirakan
+memerlukan \emph{batch size} kecil (sekitar 1--2) dengan \emph{gradient
+checkpointing} sebagai teknik wajib, kemungkinan disertai \emph{gradient
+accumulation} untuk mencapai \emph{batch size} efektif yang lebih wajar.
+Skema LoRA memiliki ruang gerak yang jauh lebih longgar, dengan
+\emph{batch size} 8--16 yang tetap realistis tanpa teknik tambahan.
+Keterbatasan ini sekaligus menjadi ilustrasi konkret argumen efisiensi
+LoRA yang diuji dalam penelitian ini (Subbab \ref{sec:2.7}): pada
+perangkat keras yang benar-benar terbatas, LoRA bukan hanya lebih hemat
+secara teoretis, tetapi menjadi opsi yang jauh lebih praktis dijalankan.
+
+Strategi 2 GPU yang digunakan bukan \emph{distributed training} (model
+sudah muat pada 1 kartu), melainkan 2 \emph{run} independen paralel,
+satu per GPU (diatur lewat \texttt{CUDA\_VISIBLE\_DEVICES}), karena grid
+eksperimen (4 kondisi $\times$ k fold) bersifat \emph{embarrassingly
+parallel}.
+
+Rekomendasi teknis lain: \emph{mixed precision} (fp16/bf16) untuk
+mengurangi jejak memori, serta membekukan \emph{CNN feature extractor}
+(praktik standar pada \emph{fine-tuning} wav2vec2). Dengan skala dataset
+target diperkirakan sekitar 5 ribu sampel (Subbab \ref{sec:3.3}),
+estimasi kasar waktu per-\emph{run} berkisar puluhan menit hingga
+beberapa jam -- kemungkinan lebih lama untuk kondisi \emph{full
+fine-tuning} karena \emph{batch size} yang lebih kecil -- sehingga total
+waktu penelitian ($k=5$, sekitar 21 \emph{run}) diperkirakan selesai
+dalam hitungan hari dengan pemanfaatan 2 GPU secara paralel. Estimasi
+ini bersifat kasar dan perlu diverifikasi pada uji coba awal.
