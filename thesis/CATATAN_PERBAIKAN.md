@@ -28,3 +28,22 @@ saya akan mengevaluasi hasil generate latex main_proposal.pdf kondisi saat ini s
 11. belum ada penjelasan kenapa pakai xlsr-53 dasar, bukan yang udah di-fine-tune buat bahasa indonesia
 12. belum jelas fine-tuning sumber itu dijalanin sekali apa berkali-kali per fold
 13. perangkat keras masih placeholder kosong
+
+# Review Iterasi 3 (31-8-2026 16.00) ((done))
+
+1. di bagian latar belakang, nampaknaya paragraf 1 dan 2 bisa digabung adgar latar belakang lebih compact dan mudah untuk dibaca
+2. rumusan masalah 1 masih nyebut metrik eksplisit (akurasi dan f1-score), harusnya generik "performa" aja
+3. rumusan hipotesis h0 rm1 juga masih ada embel-embel "(akurasi dan f1-score)"
+4. tujuan belum nyebut presisi sama recall, cuma akurasi sama f1-score
+5. tujuan poin 2 belum nyebut bakal dibandingin juga efisiensi komputasinya (waktu+memori)
+6. metrik evaluasi yang keitung buat rubrik ">2 metode evaluasi" kemungkinan cuma metrik kualitas doang, akurasi+f1 masih 2, perlu ditambah presisi+recall
+7. bab 2 subbab akurasi/f1-score belum jelasin presisi sama recall sebagai metrik sendiri, cuma numpang lewat di rumus f1
+8. dataset target masih dua-duanya sekaligus (e-seravd + indowavesentiment), beda skala jauh (5000an vs 300 sampel) dan beda skema kelas (4 vs 5), bikin beban eksperimen dobel di timeline yang cuma ~14 minggu
+9. jadwal penelitian masih placeholder "1 semester" generik, padahal ada tenggat resmi p1/p2/semhas yang jauh lebih ketat
+10. bab 3 pengumpulan data belum nyebut pilot run buat verifikasi waktu/vram sebelum lanjut ke grid penuh
+11. bab 3 analisis kinerja komputasi belum nyebut cara ngukur waktu/vram secara teknis
+12. tabel vram di perangkat keras belum lengkap, angka full fine-tuning "naif" cuma sisa 1gb buat aktivasi itu riskan oom, belum ada mitigasi 8-bit adam optimizer
+
+# Review Iterasi 4 (1-9-2026 11.00)
+
+1. tambahin daftar isi, daftar tabel, dan daftar gambar di daftar isi

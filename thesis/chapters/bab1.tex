@@ -99,11 +99,11 @@ Berdasarkan latar belakang yang telah dipaparkan, maka permasalahan
 dalam penelitian ini dapat dirumuskan sebagai berikut.
 
 \begin{enumerate}
-  \item Bagaimana perbedaan akurasi dan F1-score klasifikasi emosi
-        antara model yang dilatih langsung (\emph{single-stage}) pada
-        dataset emosi berbahasa Indonesia dan model yang melalui
-        \emph{fine-tuning} dua tahap (pra-latih pada korpus emosi
-        berbahasa Inggris, lalu diadaptasi ke data Indonesia)?
+  \item Bagaimana perbedaan performa klasifikasi emosi antara model
+        yang dilatih langsung (\emph{single-stage}) pada dataset emosi
+        berbahasa Indonesia dan model yang melalui \emph{fine-tuning}
+        dua tahap (pra-latih pada korpus emosi berbahasa Inggris, lalu
+        diadaptasi ke data Indonesia)?
   \item Apakah terdapat perbedaan performa yang signifikan secara
         statistik antara strategi \emph{full fine-tuning} dan strategi
         \emph{fine-tuning} efisien-parameter (LoRA) pada tahap adaptasi
@@ -126,9 +126,9 @@ statistik sebagai berikut.
 \textbf{Hipotesis untuk Rumusan Masalah 1} (perbandingan
 \emph{single-stage} dan \emph{two-stage}):
 \begin{itemize}
-  \item $H_0$: Tidak terdapat perbedaan performa (akurasi dan F1-score)
-        yang signifikan secara statistik antara model \emph{single-stage}
-        dan model \emph{two-stage}.
+  \item $H_0$: Tidak terdapat perbedaan performa yang signifikan
+        secara statistik antara model \emph{single-stage} dan model
+        \emph{two-stage}.
   \item $H_1$: Terdapat perbedaan performa yang signifikan secara
         statistik antara model \emph{single-stage} dan model
         \emph{two-stage}.
@@ -159,13 +159,16 @@ Tujuan dari penelitian ini menjawab rumusan masalah yang telah
 dipaparkan, maka penelitian ini memiliki tujuan sebagai berikut.
 
 \begin{enumerate}
-  \item Menganalisis perbedaan akurasi dan F1-score klasifikasi emosi
-        antara model yang dilatih langsung pada data Indonesia
-        (\emph{single-stage}) dan model yang melalui \emph{fine-tuning}
-        dua tahap dari korpus emosi berbahasa Inggris ke data Indonesia.
+  \item Menganalisis perbedaan performa klasifikasi emosi antara model
+        yang dilatih langsung pada data Indonesia (\emph{single-stage})
+        dan model yang melalui \emph{fine-tuning} dua tahap dari korpus
+        emosi berbahasa Inggris ke data Indonesia, diukur melalui
+        akurasi, presisi, recall, dan F1-score.
   \item Menguji signifikansi statistik perbedaan performa antara
         strategi \emph{full fine-tuning} dan strategi \emph{fine-tuning}
-        efisien-parameter (LoRA) pada tahap adaptasi ke data target.
+        efisien-parameter (LoRA) pada tahap adaptasi ke data target,
+        serta membandingkan efisiensi komputasinya dari sisi waktu
+        pelatihan dan penggunaan memori.
   \item Mengevaluasi konsistensi hasil klasifikasi emosi
         antar-\emph{fold} pada skema validasi silang untuk setiap
         strategi \emph{fine-tuning} yang diuji.
@@ -204,17 +207,18 @@ adalah sebagai berikut.
   \item Korpus sumber pada tahap \emph{fine-tuning} dibatasi pada korpus
         emosi berbahasa Inggris (RAVDESS/CREMA-D), sedangkan korpus
         target dibatasi pada dataset emosi berbahasa Indonesia
-        (E-SERAVD/IndoWaveSentiment).
+        (E-SERAVD).
   \item Skema kelas emosi yang dibandingkan disamakan antarkorpus agar
         konsisten, sehingga kelas emosi yang tidak beririsan antara
         korpus sumber dan target tidak dianalisis lebih lanjut.
-  \item Evaluasi performa dibatasi pada empat metrik -- akurasi,
-        F1-score, waktu pelatihan, dan penggunaan memori (VRAM) --
-        dengan akurasi dan F1-score diuji melalui skema validasi silang
-        k-fold dan pengujian signifikansi statistik menggunakan uji
-        Shapiro-Wilk untuk normalitas, dilanjutkan uji \emph{paired
-        t-test} atau \emph{Wilcoxon signed-rank test} sesuai hasil uji
-        normalitas tersebut.
+  \item Evaluasi performa dibatasi pada metrik kualitas klasifikasi --
+        akurasi, presisi, recall, dan F1-score, yang diuji melalui
+        skema validasi silang k-fold dan pengujian signifikansi
+        statistik menggunakan uji Shapiro-Wilk untuk normalitas,
+        dilanjutkan uji \emph{paired t-test} atau \emph{Wilcoxon
+        signed-rank test} sesuai hasil uji normalitas tersebut -- serta
+        metrik efisiensi komputasi berupa waktu pelatihan dan
+        penggunaan memori (VRAM).
   \item Eksperimen dijalankan pada 2 unit GPU NVIDIA RTX 3060 6GB,
         sehingga konfigurasi batch size dan teknik optimasi memori
         (misalnya \emph{gradient checkpointing}) disesuaikan dengan
@@ -268,27 +272,36 @@ sumber atau backbone model yang diuji.
 \section{Jadwal Penelitian}
 \label{sec:1.8}
 
-Penelitian ini direncanakan berlangsung selama satu semester. Tabel
-\ref{tab:1.jadwal} merangkum tahapan dan perkiraan waktunya; tanggal
-kalender aktual menyesuaikan jadwal bimbingan dan akan dilengkapi
-setelah proposal disetujui.
+Penelitian ini dijadwalkan mengikuti tenggat resmi sistem akademik
+program studi, dengan empat periode acuan: Konsultasi Proposal (P0),
+Penilaian Kemajuan 1 (P1), Penilaian Kemajuan 2 (P2), dan Pendaftaran
+Seminar Hasil/Ujian. Tabel \ref{tab:1.jadwal} merangkum tahapan
+penelitian terhadap keempat periode tersebut. Jadwal \emph{fine-tuning}
+target (Tahap 5--6) bersifat perkiraan dan dapat disesuaikan berdasarkan
+hasil \emph{pilot run} (Tahap 3), sedangkan penulisan laporan
+dikerjakan berjalan begitu hasil awal tersedia, bukan ditumpuk di akhir
+periode.
 
 \begin{table}[H]
   \centering
   \caption{Jadwal penelitian}
   \label{tab:1.jadwal}
   \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{l c c c c c c}
+  \begin{tabular}{l c c c c}
     \toprule
-    \textbf{Tahapan} & \textbf{Bulan 1} & \textbf{Bulan 2} & \textbf{Bulan 3} & \textbf{Bulan 4} & \textbf{Bulan 5} & \textbf{Bulan 6} \\
+    \textbf{Tahapan} & \textbf{s.d. 25 Sep 2026} & \textbf{25 Sep--27 Okt 2026} & \textbf{27 Okt--11 Des 2026} & \textbf{11--22 Des 2026} \\
+     & \textbf{(s.d. P0)} & \textbf{(s.d. P1)} & \textbf{(s.d. P2)} & \textbf{(s.d. Semhas)} \\
     \midrule
-    Studi Literatur                                     & \checkmark &            &            &            &            & \\
-    Pengumpulan Data                                    & \checkmark & \checkmark &            &            &            & \\
-    Fine-Tuning Sumber                                  &            & \checkmark &            &            &            & \\
-    Fine-Tuning Target (4 Kondisi $\times$ K-Fold)      &            &            & \checkmark & \checkmark &            & \\
-    Evaluasi K-Fold \& Analisis Kinerja Komputasi       &            &            &            & \checkmark & \checkmark & \\
-    Analisis Hasil dan Pembahasan                       &            &            &            &            & \checkmark & \\
-    Penulisan Laporan                                   &            &            &            &            & \checkmark & \checkmark \\
+    1. Studi Literatur                                    & \checkmark &            &            & \\
+    2. Pengumpulan \& Praproses Data                      & \checkmark &            &            & \\
+    3. Pilot Run (1 Kondisi $\times$ 1 Fold)              & \checkmark &            &            & \\
+    4. Fine-Tuning Sumber (sekali)                        &            & \checkmark &            & \\
+    5. Fine-Tuning Target Kondisi A\&B (Single-Stage)     &            & \checkmark &            & \\
+    6. Fine-Tuning Target Kondisi C\&D (Two-Stage)        &            &            & \checkmark & \\
+    7. Evaluasi K-Fold \& Uji Signifikansi Statistik      &            &            & \checkmark & \checkmark \\
+    8. Analisis Kinerja Komputasi                         &            &            & \checkmark & \checkmark \\
+    9. Analisis Hasil dan Pembahasan                      &            &            &            & \checkmark \\
+    10. Penulisan Laporan (Bab 4--6)                      &            & \checkmark & \checkmark & \checkmark \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}

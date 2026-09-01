@@ -83,13 +83,12 @@ dengan tujuan penelitian.
 
 Tahap ini mengumpulkan dua kelompok data, yaitu korpus emosi berbahasa
 Inggris sebagai sumber pada tahap \emph{fine-tuning} pertama
-(RAVDESS/CREMA-D), dan dataset SER berbahasa Indonesia sebagai target
-pada tahap \emph{fine-tuning} kedua (E-SERAVD/IndoWaveSentiment). Skema
-kelas emosi pada kedua kelompok data disamakan terlebih dahulu agar
-konsisten antarkorpus -- penelitian ini menggunakan skema empat kelas
-emosi (marah, senang, netral, sedih) mengikuti kelas yang tersedia pada
-dataset target, sehingga perbandingan antarstrategi \emph{fine-tuning}
-dapat dilakukan secara adil.
+(RAVDESS/CREMA-D), dan dataset E-SERAVD (Santoso, Budianto and Dutono,
+2026) sebagai target berbahasa Indonesia pada tahap \emph{fine-tuning}
+kedua. Skema kelas emosi pada korpus sumber disesuaikan dengan skema
+empat kelas yang tersedia pada E-SERAVD (marah, senang, netral, sedih),
+sehingga perbandingan antarstrategi \emph{fine-tuning} dapat dilakukan
+secara adil.
 
 Karakteristik masing-masing korpus dijelaskan sebagai berikut. RAVDESS
 adalah korpus ucapan emosional berbahasa Inggris yang direkam oleh 24
@@ -102,7 +101,7 @@ senang, netral, dan sedih) (Cao et al., 2014). Kedua korpus ini dipilih
 sebagai sumber karena tersedia secara publik, telah banyak digunakan
 pada penelitian SER sebelumnya, dan mencakup kategori emosi yang secara
 umum beririsan dengan skema kelas pada dataset target. Tabel
-\ref{tab:3.dataset} merangkum karakteristik keempat dataset yang
+\ref{tab:3.dataset} merangkum karakteristik ketiga dataset yang
 digunakan.
 
 \begin{table}[H]
@@ -116,8 +115,7 @@ digunakan.
     \midrule
     RAVDESS & Sumber & Inggris & 1.440 & 8 \\
     CREMA-D & Sumber & Inggris & 7.442 & 6 \\
-    E-SERAVD & Target & Indonesia & [\emph{lihat Santoso et al., 2026}] & 4 \\
-    IndoWaveSentiment & Target & Indonesia & [\emph{lihat Nugroho et al., 2025}] & [...] \\
+    E-SERAVD & Target & Indonesia & $\sim$5.049 & 4 \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
@@ -125,14 +123,14 @@ digunakan.
 
 \noindent
 Jumlah sampel untuk RAVDESS dan CREMA-D di atas mengacu pada dokumentasi
-resmi masing-masing korpus. Untuk dataset target, skala yang tersedia
-dari tim yang sama (kemungkinan besar E-SERAVD atau versi awalnya)
-adalah 5.049 sampel dengan distribusi 1.202 marah, 1.228 senang, 2.075
-netral, dan 899 sedih -- angka ini belum tentu utuh berlaku untuk
-E-SERAVD maupun IndoWaveSentiment secara spesifik, sehingga perlu
-diverifikasi ulang terhadap dokumentasi resmi masing-masing dataset
-sebagaimana dilaporkan oleh Santoso, Budianto and Dutono (2026) dan
-Nugroho et al. (2025) sebelum dataset benar-benar diperoleh.
+resmi masing-masing korpus. E-SERAVD memiliki sekitar 5.049 sampel
+dengan distribusi 1.202 marah, 1.228 senang, 2.075 netral, dan 899 sedih
+(Santoso, Budianto and Dutono, 2026); angka ini masih perlu diverifikasi
+ulang terhadap dokumentasi resmi dataset sebelum benar-benar diperoleh.
+Dataset SER Indonesia lain seperti IndoWaveSentiment (Nugroho et al.,
+2025) tidak digunakan sebagai target pada penelitian ini karena skala
+dan skema kelasnya berbeda dari E-SERAVD, namun disebutkan kembali
+sebagai arah pengembangan pada Bab 6.
 
 \section{Fine-Tuning Sumber}
 \label{sec:3.4}
@@ -194,7 +192,11 @@ awal model. Kondisi A dan B tidak melalui tahap \emph{fine-tuning}
 sumber (Subbab \ref{sec:3.4}) dan langsung dilatih pada data target,
 sedangkan Kondisi C dan D memakai bobot hasil \emph{fine-tuning} sumber
 sebagai titik awal. Validasi silang k-fold (Subbab \ref{sec:3.6})
-diterapkan pada level adaptasi target ini untuk keempat kondisi.
+diterapkan pada level adaptasi target ini untuk keempat kondisi. Sebagai
+mitigasi risiko, direkomendasikan menjalankan \emph{pilot run} (1
+kondisi $\times$ 1 fold) pada perangkat keras sebenarnya sebelum
+menjalankan grid eksperimen penuh, untuk memverifikasi estimasi waktu
+dan VRAM pada Subbab \ref{sec:3.10.2} dengan data riil.
 
 \section{Evaluasi K-Fold}
 \label{sec:3.6}
@@ -220,7 +222,11 @@ tahap \emph{fine-tuning} target (Subbab \ref{sec:3.5}); durasi
 \emph{fine-tuning} sumber (Subbab \ref{sec:3.4}) dicatat terpisah karena
 hanya dijalankan sekali dan dipakai bersama oleh Kondisi C dan D.
 Penggunaan memori diukur sebagai puncak alokasi VRAM selama pelatihan
-pada tiap kondisi. Kedua metrik ini dibandingkan secara deskriptif
+pada tiap kondisi. Secara teknis, waktu pelatihan dicatat menggunakan
+\texttt{time.perf\_counter()}, sedangkan puncak penggunaan VRAM dicatat
+menggunakan \texttt{torch.cuda.max\_memory\_allocated()} setelah
+\texttt{reset\_peak\_memory\_stats()} dipanggil di awal tiap fold. Kedua
+metrik ini dibandingkan secara deskriptif
 antarkondisi, dengan perhatian khusus pada perbandingan Kondisi A vs B
 dan Kondisi C vs D (axis \emph{full fine-tuning} vs LoRA) untuk menjawab
 Rumusan Masalah 2 dari sisi efisiensi, melengkapi pengujian signifikansi
@@ -263,6 +269,8 @@ berikut.
   \item Kerangka kerja \emph{deep learning} untuk pelatihan dan
         \emph{fine-tuning} model Wav2Vec2/XLSR.
   \item Pustaka untuk implementasi LoRA.
+  \item Pustaka optimizer 8-bit (\texttt{bitsandbytes}) untuk mitigasi
+        VRAM pada kondisi \emph{full fine-tuning}.
   \item Pustaka statistik untuk pengujian normalitas dan uji
         signifikansi.
   \item GitHub untuk pengelolaan versi kode sumber dan eksperimen.
@@ -288,28 +296,37 @@ Kecukupan VRAM \emph{per kartu} dianalisis terhadap ukuran backbone
   \centering
   \caption{Estimasi kecukupan VRAM per kartu (6GB)}
   \label{tab:3.vram}
-  \begin{tabular}{l l l}
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{l l l l}
     \toprule
-    \textbf{Komponen} & \textbf{Full Fine-Tuning} & \textbf{LoRA} \\
+    \textbf{Komponen} & \textbf{Full-FT (naif)} & \textbf{Full-FT + 8-bit Adam} & \textbf{LoRA} \\
     \midrule
-    Bobot + master + gradien + optimizer Adam & $\sim$5 GB & $\sim$0,6--0,7 GB \\
-    Sisa untuk aktivasi (dari 6 GB)           & $\sim$1 GB & $\sim$5,3 GB \\
+    Bobot + master + gradien + optimizer & $\sim$5 GB & $\sim$1,9 GB & $\sim$0,6--0,7 GB \\
+    Sisa untuk aktivasi (dari 6 GB)      & $\sim$1 GB & $\sim$4 GB   & $\sim$5,3 GB \\
     \bottomrule
   \end{tabular}
+  \end{adjustbox}
 \end{table}
 
 \noindent
-Sisa VRAM untuk aktivasi pada skema \emph{full fine-tuning} jauh lebih
-ketat dibandingkan LoRA, sehingga \emph{full fine-tuning} diperkirakan
-memerlukan \emph{batch size} kecil (sekitar 1--2) dengan \emph{gradient
-checkpointing} sebagai teknik wajib, kemungkinan disertai \emph{gradient
-accumulation} untuk mencapai \emph{batch size} efektif yang lebih wajar.
-Skema LoRA memiliki ruang gerak yang jauh lebih longgar, dengan
-\emph{batch size} 8--16 yang tetap realistis tanpa teknik tambahan.
-Keterbatasan ini sekaligus menjadi ilustrasi konkret argumen efisiensi
-LoRA yang diuji dalam penelitian ini (Subbab \ref{sec:2.7}): pada
-perangkat keras yang benar-benar terbatas, LoRA bukan hanya lebih hemat
-secara teoretis, tetapi menjadi opsi yang jauh lebih praktis dijalankan.
+Estimasi ``naif'' (optimizer Adam presisi-penuh standar) menyisakan
+hanya sekitar 1 GB untuk aktivasi -- terlalu mepet untuk aman, karena
+\emph{overhead} CUDA dan fragmentasi memori berisiko menghabiskan sisa
+tersebut sebelum sempat dipakai aktivasi. Mitigasi yang digunakan untuk
+Kondisi A dan C (\emph{full fine-tuning}) adalah optimizer Adam 8-bit
+(\texttt{bitsandbytes}), yang memangkas kebutuhan memori optimizer
+menjadi sekitar 1,9 GB dan menyisakan sekitar 4 GB untuk aktivasi --
+jauh lebih aman. Dengan mitigasi ini, \emph{full fine-tuning}
+diperkirakan tetap memerlukan \emph{batch size} kecil (sekitar 1--2),
+dengan \emph{gradient checkpointing} dan \emph{gradient accumulation}
+sebagai cadangan opsional jika 4 GB masih belum cukup pada praktiknya.
+Skema LoRA (Kondisi B dan D) memiliki ruang gerak yang jauh lebih
+longgar, dengan \emph{batch size} 8--16 yang tetap realistis tanpa
+teknik tambahan. Keterbatasan ini sekaligus menjadi ilustrasi konkret
+argumen efisiensi LoRA yang diuji dalam penelitian ini (Subbab
+\ref{sec:2.7}): pada perangkat keras yang benar-benar terbatas, LoRA
+bukan hanya lebih hemat secara teoretis, tetapi menjadi opsi yang jauh
+lebih praktis dijalankan.
 
 Strategi 2 GPU yang digunakan bukan \emph{distributed training} (model
 sudah muat pada 1 kartu), melainkan 2 \emph{run} independen paralel,

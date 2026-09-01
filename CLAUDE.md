@@ -60,9 +60,9 @@ Indonesian babel support. Full rationale for these deviations from the generic t
 
 - Bab 3, subbab 3.10.2 (Perangkat Keras) is filled in (2× RTX 3060 6GB + VRAM analysis) but its
   RAM/storage line is still a `[...]` placeholder — fill in once known.
-- Bab 3's dataset table (§3.3) has a `[...]` for E-SERAVD's exact sample count — a related
-  5,049-sample figure is noted in prose but hedged as possibly not the exact right dataset;
-  needs verification against the source paper before submission.
+- Bab 3's dataset table (§3.3) has E-SERAVD's sample count filled in (~5,049, with class
+  breakdown in prose), but it's still marked approximate — needs verification against Santoso,
+  Budianto and Dutono (2026)'s own documentation before submission.
 - Bab 4–7 chapter count/titles are undecided. Panduan Skripsi Filkom UB v3.0 gives a
   "Nonimplementatif Eksperimental" example structure (Bab 4 Hasil, Bab 5 Pembahasan, Bab 6
   Penutup — optionally merging 4+5 into one "Hasil dan Pembahasan" chapter) which matches this

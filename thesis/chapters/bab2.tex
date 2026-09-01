@@ -482,23 +482,23 @@ distribusi tertentu (Wilcoxon, 1945).
 \section{Metrik Evaluasi}
 \label{sec:2.9}
 
-Empat metrik digunakan untuk mengevaluasi setiap strategi
-\emph{fine-tuning} yang dibandingkan dalam penelitian ini: akurasi,
-F1-score, waktu pelatihan, dan penggunaan memori (VRAM). Akurasi dan
-F1-score mengukur kualitas klasifikasi emosi, sedangkan waktu pelatihan
-dan penggunaan memori mengukur efisiensi komputasi -- keduanya relevan
-langsung dengan Rumusan Masalah 2, karena LoRA diklaim unggul bukan
-semata dari kualitas prediksi tetapi juga efisiensi sumber daya
-dibandingkan \emph{full fine-tuning}.
+Penelitian ini menggunakan dua kelompok metrik untuk mengevaluasi
+setiap strategi \emph{fine-tuning} yang dibandingkan: metrik kualitas
+klasifikasi (akurasi, presisi, recall, dan F1-score) dan metrik
+efisiensi komputasi (waktu pelatihan dan penggunaan memori). Kelompok
+pertama menjawab Rumusan Masalah 1, sedangkan kelompok kedua melengkapi
+kelompok pertama dalam menjawab Rumusan Masalah 2 dari sisi efisiensi,
+karena LoRA diklaim unggul bukan semata dari kualitas prediksi tetapi
+juga efisiensi sumber daya dibandingkan \emph{full fine-tuning}.
 
-\subsection{Akurasi dan F1-Score}
+\subsection{Akurasi, Presisi, Recall, dan F1-Score}
 \label{sec:2.9.1}
 
-Akurasi dan F1-score adalah dua metrik yang umum digunakan untuk
-mengevaluasi performa model klasifikasi (Powers, 2011). Akurasi mengukur
-proporsi prediksi yang benar terhadap keseluruhan data uji, sehingga
-memberikan gambaran umum performa model, sebagaimana Persamaan
-\ref{eq:2.akurasi}.
+Akurasi, presisi, recall, dan F1-score adalah empat metrik yang umum
+digunakan untuk mengevaluasi performa model klasifikasi (Powers, 2011).
+Akurasi mengukur proporsi prediksi yang benar terhadap keseluruhan data
+uji, sehingga memberikan gambaran umum performa model, sebagaimana
+Persamaan \ref{eq:2.akurasi}.
 
 \begin{equation}
   \text{Akurasi} = \frac{TP + TN}{TP + TN + FP + FN}
@@ -512,20 +512,39 @@ di mana $TP$ = \emph{True Positive}, $TN$ = \emph{True Negative}, $FP$ =
 Akan tetapi, pada data dengan sebaran kelas yang tidak seimbang, akurasi
 dapat memberikan gambaran yang menyesatkan, karena model yang selalu
 memprediksi kelas mayoritas tetap dapat memperoleh akurasi tinggi tanpa
-benar-benar mengenali kelas minoritas. F1-score mengatasi keterbatasan
-tersebut dengan merepresentasikan rata-rata harmonis antara presisi
-(proporsi prediksi positif yang benar) dan recall (proporsi kasus
-positif yang berhasil dikenali), sebagaimana Persamaan \ref{eq:2.f1}.
+benar-benar mengenali kelas minoritas. Presisi mengukur proporsi
+prediksi positif yang benar-benar tepat, sebagaimana Persamaan
+\ref{eq:2.presisi}.
+
+\begin{equation}
+  \text{Presisi} = \frac{TP}{TP + FP}
+  \label{eq:2.presisi}
+\end{equation}
+
+\noindent
+Recall mengukur proporsi kasus positif yang berhasil dikenali model,
+sebagaimana Persamaan \ref{eq:2.recall}.
+
+\begin{equation}
+  \text{Recall} = \frac{TP}{TP + FN}
+  \label{eq:2.recall}
+\end{equation}
+
+\noindent
+Presisi dan recall sering kali saling bertukar (\emph{trade-off}):
+menaikkan salah satu cenderung menurunkan yang lain. F1-score mengatasi
+keterbatasan ini dengan merepresentasikan rata-rata harmonis keduanya,
+sebagaimana Persamaan \ref{eq:2.f1}.
 
 \begin{equation}
   F_1 = 2 \cdot \frac{\text{Presisi} \times \text{Recall}}{\text{Presisi} + \text{Recall}}
   \label{eq:2.f1}
 \end{equation}
 
-Kedua metrik ini digunakan bersama dalam penelitian ini untuk memberikan
-gambaran performa yang lebih menyeluruh terhadap setiap strategi
-\emph{fine-tuning} yang dibandingkan, mengingat skema kelas emosi yang
-digunakan berpotensi tidak seimbang antarkelas.
+Keempat metrik ini digunakan bersama dalam penelitian ini untuk
+memberikan gambaran performa yang lebih menyeluruh terhadap setiap
+strategi \emph{fine-tuning} yang dibandingkan, mengingat skema kelas
+emosi yang digunakan berpotensi tidak seimbang antarkelas.
 
 \subsection{Waktu Pelatihan dan Penggunaan Memori}
 \label{sec:2.9.2}
