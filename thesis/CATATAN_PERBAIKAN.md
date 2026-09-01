@@ -44,6 +44,12 @@ saya akan mengevaluasi hasil generate latex main_proposal.pdf kondisi saat ini s
 11. bab 3 analisis kinerja komputasi belum nyebut cara ngukur waktu/vram secara teknis
 12. tabel vram di perangkat keras belum lengkap, angka full fine-tuning "naif" cuma sisa 1gb buat aktivasi itu riskan oom, belum ada mitigasi 8-bit adam optimizer
 
-# Review Iterasi 4 (1-9-2026 11.00)
+# Review Iterasi 4 (1-9-2026 11.00) ((done))
 
 1. tambahin daftar isi, daftar tabel, dan daftar gambar di daftar isi
+2. sitasi santoso salah total di draf, papernya ternyata cnn+mfcc dilatih dari nol, bukan two-stage fine-tuning/cross-lingual transfer/xlsr sama sekali -- angka 90%/86% f1 bener tapi atribusi metodenya salah
+3. judul belum sebut axis metode adaptasi (full-ft vs lora), cuma "dua tahap" doang
+4. rumusan masalah 1 & 2 masih pakai kata "perbedaan", harusnya "pengaruh" ngikutin pola skripsi kating
+5. paragraf 1 & 2 di latar belakang sama-sama nutup pakai klaim "ser penting" dan sitasi yang sama, harusnya digabung
+6. kajian pustaka belum ada rangkaian bukti tidak langsung buat justifikasi kombinasi axis yang belum pernah diuji langsung bareng
+7. hipotesis, jadwal penelitian, dan analisis kinerja komputasi dihapus dari proposal (bukan dipindah ke bab 3 kayak saran awal di skripsi_context.md)

@@ -58,8 +58,17 @@ Indonesian babel support. Full rationale for these deviations from the generic t
 
 ## Known gaps
 
-- Bab 3, subbab 3.10.2 (Perangkat Keras) is filled in (2× RTX 3060 6GB + VRAM analysis) but its
+- Bab 3, subbab 3.9.2 (Perangkat Keras) is filled in (2× RTX 3060 6GB + VRAM analysis) but its
   RAM/storage line is still a `[...]` placeholder — fill in once known.
+- Rumusan Hipotesis, Jadwal Penelitian, and Analisis Kinerja Komputasi (waktu pelatihan/VRAM as
+  a formally analyzed metric) were deliberately removed from the proposal entirely, on explicit
+  user instruction — not an oversight. This goes against `SKRIPSI_CONTEXT.MD`'s own recommendation
+  (it suggested relocating Hipotesis/Jadwal to Bab 3 rather than deleting them, since Panduan
+  v3.0 lists both as required somewhere in the document). If asked about this at sidang, that's
+  the context to know.
+- Ou et al. (2024) in `referensi.tex` has incomplete bibliographic details (only "Ling Ou dkk.,
+  IEEE 2024" was available) — first-author name order, full author list, venue, and pages all
+  need verification before submission.
 - Bab 3's dataset table (§3.3) has E-SERAVD's sample count filled in (~5,049, with class
   breakdown in prose), but it's still marked approximate — needs verification against Santoso,
   Budianto and Dutono (2026)'s own documentation before submission.

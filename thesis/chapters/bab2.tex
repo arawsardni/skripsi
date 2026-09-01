@@ -60,14 +60,15 @@ terkait dengan subjek yang diteliti.
     Development of a Speech Emotion Recognition Dataset for Indonesian
     (Santoso, Budianto and Dutono, 2026)
     &
-    Dataset SER berbahasa Indonesia dengan skema \emph{fine-tuning} yang
+    Dataset SER berbahasa Indonesia dengan \emph{baseline} performa yang
     terdokumentasi masih terbatas.
     &
-    Pengembangan dataset E-SERAVD melalui skema \emph{fine-tuning} dua
-    tahap.
+    Pengembangan dataset E-SERAVD; performa dasar diuji menggunakan
+    model CNN dengan fitur MFCC (bukan model pra-latih
+    \emph{self-supervised}).
     &
-    Diperoleh akurasi 90\% dan F1-score 86\% pada satu konfigurasi
-    \emph{fine-tuning} dua tahap.
+    Model CNN dasar mencapai akurasi 90\% dan F1-score 86\% pada subset
+    seimbang (1.000 sampel, 250/kelas).
     \\
     \midrule
     Indonesian Automatic Speech Recognition with XLSR-53 (Arisaputra and
@@ -118,15 +119,45 @@ menerapkan representasi \emph{self-supervised} untuk SER berbahasa
 Indonesia, tetapi model dasar yang mereka uji merupakan hasil
 \emph{fine-tuning} untuk ucapan Indonesia secara umum, bukan hasil
 \emph{fine-tuning} khusus dari korpus emosi berbahasa asing. Ketiga,
-Santoso, Budianto and Dutono (2026) menerapkan skema \emph{fine-tuning}
-dua tahap, tetapi hanya melaporkan satu konfigurasi terbaik tanpa
-perbandingan sistematis maupun uji statistik. Keempat, Arisaputra and
-Zahra (2023) serta Tang et al. (2023) memanfaatkan \emph{cross-lingual
-transfer}, tetapi tidak menyasar korpus emosi berbahasa Inggris ke data
-emosi berbahasa Indonesia secara spesifik. Sebagai penguat argumen
-\emph{novelty} di level lokal, penelusuran terhadap 924 skripsi Teknik
-Informatika FILKOM UB yang tersedia secara \emph{open-access} juga belum
-menemukan satu pun yang mengangkat SER berbasis audio.
+Santoso, Budianto and Dutono (2026) menyediakan dataset E-SERAVD dan
+menetapkan \emph{baseline} performa menggunakan CNN konvensional tanpa
+representasi \emph{self-supervised} lintas bahasa; performa pendekatan
+seperti XLSR-53 -- apalagi dengan skema dua tahap -- belum diuji pada
+dataset ini sama sekali. Keempat, Arisaputra and Zahra (2023) serta
+Tang et al. (2023) memanfaatkan \emph{cross-lingual transfer}, tetapi
+tidak menyasar korpus emosi berbahasa Inggris ke data emosi berbahasa
+Indonesia secara spesifik. Sebagai penguat argumen \emph{novelty} di
+level lokal, penelusuran terhadap 924 skripsi Teknik Informatika FILKOM
+UB yang tersedia secara \emph{open-access} juga belum menemukan satu
+pun yang mengangkat SER berbasis audio.
+
+Karena tidak ada satu pun penelitian yang menguji kombinasi persis
+backbone XLSR-53, arah lintas bahasa Inggris ke Indonesia, dan tugas
+SER sekaligus, gap argument ini perlu dirangkai secara eksplisit dari
+bukti-bukti berdekatan, supaya celah penelitian terasa \emph{well-
+motivated} dan bukan muncul tiba-tiba. Pada axis pertama
+(\emph{single-stage} dibandingkan \emph{two-stage}), Wu et al. (2021)
+menunjukkan bahwa \emph{cross-lingual transfer} efektif secara teoretis
+untuk pemrosesan ucapan secara umum; Arisaputra and Zahra (2023), pada
+backbone dan bahasa target yang sama persis dengan penelitian ini
+(XLSR-53, Indonesia), membuktikan bahwa transfer lintas bahasa
+menurunkan \emph{word error rate} pada tugas ASR (berbeda tugas dari
+SER); dan Tang et al. (2023), pada tugas yang sama (SER), menunjukkan
+potensi generalisasi transfer lintas bahasa meski pada pasangan bahasa
+yang berbeda dari Inggris-Indonesia. Pada axis kedua (\emph{full
+fine-tuning} dibandingkan LoRA), Hu et al. (2022) menunjukkan bahwa LoRA
+menyamai atau mengungguli \emph{full fine-tuning} pada model bahasa
+besar dengan parameter yang dilatih jauh lebih sedikit, dan temuan
+serupa juga dilaporkan pada model ucapan (\emph{speech}) berskala besar
+secara umum (Ou et al., 2024) -- di domain suara, bukan cuma teks.
+Kombinasi kedua axis ini diuji bersamaan (bukan salah satu saja) karena,
+begitu axis pertama (staging) terbukti membantu, pertanyaan lanjutan
+seberapa murah cara memperoleh manfaat tersebut muncul dari logika
+internal kombinasinya sendiri -- relevan langsung bagi peneliti dengan
+sumber daya terbatas, motivasi awal penelitian ini. Dengan demikian,
+penelitian ini menguji hipotesis yang didukung bukti tidak langsung pada
+kombinasi yang belum pernah diuji secara langsung, bukan sekadar
+melengkapi temuan yang sudah ada.
 
 % ── 2.2 Speech Emotion Recognition ───────────────────────────────────
 \section{Speech Emotion Recognition (SER)}
@@ -478,21 +509,9 @@ data tidak berdistribusi normal, digunakan \emph{Wilcoxon signed-rank
 test} sebagai alternatif non-parametrik yang tidak mengasumsikan
 distribusi tertentu (Wilcoxon, 1945).
 
-% ── 2.9 Metrik Evaluasi ───────────────────────────────────────────────
-\section{Metrik Evaluasi}
+% ── 2.9 Akurasi, Presisi, Recall, dan F1-Score ───────────────────────
+\section{Akurasi, Presisi, Recall, dan F1-Score}
 \label{sec:2.9}
-
-Penelitian ini menggunakan dua kelompok metrik untuk mengevaluasi
-setiap strategi \emph{fine-tuning} yang dibandingkan: metrik kualitas
-klasifikasi (akurasi, presisi, recall, dan F1-score) dan metrik
-efisiensi komputasi (waktu pelatihan dan penggunaan memori). Kelompok
-pertama menjawab Rumusan Masalah 1, sedangkan kelompok kedua melengkapi
-kelompok pertama dalam menjawab Rumusan Masalah 2 dari sisi efisiensi,
-karena LoRA diklaim unggul bukan semata dari kualitas prediksi tetapi
-juga efisiensi sumber daya dibandingkan \emph{full fine-tuning}.
-
-\subsection{Akurasi, Presisi, Recall, dan F1-Score}
-\label{sec:2.9.1}
 
 Akurasi, presisi, recall, dan F1-score adalah empat metrik yang umum
 digunakan untuk mengevaluasi performa model klasifikasi (Powers, 2011).
@@ -545,22 +564,3 @@ Keempat metrik ini digunakan bersama dalam penelitian ini untuk
 memberikan gambaran performa yang lebih menyeluruh terhadap setiap
 strategi \emph{fine-tuning} yang dibandingkan, mengingat skema kelas
 emosi yang digunakan berpotensi tidak seimbang antarkelas.
-
-\subsection{Waktu Pelatihan dan Penggunaan Memori}
-\label{sec:2.9.2}
-
-Selain kualitas klasifikasi, penelitian ini juga mengukur kinerja
-komputasi setiap strategi \emph{fine-tuning}, mengingat salah satu
-motivasi utama LoRA adalah efisiensi sumber daya, bukan semata kualitas
-prediksi. Waktu pelatihan (\emph{training time}) mengukur lama waktu
-yang dibutuhkan suatu strategi \emph{fine-tuning} untuk mencapai model
-terlatih, dihitung dari awal hingga akhir proses pelatihan pada tiap
-fold. Penggunaan memori (VRAM) mengukur puncak alokasi memori GPU yang
-dibutuhkan selama pelatihan, yang mencerminkan kelayakan suatu strategi
-dijalankan pada perangkat keras dengan kapasitas terbatas -- relevan
-langsung dengan lingkungan eksperimen penelitian ini (lihat Subbab
-\ref{sec:3.10.2}). Kedua metrik ini dibandingkan secara deskriptif
-antarkondisi eksperimen (lihat Subbab \ref{sec:3.7}), melengkapi akurasi
-dan F1-score dalam memberikan gambaran menyeluruh terhadap
-\emph{trade-off} antara kualitas dan efisiensi setiap strategi
-\emph{fine-tuning} yang diuji.

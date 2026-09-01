@@ -1,25 +1,25 @@
 # Konteks Skripsi: SER Indonesia — Strategi Fine-Tuning Dua Tahap
 
-> **Cara pakai:** Rangkuman diskusi perencanaan riset (Claude.ai, bukan sesi ini), supaya bisa dipahami tanpa histori chat asli. **Bagian 6** sekarang sebagian besar SUDAH SELESAI (bukan lagi murni to-do) — cek status di tiap poin. **Bagian 7** berisi keputusan yang masih terbuka dan paling butuh perhatian saat ini.
+> **Cara pakai:** Rangkuman diskusi perencanaan riset (Claude.ai, bukan sesi ini), supaya bisa dipahami tanpa histori chat asli. **Baca Bagian 2.2 dulu** — ada koreksi kritis ke sitasi utama yang perlu ditulis ulang sebelum revisi lain. **Bagian 6** berisi checklist lengkap semua yang perlu ditulis/diubah di draf (gabungan temuan rubrik + revisi Bab 1/2 terbaru). **Bagian 7** berisi keputusan yang masih terbuka.
 
 ## 1. Identitas & Metadata
 
-| Field                   | Isi                                                                                                             |
-| ----------------------- | --------------------------------------------------------------------------------------------------------------- |
-| Nama                    | Gaung Taqwa Indraswara                                                                                          |
-| NIM                     | 235150207111043                                                                                                 |
-| Jurusan/Prodi           | Teknik Informatika, FILKOM UB                                                                                   |
-| Bidang Skripsi          | Komputasi Cerdas (KC)                                                                                           |
-| Jenis / Tipe Penelitian | Non-implementatif — Analitik (Analytical/Explanatory)                                                           |
-| Calon Pembimbing        | Tirana Noor Fatyanosa (Bu Tirana)                                                                               |
-| Judul                   | _Analisis Pengaruh Strategi Fine-Tuning Dua Tahap terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia_ |
+| Field                               | Isi                                                                                                                                                                                                                                    |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nama                                | Gaung Taqwa Indraswara                                                                                                                                                                                                                 |
+| NIM                                 | 235150207111043                                                                                                                                                                                                                        |
+| Jurusan/Prodi                       | Teknik Informatika, FILKOM UB                                                                                                                                                                                                          |
+| Bidang Skripsi                      | Komputasi Cerdas (KC)                                                                                                                                                                                                                  |
+| Jenis / Tipe Penelitian             | Non-implementatif — Analitik (Analytical/Explanatory) — **dikonfirmasi ulang tetap ini, lihat Bagian 2.2**                                                                                                                             |
+| Calon Pembimbing                    | Tirana Noor Fatyanosa (Bu Tirana)                                                                                                                                                                                                      |
+| Judul (draf saat ini)               | _Analisis Pengaruh Strategi Fine-Tuning Dua Tahap terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia_                                                                                                                        |
+| Judul (diusulkan, ⚠️ belum dikunci) | _Analisis Pengaruh Strategi Fine-Tuning Dua Tahap dan Metode Adaptasi Parameter terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia_ — supaya judul mencakup axis full-FT/LoRA juga, bukan cuma axis staging. Lihat Bagian 4. |
 
 ## 2. Status Progres
 
-- **Praproposal**: disetujui Bu Tirana.
-- **Proposal Bab 1-3**: draf sekarang sudah cukup matang — Rumusan Hipotesis (1.3), Tujuan (1.4), Manfaat (1.5), Batasan Masalah (1.6), Sistematika (1.7), Jadwal (1.8), teori lengkap Bab 2 (2.2–2.9), dan Tabel 4-kondisi di Bab 3 semuanya sudah ada. Lihat Bagian 6 untuk status detail per item.
-- **Section 3.10.2 (Perangkat Keras)**: sudah ada isi (bukan placeholder lagi), TAPI berisi angka VRAM yang perlu dikoreksi — lihat Bagian 3.5.
-- **Isu paling mendesak sekarang**: bukan lagi soal kelengkapan struktur, tapi soal **kelayakan teknis desain eksperimen** di hardware sebenarnya + timeline sebenarnya. Lihat Bagian 2.1 dan Bagian 7.
+- **Praproposal**: disetujui Bu Tirana. Masih valid meski ada koreksi di Bagian 2.2 — substansi/gap-nya tidak berubah, cuma satu sitasi pendukung yang perlu diperbaiki.
+- **Proposal Bab 1-3**: draf sudah cukup matang secara STRUKTUR (semua subbab wajib ada, teori Bab 2 lengkap, Tabel 4-kondisi di Bab 3 ada). Tapi ada beberapa revisi ISI yang belum ditulis ke draf — lihat checklist lengkap di Bagian 6.
+- **Isu paling mendesak sekarang**: bukan lagi kelengkapan struktur atau hardware — itu semua sudah settled. Yang mendesak sekarang adalah **koreksi sitasi Santoso** (Bagian 2.2) dan sejumlah revisi Bab 1 (judul, rumusan masalah, lokasi Hipotesis/Jadwal) yang sudah disepakati di diskusi tapi belum ditulis.
 
 ### 2.1 Timeline Resmi (dari sistem akademik, per 31 Agustus 2026)
 
@@ -29,30 +29,63 @@
 | Penilaian Kemajuan 2 (P2) | 11 Des 2026 | ~14,5 minggu |
 | Pendaftaran Semhas/Ujian  | 22 Des 2026 | ~16 minggu   |
 
-**Implikasi**: eksperimen inti (fine-tuning + evaluasi) idealnya selesai substansial sekitar P2, supaya masih ada waktu menulis Bab 4-6 dan bersiap Semhas. ~14 minggu adalah budget riil, bukan "1 semester longgar" seperti bunyi Jadwal Penelitian di Bab 1.
+**Implikasi**: eksperimen inti idealnya selesai substansial sekitar P2. ~14 minggu adalah budget riil.
+
+### 2.2 ⚠️ KOREKSI KRITIS — Sitasi Santoso Salah (ditemukan & diverifikasi dari primary source)
+
+**Temuan**: Baik praproposal yang disetujui maupun draf Bab 1-3 saat ini menyebut Santoso, Budianto & Dutono (2026) memakai **"skema fine-tuning dua tahap"** untuk mencapai 90% akurasi/86% F1. Setelah full paper PDF-nya diperoleh dan dibaca langsung (bukan cuma abstrak/search snippet): **paper itu SAMA SEKALI tidak menyebut two-stage, cross-lingual transfer, Wav2Vec2, XLSR, atau self-supervised apapun.** Metodenya murni **CNN dilatih dari nol** dengan fitur **MFCC** (pre-emphasis → framing → Mel filterbank 40 → DCT → 20 koefisien), pada subset **seimbang 1.000 sampel (250/kelas)** — bukan full ~5.049 sampel. Angka 90% akurasi/86% F1 itu benar, tapi sumbernya CNN baseline biasa, bukan two-stage apapun. Kesalahan ini berasal dari sesi Claude.ai sebelumnya yang menyusun praproposal awal — tidak pernah diverifikasi silang sampai sekarang.
+
+**Perbaikan konkret yang perlu ditulis (belum ditulis ke draf):**
+
+- **Tabel 2.1, baris Santoso** — _Metode_: "Pengembangan dataset E-SERAVD; performa dasar diuji menggunakan model CNN dengan fitur MFCC (bukan model pra-latih self-supervised)." _Hasil_: "Model CNN dasar mencapai akurasi 90% dan F1-score 86% pada subset seimbang (1.000 sampel, 250/kelas)."
+- **Paragraf gap di Landasan Kepustakaan** — ganti kalimat "Santoso, Budianto and Dutono (2026) menerapkan skema fine-tuning dua tahap, tetapi hanya melaporkan satu konfigurasi terbaik tanpa perbandingan sistematis maupun uji statistik" dengan versi baru: _"Santoso, Budianto and Dutono (2026) menyediakan dataset E-SERAVD dan menetapkan baseline performa menggunakan CNN konvensional tanpa representasi self-supervised lintas bahasa; performa pendekatan seperti XLSR-53 — apalagi dengan skema dua tahap — belum diuji pada dataset ini sama sekali."_
+- **Latar Belakang, paragraf soal potensi cross-lingual transfer** — kalimat "...sementara Santoso, Budianto and Dutono (2026) menunjukkan bahwa skema fine-tuning dua tahap dapat menghasilkan akurasi 90%..." perlu dikoreksi jadi merujuk baseline CNN, bukan two-stage. Lihat draf paragraf pengganti lengkap di Bagian 4.
+- Catatan tambahan (opsional, untuk kejujuran metodologis): baseline 90%/86% dihitung dari subset seimbang 1.000 sampel, bukan full 5.049 — relevan kalau nanti mau bandingkan secara adil dengan hasil eksperimen sendiri.
+
+**Apakah ini berarti harus ganti topik/model (mis. pindah ke CNN implementatif)?** Dipertimbangkan serius, tapi **diputuskan TIDAK — tetap di jalur XLSR-53 + desain 4-kondisi + nonimplementatif-analitik.** Alasan:
+
+- Implementatif vs nonimplementatif ditentukan dari JENIS KONTRIBUSI (produk/sistem jadi vs analisis statistik), bukan dari seberapa tervalidasi premisnya oleh penelitian lain. Model tetap instrumen, bukan produk akhir, terlepas dari koreksi ini.
+- Rumusan masalah sudah/akan ditulis sebagai "bagaimana **pengaruh** X" (lihat Bagian 3.1), bukan "buktikan X lebih baik" — jadi robust terhadap hasil apapun (signifikan, tidak signifikan, atau malah negatif). Semua itu tetap jawaban valid untuk penelitian analitik.
+- Manualisasi (alasan awal mempertimbangkan pindah ke CNN) sudah ada solusi di jalur XLSR-53 tanpa ganti backbone — lihat Bagian 7 poin 5.
+- Praproposal yang disetujui, ~90% draf Bab 1-3, dan literatur pembanding (Nugroho, Arisaputra & Zahra, Tang et al.) semua tetap valid dan reusable di jalur ini. Pindah topik berarti mulai dari nol dengan P1 tinggal ~8 minggu — risiko jauh lebih besar daripada masalah yang mau diselesaikan.
+- **Pilot run** (Bagian 7 poin 3) adalah titik keputusan sebenarnya soal kelayakan riset ini — bukan koreksi sitasi ini. Kalau pilot run nanti menunjukkan masalah fundamental, itu baru alasan kuat untuk mikir ulang arah besar.
+
+**Konsekuensi lanjutan — gap argument perlu direkonstruksi dari "melengkapi" jadi "menguji hipotesis dari bukti tidak langsung"**: lihat rangkaian bukti lengkap di Bagian 5.
 
 ## 3. Inti Riset
 
-### 3.1 Rumusan Masalah & Tujuan (revisi terbaru — ⚠️ belum ditulis ulang di draf)
+### 3.1 Rumusan Masalah & Tujuan — ⚠️ dua putaran revisi, versi final di bawah belum ditulis ke draf
 
-**Perubahan dari versi sebelumnya**: RM1 tadinya menyebut metrik eksplisit ("akurasi dan F1-score") di level rumusan masalah. Setelah dibandingkan ke pola beberapa skripsi kating (RM pakai istilah generik "performa"/"kinerja"; metrik spesifik baru dirinci di Tujuan, bukan di RM), RM1 disederhanakan dan metrik spesifik dipindah ke Tujuan.
+**Putaran 1** (sudah ditulis ke draf terakhir): RM1 tadinya menyebut metrik eksplisit ("akurasi dan F1-score") — disederhanakan jadi "performa", metrik dipindah ke Tujuan, mengikuti pola skripsi kating.
 
-Rumusan Masalah (final):
+**Putaran 2** (⚠️ BELUM ditulis): dengan judul diusulkan berubah jadi eksplisit "Pengaruh..." (Bagian 1), RM dan Tujuan perlu konsisten pakai kata **"pengaruh"**, bukan "perbedaan" — ini juga cocok pola skripsi kating (contoh: "Bagaimana **pengaruh** resolusi citra wajah terhadap akurasi..."). RM3 TIDAK berubah karena itu bukan klaim pengaruh (pertanyaan konsistensi, jenis berbeda). Hipotesis (Bagian 3.2) tetap boleh pakai kata "perbedaan" karena itu level formal-statistik, beda dari RM yang level konsep.
 
-1. Bagaimana perbedaan performa klasifikasi emosi antara model yang dilatih langsung (single-stage) pada dataset emosi berbahasa Indonesia dan model yang melalui fine-tuning dua tahap (pra-latih pada korpus emosi berbahasa Inggris, lalu diadaptasi ke data Indonesia)?
-2. Apakah terdapat perbedaan performa yang signifikan secara statistik antara strategi full fine-tuning dan strategi fine-tuning efisien-parameter (LoRA) pada tahap adaptasi ke data target, **baik pada skema single-stage maupun two-stage**?
-3. Bagaimana konsistensi hasil klasifikasi emosi antar-fold pada skema validasi silang untuk masing-masing strategi fine-tuning yang diuji?
+**Rumusan Masalah (final, versi "pengaruh")**:
 
-Tujuan (final, selaras RM + sudah mengakomodasi koreksi interpretasi metrik di Bagian 6):
+1. Bagaimana pengaruh strategi fine-tuning (single-stage dibandingkan fine-tuning dua tahap, yaitu pra-latih pada korpus emosi berbahasa Inggris lalu diadaptasi ke data Indonesia) terhadap performa klasifikasi emosi ucapan berbahasa Indonesia?
+2. Bagaimana pengaruh metode adaptasi (full fine-tuning dibandingkan LoRA) terhadap performa klasifikasi emosi pada tahap adaptasi ke data target, baik pada skema single-stage maupun two-stage?
+3. Bagaimana konsistensi hasil klasifikasi emosi antar-fold pada skema validasi silang untuk masing-masing strategi fine-tuning yang diuji? _(tetap, tidak berubah)_
 
-1. Menganalisis perbedaan performa klasifikasi emosi antara model single-stage dan model yang melalui fine-tuning dua tahap, diukur melalui akurasi, presisi, recall, dan F1-score.
-2. Menguji signifikansi statistik perbedaan performa antara strategi full fine-tuning dan LoRA pada tahap adaptasi ke data target, serta membandingkan efisiensi komputasinya dari sisi waktu pelatihan dan penggunaan memori.
-3. Mengevaluasi konsistensi hasil klasifikasi emosi antar-fold pada skema validasi silang untuk setiap strategi fine-tuning yang diuji.
+**Tujuan (final, selaras RM + akomodasi 4 metrik dari Bagian 6)**:
 
-### 3.2 Hipotesis (sudah ditambahkan ke draf, Subbab 1.3)
+1. Menganalisis pengaruh strategi fine-tuning (single-stage dibandingkan dua tahap) terhadap performa klasifikasi emosi, diukur melalui akurasi, presisi, recall, dan F1-score.
+2. Menganalisis pengaruh metode adaptasi (full fine-tuning dibandingkan LoRA) terhadap performa klasifikasi emosi pada tahap adaptasi ke data target, serta membandingkan efisiensi komputasinya dari sisi waktu pelatihan dan penggunaan memori.
+3. Mengevaluasi konsistensi hasil klasifikasi emosi antar-fold pada skema validasi silang untuk setiap strategi fine-tuning yang diuji. _(tetap)_
 
-- RM1 — H0: tidak ada perbedaan performa signifikan antara model single-stage dan two-stage. H1: ada.
-- RM2 — H0: tidak ada perbedaan performa signifikan antara full-FT dan LoRA (di kedua skema stage). H1: ada.
+### 3.2 Hipotesis — ⚠️ isi tetap sama, tapi LOKASI perlu pindah dari Bab 1 ke Bab 3
+
+Dicek langsung ke `Template-ProposalSkripsi-v3_0.docx` resmi: daftar isi Bab 1 template cuma **1.1 Latar Belakang, 1.2 Rumusan Masalah, 1.3 Tujuan, 1.4 Manfaat, 1.5 Batasan Masalah, 1.6 Sistematika Pembahasan** — TIDAK ADA subbab Hipotesis maupun Jadwal Penelitian di Bab 1 versi template. Draf sekarang menambahkan keduanya di Bab 1 (1.3 dan 1.8) mengikuti rubrik Panduan, bukan template.
+
+**Rekomendasi**: jangan hapus isinya (Panduan tetap mewajibkan keduanya), tapi **pindahkan lokasinya**:
+
+- **Hipotesis** → pindah ke Bab 3, ditempatkan tepat sebelum penjelasan prosedur Shapiro-Wilk/paired t-test/Wilcoxon di Subbab Evaluasi K-Fold (hipotesis muncul pas sebelum prosedur yang mengujinya — lebih natural).
+- **Jadwal Penelitian** → pindah jadi subbab baru di akhir Bab 3 (setelah Peralatan Pendukung). Ini juga didukung independen oleh Panduan sendiri: syarat Jadwal Penelitian masuk kategori **"Kelayakan Metodologi"**, bukan "Kelayakan Pendahuluan" — jadi secara rubrik pun tempatnya memang Bab 3.
+- Bab 1 dipotong pas jadi 1.1–1.6 sesuai template; Subbab 1.7 Sistematika Pembahasan juga perlu disesuaikan teksnya (sebut Hipotesis & Jadwal ada di Bab 3, bukan Bab 1).
+
+Isi hipotesis (tidak berubah, cuma pindah lokasi):
+
+- RM1 — H0: tidak ada pengaruh signifikan strategi fine-tuning (single-stage vs two-stage) terhadap performa. H1: ada.
+- RM2 — H0: tidak ada pengaruh signifikan metode adaptasi (full-FT vs LoRA) terhadap performa (di kedua skema stage). H1: ada.
 - RM3 bersifat deskriptif, tidak diuji sebagai hipotesis statistik formal.
 
 ### 3.3 Desain Eksperimen: 2×2 Factorial, 4 Kondisi
@@ -64,83 +97,112 @@ Tujuan (final, selaras RM + sudah mengakomodasi koreksi interpretasi metrik di B
 | C       | Two-stage    | Full Fine-Tuning |
 | D       | Two-stage    | LoRA             |
 
-Backbone sama persis (XLSR-53) di keempat kondisi. Sudah tertulis eksplisit di Tabel 3.2 draf saat ini — **status: SELESAI ditulis**, tapi cakupannya (tetap 4 kondisi atau disederhanakan) masih jadi keputusan terbuka, lihat Bagian 7.
+Backbone sama persis (XLSR-53) di keempat kondisi. Sudah tertulis eksplisit di Tabel 3.2 draf — **status: SELESAI ditulis**. Cakupannya (tetap 4 kondisi atau disederhanakan) masih keputusan terbuka, lihat Bagian 7 poin 2.
 
 ### 3.4 Backbone & Data
 
-- **Backbone**: `facebook/wav2vec2-large-xlsr-53`, ~317 juta parameter, 24 layer Transformer. Draf Subbab 3.4 sengaja memakai checkpoint XLSR-53 **mentah** (bukan turunan yang sudah di-fine-tune untuk Indonesia), supaya titik awal identik di keempat kondisi.
-- **Soal checkpoint Nugroho et al. (2025)**: ✅ **RESOLVED, bukan lagi item terbuka.** Sempat jadi pertanyaan apakah checkpoint mereka sama persis dengan XLSR-53 — tapi karena desain sekarang sengaja TIDAK memakai checkpoint turunan siapa pun (raw XLSR-53 di semua kondisi), ambiguitas itu jadi tidak relevan lagi untuk desain sendiri. Cukup dicatat sebagai keterbatasan pembanding di Landasan Kepustakaan.
+- **Backbone**: `facebook/wav2vec2-large-xlsr-53`, ~317 juta parameter, 24 layer Transformer. Draf sengaja memakai checkpoint XLSR-53 **mentah** (bukan turunan yang sudah di-fine-tune untuk Indonesia), supaya titik awal identik di keempat kondisi.
+- **Checkpoint Nugroho et al. (2025)**: ✅ RESOLVED — desain sekarang sengaja TIDAK memakai checkpoint turunan siapa pun, jadi ambiguitas checkpoint Nugroho tidak relevan lagi untuk desain sendiri, cukup dicatat sebagai keterbatasan pembanding.
 - **Data sumber (Tahap 3)**: RAVDESS (1.440 sampel, 8 kelas emosi, EN) dan/atau CREMA-D (7.442 sampel, 6 kelas emosi, EN).
-- **Data target (Tahap 4)** — dua kandidat dengan skala **jauh berbeda**, ini penting untuk Bagian 7:
-  - **E-SERAVD** (Santoso et al., 2026): ~5.049 sampel, 4 kelas emosi (marah 1.202, senang 1.228, netral 2.075, sedih 899).
-  - **IndoWaveSentiment** (Nugroho et al., 2025): ~300 sampel dari 10 speaker, **5 kelas emosi** (bukan 4 — beda skema kelas dari E-SERAVD).
-  - Draf Tabel 3.1 saat ini mencantumkan KEDUANYA sebagai target sekaligus — ini belum dikunci. Lihat rekomendasi di Bagian 7.
+- **Data target (Tahap 4)** — dikunci ke **E-SERAVD saja** (Santoso et al., 2026): ~5.049 sampel, 4 kelas emosi (marah 1.202, senang 1.228, netral 2.075, sedih 899). IndoWaveSentiment (Nugroho et al., 2025, ~300 sampel, 5 kelas) TIDAK dipakai sebagai target karena skala dan skema kelasnya beda — disebut sebagai arah pengembangan di Bab 6 Penutup. Ini sudah SELESAI ditulis di draf Tabel 3.1 terbaru.
 
-### 3.5 Hardware — ⚠️ PERLU KOREKSI DI DRAF
+### 3.5 Hardware
 
-- **Perangkat yang benar**: 2× NVIDIA RTX 3060 **6GB** per kartu (**bukan 12GB per kartu** — 12GB itu total gabungan dua kartu, bukan kapasitas satu kartu). Draf Tabel 3.3 sudah pakai angka 6GB yang benar, tapi solusinya belum lengkap.
-- **VRAM per kartu (~317 juta parameter)**:
+- **Perangkat**: 2× NVIDIA RTX 3060 **6GB** per kartu (bukan 12GB per kartu).
+- **VRAM per kartu (~317 juta parameter)** — sudah ditulis ke draf Tabel 3.3 dengan benar, termasuk mitigasi 8-bit Adam:
 
   | Komponen                       | Full-FT (naif)      | Full-FT + 8-bit Adam | LoRA        |
   | ------------------------------ | ------------------- | -------------------- | ----------- |
   | Bobot+master+gradien+optimizer | ~5 GB               | ~1,9 GB              | ~0,6–0,7 GB |
   | Sisa aktivasi (dari 6GB)       | ~1 GB ⚠️ riskan OOM | ~4 GB                | ~5,3 GB     |
 
-  Angka "naif" (fp32 Adam standar) di draf saat ini terlalu mepet untuk aman — overhead CUDA/fragmentasi bisa menghabiskan sisa 1GB sebelum sempat dipakai aktivasi. **Rekomendasi konkret yang perlu ditambahkan ke Subbab 3.10.2**: pakai optimizer 8-bit (library `bitsandbytes`) untuk kondisi full-FT (A & C), plus gradient checkpointing dan batch size kecil (1-2) dengan gradient accumulation. LoRA (B & D) aman tanpa perlakuan khusus.
+  Mitigasi 8-bit Adam (`bitsandbytes`) untuk Kondisi A & C sudah masuk ke Subbab 3.10.1 (software) dan 3.10.2 (hardware) draf terbaru — **status: SELESAI ditulis**.
 
-- **Strategi 2 GPU**: 2 run independen paralel (`CUDA_VISIBLE_DEVICES`), bukan distributed training — model sudah muat di 1 kartu, grid eksperimen (kondisi × fold) bersifat embarrassingly parallel.
-- **Soal waktu**: dengan skala dataset target yang kecil (300–5.000 sampel), compute time kemungkinan BUKAN bottleneck utama — risiko lebih besar ada di waktu implementasi/debug pipeline pada hardware yang memori-nya ketat, bukan jam GPU murni.
+- **Strategi 2 GPU**: 2 run independen paralel (`CUDA_VISIBLE_DEVICES`), bukan distributed training.
+- Pilot run (1 kondisi × 1 fold) sudah masuk ke Jadwal Penelitian (Tahap 3) dan disebut di Subbab 3.5 draf — **status: SELESAI ditulis**.
 
-## 4. Latar Belakang — Alur Logika (Bab 1, sudah tertulis + ada paragraf pembelaan judul)
+## 4. Latar Belakang (Bab 1) — ⚠️ beberapa revisi belum ditulis
+
+Alur logika (piramida, luas → sempit):
 
 1. Emosi = inti komunikasi manusia; penting untuk interaksi manusia-mesin personal (Dar & Delhibabu, 2024).
 2. Suara = kanal emosi relatif "jujur" → dasar SER.
 3. Bias linguistik (Bella et al., 2023) — Indonesia under-resourced, khususnya data ucapan beranotasi emosi.
 4. Solusi: cross-lingual transfer (Wu et al., 2021).
 5. Celah: skema fine-tuning mana yang tepat untuk SER Indonesia belum diuji sistematis.
-6. **Paragraf tambahan (baru)**: menjelaskan eksplisit bahwa "dua tahap" di judul adalah payung strategi utama (single vs two-stage), sementara full-FT vs LoRA adalah keputusan desain di titik adaptasi, diuji lewat RM2 dan desain 4-kondisi — ini jawaban siap pakai untuk pertanyaan penguji soal judul.
+6. Paragraf pembelaan judul "dua tahap" — dengan judul diusulkan diperluas (Bagian 1), paragraf ini kemungkinan **TIDAK PERLU LAGI** atau bisa disederhanakan jadi kalimat transisi biasa.
 
-## 5. Landasan Kepustakaan — Kelompok Pembanding (Bab 2, sudah lengkap dengan tabel + teori)
+**Revisi konkret yang perlu ditulis:**
 
-| Peneliti                                      | Persamaan                                        | Perbedaan/Gap                                                                     |
-| --------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------- |
-| Eljinini & Al-Momani (2025)                   | Fondasi representasi self-supervised             | Umum lintas tugas, tidak menyentuh emosi/Indonesia                                |
-| Nugroho et al. (2025)                         | Representasi self-supervised untuk SER Indonesia | Checkpoint hasil pra-latih ASR biasa, bukan fine-tuning korpus emosi bahasa asing |
-| Santoso, Budianto & Dutono (2026)             | Skema fine-tuning dua tahap                      | 1 konfigurasi terbaik saja, tanpa perbandingan sistematis/uji statistik           |
-| Arisaputra & Zahra (2023); Tang et al. (2023) | Pemanfaatan cross-lingual transfer               | Tidak menyasar korpus emosi Inggris → data emosi Indonesia secara spesifik        |
+- **Koreksi sitasi Santoso** (Bagian 2.2) — kalimat yang menyebut "Santoso... skema fine-tuning dua tahap... 90%" perlu diganti. Draf paragraf pengganti (menyatu dengan kalimat Nugroho yang sudah ada):
+  > "...Nugroho et al. (2025) menunjukkan bahwa model-model dasar XLSR-Wav2Vec2 yang telah di-fine-tune untuk ucapan Indonesia dapat mencapai akurasi SER hingga 91,67%, sementara Santoso, Budianto and Dutono (2026) menetapkan baseline performa 90% akurasi dan 86% F1-score pada dataset E-SERAVD menggunakan model CNN konvensional dengan fitur MFCC, tanpa melibatkan representasi self-supervised lintas bahasa."
+- **Gabungkan paragraf 1 & 2**: keduanya berakhir dengan klaim yang sama ("SER penting/berkembang"), sama-sama sitasi Dar & Delhibabu (2024). Gabung jadi satu paragraf mengalir, buang kalimat penutup P1 ("Oleh karena itu, kajian mengenai pengenalan emosi secara otomatis terus berkembang dan relevan lintas disiplin"), biarkan klaim "SER penting" cukup muncul sekali di penutup P2 ("...SER bukan sekadar topik teoretis, melainkan teknologi berpotensi dampak nyata...").
+- **Tambahkan rangkaian bukti tidak langasung** untuk gap argument (menjawab "kenapa axis ini yang diuji, padahal belum pernah ada yang coba kombinasi persis ini") — draf lengkap ada di Bagian 5.
+
+## 5. Landasan Kepustakaan (Bab 2)
+
+### Tabel Kelompok Pembanding — ⚠️ baris Santoso perlu dikoreksi (lihat Bagian 2.2)
+
+| Peneliti                                           | Persamaan                                                                     | Perbedaan/Gap                                                                                                                                   |
+| -------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Eljinini & Al-Momani (2025)                        | Fondasi representasi self-supervised                                          | Umum lintas tugas, tidak menyentuh emosi/Indonesia                                                                                              |
+| Nugroho et al. (2025)                              | Representasi self-supervised untuk SER Indonesia                              | Checkpoint hasil pra-latih ASR biasa, bukan fine-tuning korpus emosi bahasa asing                                                               |
+| **Santoso, Budianto & Dutono (2026)** — ⚠️ KOREKSI | ~~Skema fine-tuning dua tahap~~ → **Baseline CNN+MFCC pada dataset E-SERAVD** | ~~1 konfigurasi terbaik saja, tanpa uji statistik~~ → **Tidak melibatkan representasi self-supervised atau cross-lingual transfer sama sekali** |
+| Arisaputra & Zahra (2023); Tang et al. (2023)      | Pemanfaatan cross-lingual transfer                                            | Tidak menyasar korpus emosi Inggris → data emosi Indonesia secara spesifik                                                                      |
 
 Novelty lokal: dari 924 skripsi TI FILKOM open-access, belum ada yang mengangkat SER berbasis audio.
 
-Bab 2 sekarang juga punya subbab teori mandiri (bukan cuma positioning): SER (2.2), Self-Supervised Learning (2.3), Wav2Vec2/XLSR (2.4), Cross-Lingual Transfer (2.5), Fine-Tuning Dua Tahap dengan formulasi θ1/θ2 (2.6), LoRA dengan formulasi BA (2.7), K-Fold CV & uji statistik (2.8), Metrik Evaluasi (2.9).
+### Rangkaian Bukti Tidak Langsung — ⚠️ paragraf baru, belum ditulis ke draf
 
-## 6. Status Temuan Review Kelayakan/Kecukupan (Panduan FILKOM v3.0, Lampiran A.1.1 KC-Nonimplementatif)
+Karena tidak ada satupun penelitian yang menguji kombinasi persis (XLSR-53 + Inggris→Indonesia + SER — apalagi setelah koreksi Santoso di atas), gap argument perlu eksplisit dirangkai dari bukti berdekatan, supaya gap-nya terasa well-motivated, bukan muncul tiba-tiba:
 
-- [ ] **Metrik evaluasi >2 — interpretasi dikoreksi, akurasi+F1 kemungkinan belum cukup.** Rubrik memisahkan "metode evaluasi" dari "analisis kinerja komputasi" lewat kata "ditambah dengan" — dan daftar contoh ukuran di kriteria lain (Penyajian Hasil: akurasi, error rate, MSE, PSNR, precision, recall, f-measure, ROC, lift-ratio) semuanya metrik kualitas model, tidak ada waktu/memori di situ. Jadi "lebih dari dua metode evaluasi" kemungkinan besar merujuk ke metrik kualitas model saja — akurasi+F1 cuma 2, waktu+memori mungkin TIDAK terhitung ke sini (meski tetap wajib untuk syarat analisis kinerja komputasi). **Solusi**: tambah presisi & recall sebagai metrik yang dilaporkan sendiri → 4 metrik kualitas (akurasi, presisi, recall, F1). Perlu update judul+isi Subbab 2.9.1 jadi "Akurasi, Presisi, Recall, dan F1-Score" (bukan cuma sebut precision/recall sebagai komponen rumus F1 sekilas). Wording Tujuan yang sudah mengakomodasi ini ada di Bagian 3.1.
-- [x] **Analisis kinerja komputasi (waktu, memori)** — SELESAI sebagai syarat terpisah (Subbab 2.9.2 teori, 3.7 pelaksanaan) — tetap dipertahankan apa adanya, cuma statusnya sebagai bagian dari hitungan ">2 metode evaluasi" yang dikoreksi di atas.
-- [ ] **RM1 terlalu spesifik menyebut metrik.** Dibandingkan ke pola skripsi kating (RM pakai istilah generik "performa"/"kinerja", metrik baru dirinci di Tujuan) — RM1 saat ini menyebut "akurasi dan F1-score" eksplisit, perlu disederhanakan. Wording final ada di Bagian 3.1.
-- [x] **Hipotesis eksplisit (H0/H1)** — SELESAI (Subbab 1.3).
-- [x] **Pembelaan judul "dua tahap"** — SELESAI (paragraf tambahan di akhir Latar Belakang).
-- [x] **RM2 diperjelas cakupan single & two-stage** — SELESAI.
-- [x] **Bab 3 refleksikan desain 4-kondisi** — SELESAI (Tabel 3.2).
-- [x] **Tujuan, Manfaat, Batasan Masalah, Sistematika, Jadwal** — SELESAI, semua subbab ada.
-- [x] **Bab 2 teori mandiri (bukan cuma positioning)** — SELESAI (2.2–2.9).
-- [ ] **BARU — koreksi VRAM 6GB belum lengkap.** Tabel 3.3 sudah pakai angka 6GB yang benar, tapi belum menyertakan mitigasi 8-bit Adam optimizer untuk kondisi full-FT — tanpa ini, sisa ~1GB aktivasi berisiko OOM. Lihat Bagian 3.5.
-- [ ] **Implementasi pengukuran metrik belum eksplisit di Bab 3.** Perlu 1-2 kalimat teknis: `time.perf_counter()` untuk waktu pelatihan, `torch.cuda.max_memory_allocated()` (setelah `reset_peak_memory_stats()`) untuk puncak VRAM per fold.
+- **Axis 1 (single vs two-stage)**: Wu et al. (2021) — transfer lintas bahasa efektif secara teoretis untuk pemrosesan ucapan secara umum. Arisaputra & Zahra (2023) — pada backbone DAN bahasa target yang **sama persis** dengan skripsi ini (XLSR-53, Indonesia), transfer lintas bahasa terbukti menurunkan word error rate pada ASR (beda tugas: ASR, bukan SER). Tang et al. (2023) — pada **tugas yang sama** (SER), transfer lintas bahasa terbukti menunjukkan potensi generalisasi (beda pasangan bahasa, bukan Inggris→Indonesia).
+- **Axis 2 (full-FT vs LoRA)**: Hu et al. (2022), paper LoRA asli — LoRA menyamai/mengungguli full fine-tuning pada model bahasa besar dengan parameter yang dilatih jauh lebih sedikit. Riset LoRA pada speech model besar secara umum (bukan spesifik Indonesia — lihat Bagian 7 poin 6) juga menunjukkan LoRA mengungguli full fine-tuning dengan biaya jauh lebih rendah, di domain SUARA (bukan cuma teks/LLM).
+- **Kenapa kombinasi keduanya (bukan salah satu saja)**: kalau axis 1 (staging) membantu, pertanyaan lanjutan "seberapa murah cara mendapatkan manfaat itu" muncul dari LOGIKA INTERNAL kombinasi tersebut (relevan buat peneliti bersumber daya terbatas — motivasi awal skripsi ini) — bukan dari ada-tidaknya paper yang menguji kombinasi persis ini.
 
-## 7. Keputusan Terbuka (Prioritas Sekarang)
+**Framing yang tepat untuk ditulis**: penelitian ini MENGUJI HIPOTESIS yang didukung bukti tidak langsung, pada kombinasi yang belum pernah diuji langsung — bukan MELENGKAPI temuan yang sudah ada (framing lama, sudah tidak akurat setelah koreksi Santoso). Ini pola justifikasi yang sah untuk riset analitik/eksploratif, dan konsisten dengan RM yang ditulis "bagaimana pengaruh" (robust terhadap hasil apapun — lihat Bagian 3.1).
 
-1. **Cakupan dataset target: 1 atau 2 dataset?** Draf Tabel 3.1 saat ini pakai E-SERAVD DAN IndoWaveSentiment sekaligus sebagai target. Tapi skalanya jauh berbeda (5.049 vs 300 sampel) DAN skema kelasnya beda (4 vs 5 kelas emosi) — menggabungkan/menjalankan keduanya menggandakan beban eksperimen di tengah timeline 14 minggu. **Rekomendasi**: pilih **satu** (E-SERAVD, karena paling terhubung ke narasi "dua tahap" lewat Santoso et al.), sebut yang lain sebagai arah pengembangan di Bab 6 Penutup. Belum dikunci ke Bu Tirana.
-2. **Cakupan axis full-FT vs LoRA: tetap 4 kondisi atau disederhanakan?** Tiga opsi, belum diputuskan:
-   - (a) Tetap 4 kondisi + tambahkan 8-bit Adam untuk full-FT — paling lengkap secara akademis, axis ini juga yang memberi isi ke metrik efisiensi (poin baru di atas).
-   - (b) Sederhanakan ke 2 kondisi (single vs two-stage saja, metode difiksasi — kemungkinan LoRA karena lebih murah) — separuh beban, paling konservatif untuk timeline.
-   - (c) Tetap 4 kondisi, tapi kurangi beban dari sisi lain (k lebih kecil, atau kunci ke 1 dataset dari poin 1) — jaga kekuatan akademis, potong biaya dari lever lain.
-   - **Rekomendasi kerja**: (a) atau (c), karena axis ini yang membuat metrik efisiensi (waktu/memori) punya sesuatu untuk dibandingkan — tapi tetap perlu dikonfirmasi ke Bu Tirana dengan angka VRAM/waktu di atas sebagai dasar.
-3. **Pilot run sebelum commit ke grid penuh.** Disarankan jalankan 1 kondisi × 1 fold dulu di hardware 6GB sebenarnya, catat waktu & VRAM riil, baru putuskan poin 2 berdasarkan data nyata — bukan estimasi di atas kertas.
-4. **(Opsional, murah) Baseline frozen-backbone.** Backbone dibekukan total, hanya melatih classification head kecil di atasnya (linear probing) — hampir gratis secara compute karena tidak ada gradien untuk 317 juta parameter backbone. Bukan pengganti 4 kondisi (tidak menjawab RM manapun langsung), tapi berguna sebagai referensi "seberapa besar manfaat fine-tuning dibanding representasi mentah" kalau waktu memungkinkan.
-5. **Manualisasi** — masih perlu dikonfirmasi ke Bu Tirana apakah wajib. Panduan v3.0 tidak menyebutnya sebagai syarat resmi di manapun; kemungkinan besar konvensi pembimbing, bukan aturan fakultas. Manualisasi backbone asli tidak feasible (317 juta parameter). Alternatif yang feasible: manualisasi mekanisme LoRA di skala toy, satu blok self-attention mini, atau (paling relevan) uji statistik (Shapiro-Wilk/t-test/Wilcoxon) dengan angka contoh.
-6. **Catatan verifikasi literatur (untuk dicek ulang manual, jangan diasumsikan clean)**: sempat muncul sinyal ada paper "Parameter-Efficient Fine-Tuning Large Speech Model Based on LoRA" (Ling Ou dkk., IEEE 2024) yang preview pencariannya menyebut IndoWaveSentiment secara spesifik. Setelah ditelusuri ke abstrak resmi di IEEE Xplore, paper itu ternyata tentang LoRA untuk speech model secara umum, **tidak menyebut Indonesia/IndoWaveSentiment sama sekali** — kemungkinan besar artefak caching search engine, bukan gap yang nyata. Klaim bahwa belum ada yang uji full-FT vs LoRA untuk SER Indonesia kemungkinan besar masih valid, tapi worth dicek manual sekali lagi (coba cari langsung di Google Scholar) sebelum dianggap final.
+Bab 2 juga sudah punya subbab teori mandiri (bukan cuma positioning) — status SELESAI: SER (2.2), Self-Supervised Learning (2.3), Wav2Vec2/XLSR (2.4), Cross-Lingual Transfer (2.5), Fine-Tuning Dua Tahap dengan formulasi θ1/θ2 (2.6), LoRA dengan formulasi BA (2.7), K-Fold CV & uji statistik (2.8), Metrik Evaluasi (2.9).
 
-## 8. Daftar Pustaka (lengkap, sesuai draf terkini, format UB Harvard)
+## 6. Checklist Lengkap — Semua yang Perlu Ditulis/Diubah di Draf
+
+**Dari koreksi Santoso (Bagian 2.2) — prioritas tertinggi:**
+
+- [ ] Tabel 2.1 baris Santoso — ganti Metode & Hasil (teks siap pakai di Bagian 2.2).
+- [ ] Paragraf gap Landasan Kepustakaan — ganti kalimat soal Santoso (teks siap pakai di Bagian 2.2).
+- [ ] Latar Belakang — ganti kalimat "Santoso...90%" (teks siap pakai di Bagian 4).
+- [ ] Tambahkan paragraf rangkaian bukti tidak langsung ke Landasan Kepustakaan (teks siap pakai di Bagian 5).
+
+**Dari diskusi revisi Bab 1:**
+
+- [ ] Judul — pertimbangkan perluas ke versi yang mencakup axis full-FT/LoRA (Bagian 1). Belum dikunci, perlu didiskusikan/dikonfirmasi.
+- [ ] RM1 & RM2 — ganti dari "perbedaan" jadi "pengaruh" (teks final di Bagian 3.1). RM3 tidak berubah.
+- [ ] Tujuan 1 & 2 — selaraskan dengan RM versi "pengaruh" (teks final di Bagian 3.1).
+- [ ] Pindahkan Hipotesis dari Bab 1 (1.3) ke Bab 3, dekat Evaluasi K-Fold (detail di Bagian 3.2).
+- [ ] Pindahkan Jadwal Penelitian dari Bab 1 (1.8) ke Bab 3, subbab baru di akhir (detail di Bagian 3.2).
+- [ ] Update Subbab 1.7 Sistematika Pembahasan — sebutkan Hipotesis & Jadwal sekarang ada di Bab 3, bukan Bab 1.
+- [ ] Gabungkan paragraf 1 & 2 Latar Belakang (teks arahan di Bagian 4).
+- [ ] Evaluasi ulang apakah paragraf pembelaan judul "dua tahap" masih perlu, setelah judul (kalau) diperluas.
+
+**Dari review kelayakan/kecukupan sebelumnya (sudah SELESAI, dicatat sebagai referensi):**
+
+- [x] Metrik evaluasi jadi 4 (akurasi, presisi, recall, F1) — SELESAI, Subbab 2.9.1.
+- [x] Analisis kinerja komputasi (waktu, memori) — SELESAI, Subbab 2.9.2 & 3.7.
+- [x] Implementasi pengukuran metrik (`time.perf_counter()`, `torch.cuda.max_memory_allocated()`) — SELESAI, Subbab 3.7.
+- [x] Bab 3 refleksikan desain 4-kondisi — SELESAI, Tabel 3.2.
+- [x] Dataset target dikunci ke E-SERAVD saja — SELESAI, Tabel 3.1.
+- [x] Koreksi VRAM 6GB + mitigasi 8-bit Adam — SELESAI, Tabel 3.3 & Subbab 3.10.
+- [x] Pilot run masuk Jadwal Penelitian — SELESAI.
+
+## 7. Keputusan Terbuka
+
+1. **Cakupan axis full-FT vs LoRA: tetap 4 kondisi atau disederhanakan?** Belum diputuskan. Opsi (a) tetap 4 kondisi + 8-bit Adam — paling lengkap, axis ini juga yang mengisi metrik efisiensi. (b) Sederhanakan ke 2 kondisi (single vs two-stage saja, metode difiksasi). (c) Tetap 4 kondisi, kurangi beban dari k-fold. Rekomendasi kerja: (a) — sudah dimitigasi dengan 8-bit Adam, dan axis ini yang bikin argumen efisiensi (Bagian 5, evidence chain) punya sesuatu untuk diuji.
+2. **Pilot run sebelum commit ke grid penuh.** Sudah masuk Jadwal Penelitian (Tahap 3) — ini titik keputusan sebenarnya soal kelayakan riset secara keseluruhan (lihat Bagian 2.2).
+3. **(Opsional, murah) Baseline frozen-backbone/linear-probing** — belum diputuskan, bukan prioritas kalau waktu ketat.
+4. **Manualisasi** — masih perlu dikonfirmasi ke Bu Tirana apakah wajib. Panduan v3.0 tidak menyebutnya sebagai syarat resmi eksplisit di manapun. Manualisasi backbone asli tidak feasible (317 juta parameter). Alternatif feasible: manualisasi mekanisme LoRA di skala toy, satu blok self-attention mini, atau (paling relevan) uji statistik (Shapiro-Wilk/t-test/Wilcoxon) dengan angka contoh. **Ini bukan lagi alasan untuk pindah ke model lain** (sempat dipertimbangkan, sudah diputuskan tidak — lihat Bagian 2.2).
+5. **Paper "Parameter-Efficient Fine-Tuning Large Speech Model Based on LoRA" (Ling Ou dkk., IEEE 2024)** — direvisi pemahamannya: paper ini BUKAN soal IndoWaveSentiment/Indonesia (sinyal awal itu artefak caching search), tapi TETAP berguna sebagai bukti tidak langsung generik "LoRA mengungguli full fine-tuning pada speech model besar" — dipakai di rangkaian bukti Bagian 5. Belum disitasi resmi di Daftar Pustaka; pertimbangkan tambahkan kalau dipakai di teks.
+
+## 8. Daftar Pustaka (format UB Harvard)
 
 ```
 Arisaputra, P. and Zahra, A., 2023. Indonesian automatic speech recognition with
@@ -223,6 +285,6 @@ arXiv:2111.01326 [eess.AS].
 - Kompilasi **XeLaTeX** (jalankan 2×), font **Carlito** (substitusi Calibri, praktik lazim — bukan aturan resmi), spasi tunggal, sitasi **UB Harvard**.
 - Base template: `github.com/arawsardni/skripsi`. Package: `fontspec`, `tikz`, `booktabs`.
 
-## 10. Sumber Dokumen (tidak tersedia di repo ini)
+## 10. Sumber Dokumen
 
-Konteks di atas digali dari Claude Project terpisah: praproposal yang disetujui, `PanduanSkripsiFilkom-v3_0.pdf`, dan 3 contoh skripsi FILKOM (Rifky 2026 implementatif; Ulfah 2019 & Wahyu 2021 nonimplementatif), plus pencarian web untuk verifikasi teknis (spek XLSR-53/GPU, cek literatur LoRA). File-file itu tidak ada di repo ini — untuk detail lebih lanjut, balik ke sesi Claude.ai terkait atau upload ulang.
+Konteks di atas digali dari Claude Project terpisah: praproposal yang disetujui, `PanduanSkripsiFilkom-v3_0.pdf`, `Template-ProposalSkripsi-v3_0.docx` (dicek langsung untuk struktur Bab 1), 3 contoh skripsi FILKOM (Rifky 2026 implementatif; Ulfah 2019 & Wahyu 2021 nonimplementatif), plus full paper PDF Santoso, Budianto & Dutono (2026) yang diunggah langsung dan dibaca utuh (bukan cuma abstrak) untuk verifikasi Bagian 2.2, dan pencarian web untuk verifikasi teknis lain (spek XLSR-53/GPU, literatur LoRA). File-file itu tidak ada di repo ini — untuk detail lebih lanjut, balik ke sesi Claude.ai terkait atau upload ulang.
