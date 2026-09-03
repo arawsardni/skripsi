@@ -1,3 +1,4 @@
+% !TEX root = main_proposal.tex
 % =====================================================================
 %  PREAMBLE BERSAMA — dipakai oleh main_proposal.tex dan main_skripsi.tex
 %  (\input dari kedua entry point supaya paket/style tidak dobel-tulis)
@@ -24,6 +25,13 @@
 % "sansmath" atau "unicode-math" secara manual di sistem Anda.
 \usepackage{setspace}
 \singlespacing                   % spasi 1 — Panduan Skripsi Filkom UB v3.0, Lampiran A.4
+
+% ── Jarak baris daftar tabel dan daftar gambar ───────────────────────────────────────────────
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\@chapter}{\addtocontents{lot}{\protect\addvspace{10\p@}}}{}{}{}
+\patchcmd{\@chapter}{\addtocontents{lof}{\protect\addvspace{10\p@}}}{}{}{}
+\makeatother
 
 % ── Tata letak halaman ───────────────────────────────────────────────
 \usepackage[a4paper,left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
