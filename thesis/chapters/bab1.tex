@@ -7,82 +7,80 @@
 \section{Latar Belakang}
 \label{sec:1.1}
 
-Emosi merupakan komponen mendasar yang menyertai hampir setiap bentuk
-komunikasi antarmanusia, karena emosi memungkinkan seseorang menyampaikan
-maksud dan keadaan batin secara lebih utuh daripada makna literal
-kata-kata. Melalui emosi, seseorang dapat menunjukkan empati dan
-menyesuaikan responsnya terhadap lawan bicara, sehingga interaksi menjadi
-lebih bermakna dan manusiawi. Dalam interaksi manusia dan mesin,
-pengenalan emosi dari sinyal ucapan memegang peranan penting bagi
-pengembangan komputasi afektif dan sistem interaktif yang mampu merespons
-pengguna secara lebih personal (Dar and Delhibabu, 2024). Tanpa
-kemampuan tersebut, sistem cenderung memperlakukan seluruh pengguna
-secara seragam, padahal keadaan emosional yang berbeda semestinya
-direspons secara berbeda pula. Di antara berbagai saluran ekspresi emosi
-seperti raut wajah, gestur tubuh, dan tulisan, suara manusia menempati
-posisi istimewa karena emosi dapat tersampaikan langsung melalui pola
-intonasi, tekanan, kecepatan, dan ritme saat seseorang berbicara. Ciri
-ini sering muncul spontan dan sulit disembunyikan, sehingga ucapan kerap
-dianggap sumber informasi emosi yang relatif jujur dibandingkan saluran
-ekspresi lain. Karakteristik inilah yang mendasari berkembangnya
-\emph{speech emotion recognition} (SER), yaitu bidang kajian yang
-berupaya mengenali kondisi emosi seseorang secara otomatis dari sinyal
-ucapannya. Tinjauan pustaka Dar and Delhibabu (2024) menunjukkan bahwa
-SER telah menjadi perhatian penting dalam pengembangan sistem interaksi
-manusia-mesin dan komputasi afektif, dengan cakupan penerapan yang
-terus meluas. Luasnya cakupan tersebut menunjukkan bahwa SER bukan
-sekadar topik teoretis, melainkan teknologi berpotensi dampak nyata bagi
-interaksi manusia dengan sistem digital.
+Emosi merupakan komponen mendasar dalam komunikasi antarmanusia, karena
+emosi memungkinkan seseorang menyampaikan maksud dan keadaan batin
+secara lebih utuh daripada makna literal kata-kata. Dalam interaksi
+manusia dan mesin, pengenalan emosi dari sinyal ucapan memegang peranan
+penting bagi pengembangan komputasi afektif dan sistem interaktif yang
+mampu merespons pengguna secara lebih personal (Dar and Delhibabu,
+2024). Karakteristik inilah yang mendasari berkembangnya \emph{speech
+emotion recognition} (SER), yaitu bidang kajian yang berupaya mengenali
+kondisi emosi seseorang secara otomatis dari sinyal ucapannya, dengan
+cakupan penerapan yang terus meluas. Meskipun signifikansinya diakui
+luas, perkembangan teknologi bahasa berbasis ucapan masih timpang
+antarbahasa, karena sebagian besar teknologi kecerdasan buatan terpusat
+pada sebagian kecil bahasa dengan sumber daya digital terbesar (Bella et
+al., 2023). Bahasa Indonesia, meskipun dituturkan ratusan juta jiwa,
+termasuk kelompok bahasa yang sumber dayanya masih tertinggal, sehingga
+data ucapan beranotasi emosi dalam jumlah memadai masih sulit diperoleh.
+Kesenjangan inilah yang menjadikan pengembangan SER berbahasa Indonesia
+sebagai permasalahan penelitian yang penting sekaligus menantang.
 
-Meskipun signifikansinya diakui luas, perkembangan teknologi bahasa
-berbasis ucapan masih timpang antarbahasa, karena sebagian besar
-teknologi kecerdasan buatan terpusat pada sebagian kecil bahasa dengan
-sumber daya digital terbesar (Bella et al., 2023). Ketimpangan ini oleh
-Bella et al. (2023) disebut bias linguistik, yang membuat performa
-teknologi bahasa berbeda-beda secara tidak proporsional antarbahasa
-meski diuji pada kondisi setara. Bahasa Indonesia, meskipun dituturkan
-ratusan juta jiwa, termasuk kelompok bahasa yang sumber dayanya masih
-tertinggal dibandingkan bahasa besar seperti Inggris. Ketimpangan ini
-semakin terasa pada tugas SER, yang membutuhkan data ucapan beranotasi
-emosi dalam jumlah memadai, padahal pengumpulan dan anotasinya
-memerlukan biaya, waktu, dan tenaga ahli. Kesenjangan inilah yang
-menjadikan pengembangan SER berbahasa Indonesia sebagai permasalahan
-penelitian yang penting sekaligus menantang.
+Menjawab kesenjangan tersebut, Santoso, Budianto and Dutono (2026)
+mengembangkan E-SERAVD, dataset SER berbahasa Indonesia yang bersumber
+dari rekaman film Indonesia, sekaligus menetapkan \emph{baseline}
+performa 86\% akurasi dan 86\% F1-macro menggunakan model CNN
+konvensional dengan fitur tangan MFCC. \emph{Baseline} tersebut,
+meskipun berguna, dilaporkan tanpa menyebutkan kontrol terhadap sumber
+film pada pembagian data latih dan uji. Padahal, E-SERAVD terbukti
+memiliki sebaran film yang tidak merata antarkelas emosi -- 106 dari 300
+klip kelas sedih berasal dari satu film yang sama, dan 147 dari 300 klip
+kelas bahagia berasal dari dua film yang sama (lihat Subbab
+\ref{sec:3.3}). Apabila pembagian data latih dan uji dilakukan secara
+acak tanpa mengontrol sumber film, klip dari film yang sama berisiko
+muncul pada kedua sisi sekaligus, sehingga model berpotensi mempelajari
+ciri produksi atau karakteristik rekaman film tertentu sebagai proxy
+kelas emosi, bukan pola akustik emosi yang genuinely general. Risiko ini
+dikenal sebagai kebocoran data (\emph{data leakage}) (Kapoor and
+Narayanan, 2023), dan berpotensi membuat performa yang dilaporkan
+terlihat lebih baik daripada performa sesungguhnya pada data yang
+benar-benar baru. Pada domain SER secara spesifik, kegagalan mengontrol
+tumpang tindih identitas penutur antara data latih dan uji telah
+terbukti menghasilkan estimasi performa yang lebih optimistis
+dibandingkan skema evaluasi yang independen (Antoniou et al., 2023).
 
-Salah satu arah yang banyak ditempuh untuk mengatasi kesenjangan sumber
-daya pada bahasa yang kurang terwakili adalah \emph{cross-lingual
-transfer}, yaitu strategi memindahkan pengetahuan yang dipelajari model
-dari bahasa bersumber daya besar ke bahasa bersumber daya terbatas (Wu
-et al., 2021). Strategi ini menjanjikan karena memungkinkan model
-memanfaatkan representasi ucapan yang telah dipelajari secara luas tanpa
-membangun ulang pembelajaran dari data Indonesia yang masih terbatas.
-Beberapa penelitian telah menunjukkan potensi arah ini: Nugroho et al.
-(2025) menunjukkan bahwa model-model dasar XLSR-Wav2Vec2 yang telah
-di-\emph{fine-tune} untuk ucapan Indonesia -- memanfaatkan data Mozilla
-Common Voice serta OpenSLR berbahasa Jawa dan Sunda -- dapat mencapai
-akurasi SER hingga 91,67\%, sementara Santoso, Budianto and Dutono
-(2026) menetapkan \emph{baseline} performa 90\% akurasi dan 86\%
-F1-score pada dataset E-SERAVD menggunakan model CNN konvensional dengan
-fitur MFCC, tanpa melibatkan representasi \emph{self-supervised} lintas
-bahasa.
+Di sisi lain, representasi \emph{self-supervised} kini banyak dianggap
+sebagai pendekatan performa terbaik (\emph{state-of-the-art}) untuk SER,
+termasuk untuk bahasa Indonesia. Atmaja and Sasou (2022) menunjukkan
+bahwa representasi \emph{self-supervised} secara konsisten mengungguli
+fitur tangan pada lima dataset SER berbahasa Inggris dan Jepang, dengan
+signifikansi statistik yang kuat (uji Friedman, $p<10^{-10}$), meskipun
+XLSR-53 secara spesifik sempat berperforma lebih rendah dibandingkan
+model monolingual berbahasa Inggris pada studi yang sama. Pada konteks
+SER berbahasa Indonesia secara spesifik, Nugroho et al. (2025)
+menunjukkan bahwa model dasar XLSR-Wav2Vec2 yang telah di-\emph{fine-tune}
+untuk ucapan Indonesia dapat mencapai akurasi SER hingga 91,67\%,
+mengungguli metode klasik berbasis fitur tangan. Bukti-bukti ini
+menempatkan XLSR-53 sebagai backbone \emph{self-supervised} yang paling
+relevan untuk diadaptasi pada tugas SER berbahasa Indonesia saat ini.
 
-Akan tetapi, penerapan \emph{cross-lingual transfer} secara spesifik
-pada SER berbahasa Indonesia masih belum menjawab secara sistematis
-seberapa jauh keterbatasan data dapat diatasi tanpa mengorbankan
-kualitas pengenalan emosi. Penelitian Santoso, Budianto and Dutono
-(2026) baru menetapkan \emph{baseline} performa pada dataset E-SERAVD
-menggunakan model konvensional tanpa representasi \emph{self-supervised}
-atau \emph{cross-lingual transfer} apa pun, sehingga potensi pendekatan
-seperti XLSR-53 -- apalagi dengan skema \emph{fine-tuning} dua tahap --
-pada dataset ini belum diuji sama sekali. Demikian pula, belum ada
-kajian yang membandingkan \emph{full fine-tuning} dengan
-\emph{fine-tuning} efisien-parameter seperti \emph{Low-Rank Adaptation}
-(LoRA) pada konteks SER Indonesia, padahal LoRA menjanjikan efisiensi
-komputasi yang relevan bagi peneliti dengan sumber daya terbatas.
-Berdasarkan uraian tersebut, diperlukan kajian analitik mengenai
-pengaruh strategi \emph{fine-tuning} lintas bahasa terhadap akurasi
-klasifikasi emosi pada ucapan berbahasa Indonesia, yang akan dianalisis
-dalam skripsi ini.
+Kekhawatiran ini bukan sekadar spekulasi metodologis: pada domain SER
+secara umum, kegagalan mengontrol kebocoran semacam ini dilaporkan
+memengaruhi sebagian besar penelitian yang diterbitkan -- lebih dari
+80\% studi SER tidak dapat direproduksi secara memadai, dan skema
+partisi data yang tidak terkontrol dilaporkan menghasilkan peningkatan
+performa semu hingga sekitar 4\% (Wu et al., 2024). Akan tetapi, belum
+ada studi yang menguji ketahanan algoritma \emph{baseline} (CNN+MFCC)
+maupun algoritma SOTA (XLSR-53 yang diadaptasi dengan LoRA) terhadap
+risiko kebocoran data berbasis film yang terbukti ada pada E-SERAVD. Penelusuran terhadap 924 skripsi Teknik
+Informatika FILKOM UB yang tersedia secara \emph{open-access} juga belum
+menemukan satu pun yang mengangkat SER berbasis audio, apalagi
+menyentuh isu validitas skema evaluasinya. Berdasarkan uraian tersebut,
+diperlukan kajian analitik mengenai pengaruh skema pembagian data
+berbasis film terhadap akurasi pengenalan emosi ucapan berbahasa
+Indonesia, serta apakah pengaruh tersebut konsisten pada algoritma
+berbasis fitur tangan maupun algoritma berbasis representasi pralatih,
+yang akan dianalisis dalam skripsi ini.
 
 \section{Rumusan Masalah}
 \label{sec:1.2}
@@ -91,18 +89,13 @@ Berdasarkan latar belakang yang telah dipaparkan, maka permasalahan
 dalam penelitian ini dapat dirumuskan sebagai berikut.
 
 \begin{enumerate}
-  \item Bagaimana pengaruh strategi \emph{fine-tuning}
-        (\emph{single-stage} dibandingkan \emph{fine-tuning} dua tahap,
-        yaitu pra-latih pada korpus emosi berbahasa Inggris lalu
-        diadaptasi ke data Indonesia) terhadap performa klasifikasi
-        emosi ucapan berbahasa Indonesia?
-  \item Bagaimana pengaruh metode adaptasi (\emph{full fine-tuning}
-        dibandingkan LoRA) terhadap performa klasifikasi emosi pada
-        tahap adaptasi ke data target, baik pada skema
-        \emph{single-stage} maupun \emph{two-stage}?
-  \item Bagaimana konsistensi hasil klasifikasi emosi antar-\emph{fold}
-        pada skema validasi silang untuk masing-masing strategi
-        \emph{fine-tuning} yang diuji?
+  \item Bagaimana pengaruh skema pembagian data berbasis film
+        (\emph{random} dibandingkan \emph{movie-independent}) terhadap
+        performa klasifikasi pengenalan emosi ucapan berbahasa
+        Indonesia?
+  \item Apakah pengaruh tersebut konsisten pada algoritma berbasis
+        fitur tangan (CNN+MFCC) maupun algoritma berbasis representasi
+        pralatih (XLSR-53+LoRA)?
 \end{enumerate}
 
 \section{Tujuan}
@@ -112,16 +105,15 @@ Tujuan dari penelitian ini menjawab rumusan masalah yang telah
 dipaparkan, maka penelitian ini memiliki tujuan sebagai berikut.
 
 \begin{enumerate}
-  \item Menganalisis pengaruh strategi \emph{fine-tuning}
-        (\emph{single-stage} dibandingkan dua tahap) terhadap performa
-        klasifikasi emosi, diukur melalui akurasi, presisi, recall, dan
-        F1-score.
-  \item Menganalisis pengaruh metode adaptasi (\emph{full fine-tuning}
-        dibandingkan LoRA) terhadap performa klasifikasi emosi pada
-        tahap adaptasi ke data target.
-  \item Mengevaluasi konsistensi hasil klasifikasi emosi
-        antar-\emph{fold} pada skema validasi silang untuk setiap
-        strategi \emph{fine-tuning} yang diuji.
+  \item Mengetahui pengaruh skema pembagian data berbasis film
+        (\emph{random} dibandingkan \emph{movie-independent}) terhadap
+        performa klasifikasi pengenalan emosi ucapan berbahasa
+        Indonesia.
+  \item Menganalisis konsistensi pengaruh skema pembagian data berbasis
+        film (\emph{random split} dibandingkan \emph{movie-independent
+        split}) terhadap akurasi pengenalan emosi ucapan berbahasa
+        Indonesia pada algoritma berbasis fitur tangan (CNN+MFCC) dan
+        algoritma berbasis representasi pralatih (XLSR-53+LoRA).
 \end{enumerate}
 
 \section{Manfaat}
@@ -130,16 +122,16 @@ dipaparkan, maka penelitian ini memiliki tujuan sebagai berikut.
 Penelitian ini diharapkan dapat memberikan manfaat sebagai berikut.
 
 \begin{enumerate}
-  \item Memberikan bukti empiris mengenai pengaruh strategi
-        \emph{fine-tuning} lintas bahasa terhadap akurasi SER berbahasa
-        Indonesia, sehingga dapat menjadi rujukan bagi peneliti lain
-        yang mengembangkan sistem pengenalan emosi ucapan pada bahasa
-        dengan sumber daya terbatas.
-  \item Memberikan gambaran perbandingan yang teruji secara statistik
-        antara strategi \emph{full fine-tuning} dan LoRA, sehingga dapat
-        membantu peneliti maupun praktisi dalam memilih strategi
-        adaptasi model yang efisien dari segi sumber daya komputasi
-        tanpa mengorbankan akurasi secara signifikan.
+  \item Memberikan bukti empiris mengenai validitas \emph{baseline}
+        performa yang telah dilaporkan pada dataset E-SERAVD terhadap
+        risiko kebocoran data, sehingga dapat menjadi rekomendasi
+        metodologis bagi peneliti lain yang menggunakan dataset ini
+        pada penelitian selanjutnya.
+  \item Memberikan bukti empiris mengenai ketahanan algoritma berbasis
+        representasi pralatih dibandingkan algoritma berbasis fitur
+        tangan terhadap skema pembagian data yang lebih ketat, sehingga
+        dapat membantu peneliti maupun praktisi dalam memilih algoritma
+        yang lebih andal untuk SER berbahasa Indonesia.
   \item Berkontribusi pada pengembangan riset komputasi cerdas berbahasa
         Indonesia, khususnya pada bidang pemrosesan sinyal ucapan yang
         masih relatif terbatas jumlah kajiannya.
@@ -152,25 +144,23 @@ Batasan masalah yang membatasi penulis dalam melakukan penelitian ini
 adalah sebagai berikut.
 
 \begin{enumerate}
-  \item Backbone \emph{self-supervised} yang digunakan dibatasi pada
-        keluarga Wav2Vec2/XLSR-53.
-  \item Korpus sumber pada tahap \emph{fine-tuning} dibatasi pada korpus
-        emosi berbahasa Inggris (RAVDESS/CREMA-D), sedangkan korpus
-        target dibatasi pada dataset emosi berbahasa Indonesia
-        (E-SERAVD).
-  \item Skema kelas emosi yang dibandingkan disamakan antarkorpus agar
-        konsisten, sehingga kelas emosi yang tidak beririsan antara
-        korpus sumber dan target tidak dianalisis lebih lanjut.
+  \item Dataset dibatasi pada E-SERAVD v1.1, mencakup 1.200 klip ucapan
+        emosional berbahasa Indonesia dari 6 film sumber, dengan 4
+        kelas emosi (marah, sedih, netral, bahagia).
+  \item Algoritma \emph{baseline} dibatasi pada CNN dengan fitur tangan
+        MFCC, mengikuti pendekatan Santoso, Budianto and Dutono (2026).
+  \item Algoritma SOTA dibatasi pada backbone XLSR-53 yang diadaptasi
+        menggunakan LoRA (\emph{Low-Rank Adaptation}), bukan
+        \emph{full fine-tuning} pada seluruh parameter backbone.
+  \item Skema pembagian data dibatasi pada dua skema: \emph{random} dan
+        \emph{movie-independent}, keduanya menggunakan $k=6$
+        \emph{fold}.
   \item Evaluasi performa dibatasi pada metrik kualitas klasifikasi --
-        akurasi, presisi, recall, dan F1-score -- yang diuji melalui
-        skema validasi silang k-fold dan pengujian signifikansi
-        statistik menggunakan uji Shapiro-Wilk untuk normalitas,
-        dilanjutkan uji \emph{paired t-test} atau \emph{Wilcoxon
-        signed-rank test} sesuai hasil uji normalitas tersebut.
-  \item Eksperimen dijalankan pada 2 unit GPU NVIDIA RTX 3060 6GB,
-        sehingga konfigurasi batch size dan teknik optimasi memori
-        (misalnya \emph{gradient checkpointing}) disesuaikan dengan
-        kapasitas tersebut.
+        akurasi, presisi, recall, dan F1-score.
+  \item Signifikansi statistik diuji menggunakan uji Shapiro-Wilk untuk
+        normalitas, dilanjutkan uji \emph{paired t-test} atau
+        \emph{Wilcoxon signed-rank test} sesuai hasil uji normalitas
+        tersebut.
 \end{enumerate}
 
 \section{Sistematika Pembahasan}
@@ -179,39 +169,46 @@ adalah sebagai berikut.
 \textbf{Bab 1 Pendahuluan} membahas mengenai latar belakang penelitian
 ini diangkat, rumusan masalah, tujuan dan manfaat penelitian, batasan
 masalah, serta sistematika pembahasan penulisan penelitian yang
-berjudul Analisis Pengaruh Strategi Fine-Tuning Dua Tahap dan Metode
-Adaptasi Parameter terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa
-Indonesia.
+berjudul Pengaruh Skema Pembagian Data Berbasis Film terhadap Akurasi
+Pengenalan Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD.
 
 \textbf{Bab 2 Landasan Kepustakaan} membahas tentang kajian pustaka dan
 dasar teori. Kajian pustaka berisi referensi mengenai
-penelitian-penelitian sebelumnya yang terkait dengan SER, representasi
-\emph{self-supervised}, dan \emph{cross-lingual transfer}. Dasar teori
-membahas konsep-konsep yang mendasari metode yang digunakan, meliputi
-pembelajaran \emph{self-supervised}, Wav2Vec2/XLSR, \emph{cross-lingual
-transfer}, strategi \emph{fine-tuning} dua tahap, \emph{Low-Rank
-Adaptation} (LoRA), validasi silang k-fold dan pengujian signifikansi
-statistik, serta metrik evaluasi akurasi, presisi, recall, dan
-F1-score.
+penelitian-penelitian sebelumnya yang terkait dengan SER dan kebocoran
+data pada skema evaluasi. Dasar teori membahas konsep-konsep yang
+mendasari metode yang digunakan, meliputi kebocoran data (\emph{data
+leakage}), fitur \emph{hand-crafted}, Mel-Frequency Cepstral
+Coefficients (MFCC), \emph{convolutional neural network} (CNN),
+pembelajaran \emph{self-supervised}, Wav2Vec2, XLSR-53, \emph{Low-Rank
+Adaptation} (LoRA), evaluasi model, validasi silang k-fold, serta
+pengujian signifikansi statistik.
 
 \textbf{Bab 3 Metodologi Penelitian} membahas tipe penelitian serta
 tahapan penelitian yang dilaksanakan mulai dari studi literatur,
-pengumpulan data, \emph{fine-tuning} sumber, \emph{fine-tuning} target,
-evaluasi k-fold, hingga analisis hasil dan penarikan kesimpulan.
+pengumpulan data, perancangan algoritma, evaluasi k-fold, hingga
+analisis hasil dan penarikan kesimpulan.
 
-\textbf{Bab 4 Hasil} menyajikan hasil pelaksanaan setiap strategi
-\emph{fine-tuning} yang diuji, meliputi observasi akurasi, presisi,
-recall, dan F1-score per fold dari skema validasi silang k-fold untuk
-keempat kondisi eksperimen (Kondisi A--D, lihat Subbab \ref{sec:3.5}),
-beserta hasil pengujian normalitas dan signifikansi statistiknya.
+\textbf{Bab 4 Perancangan} membahas perancangan sistem serta algoritme
+yang digunakan dalam eksperimen penelitian ini, meliputi rancangan
+sistem klasifikasi untuk algoritma \emph{baseline} dan algoritma SOTA,
+desain keempat kondisi eksperimen (kombinasi algoritma dan skema
+pembagian data, lihat Subbab \ref{sec:3.4}), serta rancangan skema
+validasi silang k-fold.
 
-\textbf{Bab 5 Pembahasan} menerjemahkan makna dari hasil yang diperoleh
-pada Bab 4 untuk menjawab rumusan masalah penelitian, mencakup
-interpretasi perbedaan performa antarstrategi \emph{fine-tuning},
-konsistensi hasil antar-fold, serta kaitannya dengan landasan teori dan
+\textbf{Bab 5 Implementasi} membahas implementasi kode-kode esensial
+dari perancangan yang telah diuraikan pada Bab 4, meliputi implementasi
+ekstraksi fitur, pelatihan model, dan pengujian signifikansi statistik.
+
+\textbf{Bab 6 Hasil dan Pembahasan} menyajikan hasil pelaksanaan keempat
+kondisi eksperimen, meliputi observasi akurasi, presisi, recall, dan
+F1-score per fold, beserta hasil pengujian normalitas dan signifikansi
+statistiknya, serta pembahasan yang menerjemahkan makna hasil tersebut
+untuk menjawab rumusan masalah penelitian -- mencakup interpretasi
+pengaruh skema pembagian data terhadap performa klasifikasi emosi dan
+konsistensinya antaralgoritma, serta kaitannya dengan landasan teori dan
 penelitian terdahulu yang telah diuraikan pada Bab 2.
 
-\textbf{Bab 6 Penutup} memuat kesimpulan yang menjawab rumusan masalah
+\textbf{Bab 7 Penutup} memuat kesimpulan yang menjawab rumusan masalah
 berdasarkan hasil dan pembahasan penelitian, serta saran untuk
-pengembangan penelitian selanjutnya, misalnya perluasan cakupan korpus
-sumber atau backbone model yang diuji.
+pengembangan penelitian selanjutnya, misalnya augmentasi data atau
+algoritma lain di luar CNN+MFCC dan XLSR-53+LoRA.

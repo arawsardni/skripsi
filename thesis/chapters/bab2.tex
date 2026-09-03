@@ -20,25 +20,78 @@ terkait dengan subjek yang diteliti.
   \caption{Daftar penelitian terdahulu}
   \label{tab:2.penelitian_terdahulu}
   \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{p{4.2cm} p{4.6cm} p{4.2cm} p{4.6cm}}
+  \begin{tabular}{p{4.0cm} p{4.2cm} p{5.4cm} p{4.2cm}}
     \toprule
     \textbf{Judul Penelitian} & \textbf{Masalah} & \textbf{Metode} & \textbf{Hasil} \\
     \midrule
-    Advancements in Speech Recognition: A Systematic Review of Deep
-    Learning Transformer Models, Trends, Innovations, and Future
-    Directions (Eljinini and Al-Momani, 2025)
+    Development of a Speech Emotion Recognition Dataset for Indonesian
+    (Santoso, Budianto and Dutono, 2026)
     &
-    Pergeseran paradigma dari fitur tangan (\emph{hand-crafted
-    features}) menuju representasi ucapan yang dipelajari langsung dari
-    sinyal mentah belum ditinjau secara sistematis lintas 37 studi inti.
+    Dataset SER berbahasa Indonesia dengan \emph{baseline} performa yang
+    terdokumentasi masih terbatas.
     &
-    Tinjauan sistematis (\emph{systematic review}) terhadap arsitektur
-    transformer dan pembelajaran \emph{self-supervised} pada pengenalan
-    ucapan.
+    Pengembangan dataset E-SERAVD dari rekaman film Indonesia beranotasi
+    emosi. Performa dasar diuji menggunakan model CNN yang dilatih dari
+    nol dengan fitur tangan MFCC, tanpa melibatkan model pra-latih
+    \emph{self-supervised} maupun kontrol eksplisit terhadap sumber film
+    pada pembagian data latih dan uji.
     &
-    Transformer dan pembelajaran \emph{self-supervised} terbukti
-    meningkatkan akurasi pengenalan ucapan pada kondisi akustik
-    menantang dibandingkan fitur tangan konvensional.
+    Model CNN dasar mencapai akurasi 86\% dan F1-macro 86\% pada subset
+    seimbang (1.000 sampel, 250/kelas).
+    \\
+    \midrule
+    End-to-End Transfer Learning for Speaker-Independent Cross-Language
+    and Cross-Corpus Speech Emotion Recognition (Tang et al., 2023)
+    &
+    Evaluasi model SER yang tidak mengontrol kebocoran identitas
+    penutur antara data latih dan uji berisiko melebih-lebihkan
+    performa generalisasi model.
+    &
+    Skema evaluasi \emph{speaker-independent} yang memastikan penutur
+    pada data uji tidak pernah muncul pada data latih. Skema ini
+    diterapkan pada \emph{transfer learning end-to-end} lintas bahasa
+    dan lintas korpus, dibandingkan dengan skema evaluasi konvensional
+    yang tidak mengontrol identitas penutur.
+    &
+    Skema evaluasi \emph{speaker-independent} menghasilkan estimasi
+    performa yang lebih andal dibandingkan skema yang tidak mengontrol
+    identitas penutur.
+    \\
+    \midrule
+    Designing and Evaluating Speech Emotion Recognition Systems: A
+    Reality Check Case Study with IEMOCAP (Antoniou et al., 2023)
+    &
+    Belum ada konsensus protokol evaluasi SER pada IEMOCAP, khususnya
+    terkait kontrol identitas penutur antara data latih dan uji,
+    sehingga performa antarpenelitian sulit dibandingkan secara adil.
+    &
+    Tinjauan kritis dan kompilasi hasil dari sejumlah publikasi SER pada
+    IEMOCAP, membandingkan performa yang dilaporkan di bawah skema
+    \emph{Speaker-Dependent} (SD, pembagian data acak) dengan skema
+    \emph{Speaker-Independent} (SI, \emph{leave-one-speaker/session-out}).
+    &
+    Skema SD secara konsisten dilaporkan menghasilkan performa lebih
+    tinggi dibandingkan skema SI pada metode yang sebanding; satu model
+    HuBERT pada penelitian yang sama melaporkan 79,58\% (SD) berbanding
+    73,01\% (SI) pada metrik \emph{weighted accuracy}.
+    \\
+    \midrule
+    Evaluating Self-Supervised Speech Representations for Speech
+    Emotion Recognition (Atmaja and Sasou, 2022)
+    &
+    Belum diketahui apakah keunggulan representasi \emph{self-supervised}
+    atas fitur tangan pada SER berlaku universal lintas model dan
+    bahasa.
+    &
+    Evaluasi sistematis 19 representasi \emph{self-supervised} dan 1
+    fitur tangan (filterbank) pada 5 dataset SER berbahasa Inggris dan
+    Jepang. Setiap representasi diuji dengan \emph{classifier
+    feed-forward} yang identik, kemudian signifikansi antarrepresentasi
+    diuji memakai uji Friedman dan dihitung \emph{effect size}-nya.
+    &
+    Representasi \emph{self-supervised} unggul signifikan (filterbank
+    rank terakhir dari 20), namun XLSR-53 spesifik kalah dari model
+    monolingual Inggris; tidak ada dataset Indonesia diuji.
     \\
     \midrule
     Advancing End-to-End Indonesian Speech Emotion Recognition Using
@@ -49,115 +102,19 @@ terkait dengan subjek yang diteliti.
     multibahasa.
     &
     Perbandingan SVM, CNN, dan dua model dasar XLSR-Wav2Vec2 yang telah
-    di-\emph{fine-tune} untuk ucapan Indonesia (Common Voice, OpenSLR
-    Jawa/Sunda), diuji pada dataset IndoWaveSentiment.
+    di-\emph{fine-tune} untuk ucapan Indonesia menggunakan data Mozilla
+    Common Voice serta OpenSLR berbahasa Jawa dan Sunda. Keempat model
+    diuji pada dataset IndoWaveSentiment untuk membandingkan performa
+    metode klasik dan representasi \emph{self-supervised} multibahasa.
     &
     Model dasar XLSR-Wav2Vec2 yang telah disesuaikan untuk ucapan
     Indonesia mencapai akurasi tertinggi sebesar 91,67\%, mengungguli
     metode klasik.
     \\
-    \midrule
-    Development of a Speech Emotion Recognition Dataset for Indonesian
-    (Santoso, Budianto and Dutono, 2026)
-    &
-    Dataset SER berbahasa Indonesia dengan \emph{baseline} performa yang
-    terdokumentasi masih terbatas.
-    &
-    Pengembangan dataset E-SERAVD; performa dasar diuji menggunakan
-    model CNN dengan fitur MFCC (bukan model pra-latih
-    \emph{self-supervised}).
-    &
-    Model CNN dasar mencapai akurasi 90\% dan F1-score 86\% pada subset
-    seimbang (1.000 sampel, 250/kelas).
-    \\
-    \midrule
-    Indonesian Automatic Speech Recognition with XLSR-53 (Arisaputra and
-    Zahra, 2023)
-    &
-    Ketersediaan data latih ASR berbahasa Indonesia terbatas
-    dibandingkan bahasa besar.
-    &
-    \emph{Cross-lingual transfer} menggunakan backbone XLSR-53 pada
-    tugas ASR Indonesia.
-    &
-    \emph{Word error rate} lebih rendah dicapai meski data latih lebih
-    sedikit dibandingkan pelatihan dari awal.
-    \\
-    \midrule
-    End-to-End Transfer Learning for Speaker-Independent Cross-Language
-    and Cross-Corpus Speech Emotion Recognition (Tang et al., 2023)
-    &
-    Generalisasi model SER antarbahasa dan antarkorpus belum banyak
-    diuji dengan pendekatan \emph{end-to-end}.
-    &
-    \emph{Transfer learning end-to-end} yang bersifat
-    \emph{speaker-independent}, lintas bahasa, dan lintas korpus.
-    &
-    Menunjukkan potensi generalisasi model emosi antarbahasa melalui
-    pendekatan \emph{transfer learning}.
-    \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
 \end{table}
-
-Berdasarkan kelima penelitian tersebut, dapat disimpulkan bahwa celah
-penelitian terletak pada belum adanya studi yang membandingkan strategi
-\emph{fine-tuning} satu tahap versus dua tahap dan \emph{full
-fine-tuning} versus LoRA pada SER berbahasa Indonesia secara sistematis
-dan teruji signifikansi statistiknya. Penelitian ini menempatkan diri
-pada celah tersebut dengan merancang perbandingan yang sistematis antara
-keempat kombinasi strategi tersebut, dievaluasi melalui skema validasi
-silang k-fold dan diuji signifikansi statistiknya.
-
-Celah tersebut dapat disintesis dalam empat kelompok pembanding
-berdasarkan persamaan dan perbedaannya dengan penelitian ini. Pertama,
-Eljinini and Al-Momani (2025) meletakkan fondasi representasi
-\emph{self-supervised} secara umum, namun tidak menyentuh domain emosi
-maupun bahasa Indonesia secara spesifik. Kedua, Nugroho et al. (2025)
-menerapkan representasi \emph{self-supervised} untuk SER berbahasa
-Indonesia, tetapi model dasar yang mereka uji merupakan hasil
-\emph{fine-tuning} untuk ucapan Indonesia secara umum, bukan hasil
-\emph{fine-tuning} khusus dari korpus emosi berbahasa asing. Ketiga,
-Santoso, Budianto and Dutono (2026) menyediakan dataset E-SERAVD dan
-menetapkan \emph{baseline} performa menggunakan CNN konvensional tanpa
-representasi \emph{self-supervised} lintas bahasa; performa pendekatan
-seperti XLSR-53 -- apalagi dengan skema dua tahap -- belum diuji pada
-dataset ini sama sekali. Keempat, Arisaputra and Zahra (2023) serta
-Tang et al. (2023) memanfaatkan \emph{cross-lingual transfer}, tetapi
-tidak menyasar korpus emosi berbahasa Inggris ke data emosi berbahasa
-Indonesia secara spesifik. Sebagai penguat argumen \emph{novelty} di
-level lokal, penelusuran terhadap 924 skripsi Teknik Informatika FILKOM
-UB yang tersedia secara \emph{open-access} juga belum menemukan satu
-pun yang mengangkat SER berbasis audio.
-
-Karena tidak ada satu pun penelitian yang menguji kombinasi persis
-backbone XLSR-53, arah lintas bahasa Inggris ke Indonesia, dan tugas
-SER sekaligus, gap argument ini perlu dirangkai secara eksplisit dari
-bukti-bukti berdekatan, supaya celah penelitian terasa \emph{well-
-motivated} dan bukan muncul tiba-tiba. Pada axis pertama
-(\emph{single-stage} dibandingkan \emph{two-stage}), Wu et al. (2021)
-menunjukkan bahwa \emph{cross-lingual transfer} efektif secara teoretis
-untuk pemrosesan ucapan secara umum; Arisaputra and Zahra (2023), pada
-backbone dan bahasa target yang sama persis dengan penelitian ini
-(XLSR-53, Indonesia), membuktikan bahwa transfer lintas bahasa
-menurunkan \emph{word error rate} pada tugas ASR (berbeda tugas dari
-SER); dan Tang et al. (2023), pada tugas yang sama (SER), menunjukkan
-potensi generalisasi transfer lintas bahasa meski pada pasangan bahasa
-yang berbeda dari Inggris-Indonesia. Pada axis kedua (\emph{full
-fine-tuning} dibandingkan LoRA), Hu et al. (2022) menunjukkan bahwa LoRA
-menyamai atau mengungguli \emph{full fine-tuning} pada model bahasa
-besar dengan parameter yang dilatih jauh lebih sedikit, dan temuan
-serupa juga dilaporkan pada model ucapan (\emph{speech}) berskala besar
-secara umum (Ou et al., 2024) -- di domain suara, bukan cuma teks.
-Kombinasi kedua axis ini diuji bersamaan (bukan salah satu saja) karena,
-begitu axis pertama (staging) terbukti membantu, pertanyaan lanjutan
-seberapa murah cara memperoleh manfaat tersebut muncul dari logika
-internal kombinasinya sendiri -- relevan langsung bagi peneliti dengan
-sumber daya terbatas, motivasi awal penelitian ini. Dengan demikian,
-penelitian ini menguji hipotesis yang didukung bukti tidak langsung pada
-kombinasi yang belum pernah diuji secara langsung, bukan sekadar
-melengkapi temuan yang sudah ada.
 
 % ── 2.2 Speech Emotion Recognition ───────────────────────────────────
 \section{Speech Emotion Recognition (SER)}
@@ -199,14 +156,213 @@ Cakupan penerapan SER terus meluas, mulai dari asisten virtual yang
 responsif terhadap keadaan pengguna, layanan pelanggan otomatis yang
 dapat mendeteksi frustrasi penelepon, hingga sistem pemantauan kesehatan
 mental yang menandai perubahan pola emosi dari waktu ke waktu.
-Perkembangan representasi \emph{self-supervised} seperti Wav2Vec2/XLSR,
-yang dibahas pada Subbab \ref{sec:2.4}, menjadi salah satu pendorong
-utama peningkatan akurasi SER dibandingkan pendekatan fitur tangan
-konvensional.
+Perkembangan representasi \emph{self-supervised} seperti Wav2Vec2 dan
+XLSR-53 menjadi salah satu pendorong utama peningkatan akurasi SER
+dibandingkan pendekatan fitur tangan konvensional.
 
-% ── 2.3 Pembelajaran Self-Supervised ─────────────────────────────────
-\section{Pembelajaran Self-Supervised}
+% ── 2.3 Data Leakage / Group Leakage ──────────────────────────────────
+\section{Data Leakage / Group Leakage}
 \label{sec:2.3}
+
+Kebocoran data (\emph{data leakage}) (Kapoor and Narayanan, 2023) adalah
+kondisi ketika informasi dari data uji secara tidak sengaja ikut
+memengaruhi proses pelatihan model, sehingga performa yang terukur pada
+data uji tidak lagi mencerminkan kemampuan generalisasi model yang
+sesungguhnya pada data baru. Salah satu bentuk kebocoran data yang
+sering luput diperhatikan adalah \emph{group leakage}, yaitu kebocoran
+yang terjadi ketika beberapa sampel data memiliki keterkaitan atau
+berasal dari satu sumber/kelompok yang sama (dikategorikan sebagai
+\emph{nonindependence} antara sampel latih dan uji oleh Kapoor and
+Narayanan, 2023) -- misalnya beberapa klip ucapan yang berasal dari
+rekaman film yang sama -- namun sampel-sampel berkelompok tersebut
+tersebar ke sisi latih dan uji sekaligus akibat pembagian data yang
+dilakukan secara acak murni terhadap satuan sampel individual (skema
+\emph{random}). Ketika hal ini terjadi, model berpotensi mempelajari
+ciri-ciri spesifik kelompok tersebut -- misalnya gaya produksi,
+karakteristik rekaman, atau suara latar khas suatu film -- sebagai
+jalan pintas untuk memprediksi label, alih-alih benar-benar mempelajari
+pola yang ingin dikenali (dalam konteks penelitian ini, pola akustik
+emosi). Akibatnya, performa yang dilaporkan pada skema \emph{random}
+cenderung terlihat lebih tinggi daripada performa sesungguhnya yang
+akan diperoleh model pada data dari sumber yang benar-benar baru.
+
+Skema pembagian data \emph{movie-independent} (satu ragam
+\emph{grouped split}) mengatasi risiko \emph{group leakage} tersebut
+dengan menjaga agar seluruh klip yang berasal dari film yang sama
+selalu berada pada sisi \emph{fold} yang sama -- tidak pernah ada satu
+film yang klipnya tersebar ke sisi latih dan uji sekaligus. Dengan
+demikian, ketika suatu film digunakan sebagai data uji, model
+benar-benar belum pernah ``melihat'' karakteristik rekaman film
+tersebut selama pelatihan, sehingga performa yang terukur mencerminkan
+kemampuan generalisasi model pada sumber rekaman yang genuinely baru.
+Preseden penerapan skema \emph{grouped} semacam ini pada SER dilaporkan
+oleh Tang et al. (2023), yang menerapkan skema evaluasi
+\emph{speaker-independent} -- varian \emph{grouped split} berdasarkan
+identitas penutur, bukan berdasarkan film -- untuk mencegah model
+mempelajari isyarat spesifik penutur alih-alih pola emosi yang
+genuinely general. Penelitian ini menerapkan prinsip yang sama pada
+satuan film, karena unit kebocoran yang relevan pada dataset yang
+digunakan adalah sumber film, bukan identitas penutur individual.
+
+Penelitian ini membandingkan performa algoritma yang diuji di bawah
+kedua skema tersebut -- \emph{random} dan \emph{movie-independent} --
+untuk mengukur secara langsung seberapa besar performa yang dilaporkan
+berpotensi terinflasi oleh \emph{group leakage} berbasis film, dan
+apakah besar inflasi tersebut berbeda antara algoritma berbasis fitur
+tangan dan algoritma berbasis representasi pralatih.
+
+% ── 2.4 Fitur Hand-Crafted ────────────────────────────────────────────
+\section{Fitur Hand-Crafted}
+\label{sec:2.4}
+
+Fitur \emph{hand-crafted} adalah representasi sinyal yang diekstraksi
+secara manual melalui rangkaian transformasi sinyal yang telah
+ditentukan terlebih dahulu (\emph{fixed}) berdasarkan teori dan
+pengetahuan domain, alih-alih dipelajari otomatis oleh model dari data.
+Pada domain pemrosesan ucapan, fitur \emph{hand-crafted} umumnya
+dirancang untuk menangkap karakteristik akustik yang secara teoretis
+relevan dengan tugas yang ingin diselesaikan, misalnya intonasi,
+energi, nada dasar (\emph{pitch}), atau distribusi frekuensi sinyal.
+Karena rangkaian transformasinya sudah ditentukan sejak awal, fitur
+\emph{hand-crafted} tidak memerlukan data berlabel maupun proses
+pembelajaran untuk diperoleh, berbeda dengan representasi yang
+dipelajari model dari data (\emph{learned representations}) yang
+parameternya disesuaikan melalui proses pelatihan.
+
+Pendekatan fitur \emph{hand-crafted} banyak digunakan pada penelitian
+SER sebelum berkembangnya representasi yang dipelajari model, karena
+tidak memerlukan data pra-latih berskala besar dan relatif murah secara
+komputasi untuk diekstraksi. Salah satu fitur \emph{hand-crafted} yang
+paling umum digunakan pada pemrosesan ucapan adalah Mel-Frequency
+Cepstral Coefficients (MFCC), yang digunakan sebagai representasi fitur
+tangan pada penelitian ini.
+
+% ── 2.5 Mel-Frequency Cepstral Coefficients (MFCC) ───────────────────
+\section{Mel-Frequency Cepstral Coefficients (MFCC)}
+\label{sec:2.5}
+
+Mel-Frequency Cepstral Coefficients (MFCC) adalah representasi fitur
+akustik tangan yang secara luas digunakan pada tugas pemrosesan ucapan,
+dirancang untuk meniru cara sistem pendengaran manusia mempersepsikan
+frekuensi bunyi secara tidak linear (Davis and Mermelstein, 1980).
+Alih-alih menggunakan skala frekuensi linear (Hz), MFCC memetakan
+spektrum sinyal ke skala mel, yang lebih sensitif terhadap perbedaan
+pada frekuensi rendah dibandingkan frekuensi tinggi, sebagaimana
+Persamaan \ref{eq:2.mel}.
+
+\begin{equation}
+  m = 2595 \log_{10}\left(1 + \frac{f}{700}\right)
+  \label{eq:2.mel}
+\end{equation}
+
+\noindent
+di mana $f$ adalah frekuensi dalam Hz dan $m$ adalah frekuensi
+terskala mel yang bersesuaian.
+
+Ekstraksi MFCC dari sinyal ucapan mentah dilakukan melalui serangkaian
+tahap sebagaimana digambarkan pada Gambar \ref{fig:2.mfcc}. Sinyal
+terlebih dahulu melalui \emph{pre-emphasis} untuk menguatkan komponen
+frekuensi tinggi, kemudian dibagi menjadi bingkai-bingkai pendek
+(\emph{framing}) yang tumpang tindih dan dikalikan fungsi jendela
+(\emph{windowing}) untuk mengurangi efek diskontinuitas di tepi bingkai.
+Setiap bingkai kemudian ditransformasi ke domain frekuensi menggunakan
+\emph{Fast Fourier Transform} (FFT) untuk memperoleh spektrum daya, yang
+selanjutnya difilter menggunakan sekumpulan filter \emph{bank} berskala
+mel (Persamaan \ref{eq:2.mel}) untuk memperoleh energi pada tiap pita
+frekuensi mel. Energi tersebut diambil logaritmanya untuk mendekati
+persepsi kenyaringan manusia yang bersifat logaritmik, kemudian
+ditransformasi menggunakan \emph{Discrete Cosine Transform} (DCT) untuk
+mendekorelasi energi antarpita dan menghasilkan koefisien cepstral
+akhir.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=8mm]
+    \node[io]        (sinyal)  {Sinyal Ucapan};
+    \node[procplain]  (pre)     [right=of sinyal] {Pre-Emphasis};
+    \node[procplain]  (frame)   [right=of pre]     {Framing \& Windowing};
+    \node[procplain]  (fft)     [right=of frame]   {FFT};
+    \node[procplain]  (mel)     [below=of frame]   {Filter Bank Mel};
+    \node[procplain]  (log)     [right=of mel]     {Logaritma};
+    \node[procplain]  (dct)     [right=of log]     {DCT};
+    \node[io]        (mfcc)    [right=of dct]      {Koefisien MFCC};
+
+    \draw[arr] (sinyal) -- (pre);
+    \draw[arr] (pre)    -- (frame);
+    \draw[arr] (frame)  -- (fft);
+    \draw[arr] (fft)    -- (mel);
+    \draw[arr] (mel)    -- (log);
+    \draw[arr] (log)    -- (dct);
+    \draw[arr] (dct)    -- (mfcc);
+  \end{tikzpicture}
+  }
+  \caption{Pipeline ekstraksi Mel-Frequency Cepstral Coefficients (MFCC)}
+  \label{fig:2.mfcc}
+\end{figure}
+
+Berbeda dengan representasi yang dipelajari model dari data
+(\emph{learned representations}), MFCC dihitung langsung dari sinyal
+melalui rangkaian transformasi sinyal yang telah ditentukan
+(\emph{fixed}), tanpa proses pembelajaran. Karakteristik inilah yang
+mendasari penggunaan MFCC sebagai fitur \emph{hand-crafted} pada
+algoritma \emph{baseline} dalam penelitian ini.
+
+% ── 2.6 Convolutional Neural Network (CNN) ───────────────────────────
+\section{Convolutional Neural Network (CNN)}
+\label{sec:2.6}
+
+\emph{Convolutional neural network} (CNN) adalah arsitektur jaringan
+saraf tiruan yang dirancang untuk memproses data yang memiliki struktur
+grid, seperti citra dua dimensi atau spektrogram ucapan, dengan
+memanfaatkan operasi konvolusi untuk mengekstraksi pola-pola lokal
+secara bertingkat (LeCun et al., 1998). Arsitektur CNN umumnya terdiri
+atas tiga jenis lapisan utama, sebagaimana digambarkan pada Gambar
+\ref{fig:2.cnn}: (1) lapisan konvolusi (\emph{convolutional layer}),
+yang menerapkan sejumlah filter/\emph{kernel} berukuran kecil secara
+bergeser di sepanjang data masukan untuk mendeteksi pola lokal seperti
+tepi atau tekstur pada tahap awal, dan pola yang lebih kompleks pada
+lapisan berikutnya; (2) lapisan \emph{pooling}, yang mereduksi dimensi
+spasial representasi sambil mempertahankan informasi penting, sehingga
+jaringan lebih tahan terhadap pergeseran kecil pada data masukan dan
+lebih efisien secara komputasi; dan (3) lapisan terhubung penuh
+(\emph{fully-connected layer}), yang menggabungkan seluruh fitur yang
+telah diekstraksi untuk menghasilkan keluaran akhir, misalnya
+probabilitas kelas pada tugas klasifikasi.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=8mm]
+    \node[io]        (input)  {Fitur MFCC};
+    \node[procplain]  (conv)   [right=of input] {Lapisan Konvolusi};
+    \node[procplain]  (pool)   [right=of conv]  {Lapisan Pooling};
+    \node[procplain]  (fc)     [right=of pool]  {Lapisan Terhubung Penuh};
+    \node[io]        (output) [right=of fc]    {Label Emosi};
+
+    \draw[arr] (input) -- (conv);
+    \draw[arr] (conv)  -- (pool);
+    \draw[arr] (pool)  -- (fc);
+    \draw[arr] (fc)    -- (output);
+  \end{tikzpicture}
+  }
+  \caption{Arsitektur umum convolutional neural network (CNN)}
+  \label{fig:2.cnn}
+\end{figure}
+
+Kemampuan lapisan konvolusi mendeteksi pola lokal menjadikan CNN cocok
+untuk memproses fitur MFCC, yang berbentuk grid dua dimensi berupa
+koefisien cepstral pada sumbu vertikal dan bingkai waktu pada sumbu
+horizontal -- pola akustik emosi yang relevan seringkali muncul sebagai
+struktur lokal pada grid tersebut, misalnya perubahan energi pada
+rentang waktu dan pita frekuensi tertentu. Karakteristik inilah yang
+mendasari penggunaan CNN sebagai \emph{classifier} pada algoritma
+\emph{baseline} dalam penelitian ini, mengikuti pendekatan yang sudah
+banyak digunakan pada penelitian SER berbasis fitur tangan.
+
+% ── 2.7 Pembelajaran Self-Supervised ─────────────────────────────────
+\section{Pembelajaran Self-Supervised}
+\label{sec:2.7}
 
 Pembelajaran \emph{self-supervised} adalah paradigma pembelajaran mesin
 yang melatih model pada data tanpa label dengan cara menciptakan sinyal
@@ -243,12 +399,11 @@ Keunggulan utama paradigma ini adalah kemampuannya memanfaatkan data
 tanpa label dalam jumlah besar, yang jauh lebih mudah dan murah diperoleh
 dibandingkan data berlabel. Karakteristik inilah yang mendasari
 penggunaannya secara luas pada domain ucapan, termasuk pada backbone
-Wav2Vec2/XLSR yang digunakan dalam penelitian ini, sebagaimana diuraikan
-pada Subbab \ref{sec:2.4}.
+Wav2Vec2 dan XLSR-53 yang digunakan dalam penelitian ini.
 
-% ── 2.4 Wav2Vec2/XLSR ─────────────────────────────────────────────────
-\section{Wav2Vec2/XLSR}
-\label{sec:2.4}
+% ── 2.8 Wav2Vec2 ──────────────────────────────────────────────────────
+\section{Wav2Vec2}
+\label{sec:2.8}
 
 Wav2Vec2 adalah arsitektur pembelajaran \emph{self-supervised} untuk
 representasi ucapan yang dilatih pada volume data ucapan tanpa label
@@ -287,123 +442,31 @@ kuantisasi yang benar dari sejumlah pengganggu (\emph{distractors}).
   \label{fig:2.wav2vec2}
 \end{figure}
 
+Representasi $C$ yang dihasilkan oleh \emph{context network} inilah yang
+menjadi keluaran utama Wav2Vec2 untuk dimanfaatkan pada tugas hilir
+(\emph{downstream task}), termasuk SER pada penelitian ini.
+
+% ── 2.9 XLSR-53 ───────────────────────────────────────────────────────
+\section{XLSR-53}
+\label{sec:2.9}
+
 XLSR merupakan varian multibahasa dari Wav2Vec2 yang dilatih pada data
 ucapan tanpa label dari banyak bahasa sekaligus, menggunakan arsitektur
 dan tujuan pra-latih yang sama, namun dengan korpus pra-latih gabungan
 lintas bahasa (Conneau et al., 2021). Karena dilatih lintas bahasa,
 representasi yang dihasilkan XLSR cenderung menangkap struktur akustik
 yang lebih umum dan dapat menggeneralisasi lintas bahasa dibandingkan
-model yang hanya dilatih pada satu bahasa saja. Karakteristik inilah
-yang mendasari pemilihan Wav2Vec2/XLSR sebagai backbone dalam penelitian
-ini, karena representasi $C$ yang dihasilkan berpotensi menjadi titik
-awal (\emph{initialization}) yang baik untuk \emph{fine-tuning} lintas
-bahasa pada tugas SER, sebagaimana diuraikan pada Subbab \ref{sec:2.6}.
+model yang hanya dilatih pada satu bahasa saja. XLSR-53 adalah varian
+XLSR yang dilatih pada korpus gabungan dari 53 bahasa. Karakteristik
+inilah yang mendasari pemilihan XLSR-53 sebagai backbone algoritma SOTA
+dalam penelitian ini: bobot dasar backbone tetap dibekukan
+(\emph{frozen}), namun diberi matriks adaptasi tambahan berperingkat
+rendah (LoRA) yang dilatih untuk menyesuaikan representasi ke tugas
+SER, alih-alih memperbarui seluruh parameter backbone secara langsung.
 
-% ── 2.5 Cross-Lingual Transfer ───────────────────────────────────────
-\section{Cross-Lingual Transfer pada Pemrosesan Ucapan}
-\label{sec:2.5}
-
-\emph{Cross-lingual transfer} adalah strategi memindahkan pengetahuan
-yang dipelajari model dari bahasa bersumber daya besar ke bahasa
-bersumber daya terbatas (Wu et al., 2021). Strategi ini bekerja dengan
-memanfaatkan representasi yang telah dipelajari model pada data bahasa
-sumber sebagai titik awal, alih-alih melatih model dari awal
-(\emph{from scratch}) pada data bahasa target yang terbatas jumlahnya.
-Gambar \ref{fig:2.transfer} menggambarkan alur umum tersebut: model
-dilatih terlebih dahulu pada bahasa sumber yang memiliki data melimpah,
-kemudian representasi yang dihasilkan diadaptasi ke bahasa target.
-
-\begin{figure}[H]
-  \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=10mm]
-    \node[io]        (sumber) {Bahasa Sumber \\ (data melimpah)};
-    \node[procplain]  (repr)   [right=of sumber] {Representasi Terlatih};
-    \node[procplain]  (adapt)  [right=of repr]   {Adaptasi / \emph{Transfer}};
-    \node[io]        (target) [right=of adapt]  {Bahasa Target \\ (data terbatas)};
-
-    \draw[arr] (sumber) -- (repr);
-    \draw[arr] (repr)   -- (adapt);
-    \draw[arr] (adapt)  -- (target);
-  \end{tikzpicture}
-  }
-  \caption{Alur umum cross-lingual transfer}
-  \label{fig:2.transfer}
-\end{figure}
-
-Pendekatan ini banyak ditempuh untuk mengatasi kesenjangan sumber daya
-pada bahasa yang kurang terwakili dalam teknologi bahasa, karena
-memungkinkan model memanfaatkan pola akustik atau linguistik yang telah
-dipelajari secara luas tanpa membangun ulang pembelajaran dari data yang
-masih terbatas pada bahasa target. Pada konteks penelitian ini, bahasa
-sumber adalah bahasa Inggris (dengan korpus emosi RAVDESS/CREMA-D yang
-tersedia luas) dan bahasa target adalah Bahasa Indonesia (dengan korpus
-emosi yang relatif terbatas), sebagaimana diuraikan lebih lanjut pada
-Subbab \ref{sec:2.6}.
-
-% ── 2.6 Strategi Fine-Tuning Dua Tahap ───────────────────────────────
-\section{Strategi Fine-Tuning Dua Tahap}
-\label{sec:2.6}
-
-Strategi \emph{fine-tuning} dua tahap merupakan bentuk penerapan
-\emph{cross-lingual transfer} (Subbab \ref{sec:2.5}) yang mengadaptasi
-model secara bertahap melalui dua kali proses \emph{fine-tuning}
-berurutan, alih-alih satu kali \emph{fine-tuning} langsung ke data
-target (Pan and Yang, 2010). Secara formal, jika $\theta_0$ menyatakan
-bobot Wav2Vec2/XLSR hasil pra-latih (Subbab \ref{sec:2.4}), maka tahap
-pertama melatih model pada korpus sumber $D_{\text{src}}$ untuk
-memperoleh bobot antara sebagaimana Persamaan \ref{eq:2.tahap1}.
-
-\begin{equation}
-  \theta_1 = \arg\min_{\theta} \; \mathcal{L}_{\text{src}}(\theta; D_{\text{src}}),
-  \quad \theta \text{ diinisialisasi dari } \theta_0
-  \label{eq:2.tahap1}
-\end{equation}
-
-Tahap kedua kemudian mengadaptasi bobot antara $\theta_1$ tersebut ke
-korpus target $D_{\text{tgt}}$ untuk memperoleh bobot akhir sebagaimana
-Persamaan \ref{eq:2.tahap2}.
-
-\begin{equation}
-  \theta_2 = \arg\min_{\theta} \; \mathcal{L}_{\text{tgt}}(\theta; D_{\text{tgt}}),
-  \quad \theta \text{ diinisialisasi dari } \theta_1
-  \label{eq:2.tahap2}
-\end{equation}
-
-\noindent
-Gambar \ref{fig:2.twostage} menggambarkan alur dua tahap tersebut.
-
-\begin{figure}[H]
-  \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=9mm]
-    \node[io]        (backbone) {Backbone Pra-latih $\theta_0$};
-    \node[procplain]  (tahap1)   [right=of backbone] {Tahap 1: \emph{Fine-Tuning} Sumber};
-    \node[io]        (antara)   [right=of tahap1]    {Model Antara $\theta_1$};
-    \node[procplain]  (tahap2)   [right=of antara]    {Tahap 2: \emph{Fine-Tuning} Target};
-    \node[io]        (akhir)    [right=of tahap2]     {Model Akhir $\theta_2$};
-
-    \draw[arr] (backbone) -- (tahap1);
-    \draw[arr] (tahap1)   -- (antara);
-    \draw[arr] (antara)   -- (tahap2);
-    \draw[arr] (tahap2)   -- (akhir);
-  \end{tikzpicture}
-  }
-  \caption{Alur strategi fine-tuning dua tahap}
-  \label{fig:2.twostage}
-\end{figure}
-
-Pendekatan bertahap ini diharapkan memungkinkan model mempelajari pola
-akustik emosi yang bersifat lebih umum pada tahap pertama, sebelum
-menyesuaikan pola tersebut dengan karakteristik spesifik Bahasa
-Indonesia pada tahap kedua. Sebagai pembanding pada penelitian ini,
-disiapkan pula skema \emph{single-stage} yang melewati tahap pertama dan
-langsung melatih $\theta_0$ pada $D_{\text{tgt}}$, sebagaimana diuraikan
-pada Bab 3.
-
-% ── 2.7 Low-Rank Adaptation (LoRA) ───────────────────────────────────
+% ── 2.10 Low-Rank Adaptation (LoRA) ──────────────────────────────────
 \section{Low-Rank Adaptation (LoRA)}
-\label{sec:2.7}
+\label{sec:2.10}
 
 \emph{Low-Rank Adaptation} (LoRA) adalah strategi \emph{fine-tuning}
 efisien-parameter yang membekukan seluruh bobot model dasar $W_0$ dan
@@ -452,66 +515,23 @@ Karena jumlah parameter pada $A$ dan $B$ jauh lebih sedikit daripada
 jumlah parameter $W_0$, LoRA menawarkan efisiensi komputasi dan memori
 yang signifikan dibandingkan \emph{full fine-tuning}, yang memperbarui
 seluruh parameter $W_0$ secara langsung. Efisiensi ini relevan bagi
-penelitian dengan keterbatasan sumber daya komputasi, namun pengaruhnya
-terhadap akurasi klasifikasi emosi pada konteks SER berbahasa Indonesia
-belum banyak dikaji secara sistematis, sehingga menjadi salah satu
-perbandingan utama yang diuji dalam penelitian ini, sebagaimana
-diuraikan pada Bab 3.
+penelitian dengan keterbatasan sumber daya komputasi. Efektivitas LoRA
+pada arsitektur berbasis Wav2Vec2 secara spesifik telah dibuktikan pada
+tugas deteksi audio sintetis, di mana LoRA mencapai performa setara
+dengan \emph{full fine-tuning} sekaligus mengurangi jumlah parameter
+yang dilatih hingga 198 kali lipat (Wang et al., 2023). Pada tugas SER
+secara lebih spesifik, kombinasi LoRA dengan metode
+\emph{parameter-efficient fine-tuning} lainnya terbukti melampaui
+performa \emph{full fine-tuning} pada backbone Wav2Vec2 dan HuBERT,
+sekaligus hanya melatih sekitar 2--3\% dari total parameter
+(Lashkarashvili et al., 2024). Karakteristik inilah yang mendasari
+penggunaan LoRA untuk mengadaptasi backbone XLSR-53 pada algoritma SOTA
+dalam penelitian ini, alih-alih memperbarui seluruh parameter backbone
+secara langsung.
 
-% ── 2.8 Validasi Silang K-Fold dan Uji Statistik ─────────────────────
-\section{Validasi Silang K-Fold dan Pengujian Signifikansi Statistik}
-\label{sec:2.8}
-
-Validasi silang k-fold adalah teknik evaluasi yang membagi data menjadi
-$k$ bagian (\emph{fold}) berukuran relatif sama, dengan setiap bagian
-secara bergantian digunakan sebagai data uji sementara $k-1$ bagian
-lainnya digunakan sebagai data latih, sehingga setiap bagian data pernah
-menjadi data uji tepat satu kali (Kohavi, 1995). Gambar
-\ref{fig:2.kfold} menggambarkan skema tersebut untuk $k=5$.
-
-\begin{figure}[H]
-  \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=3mm, every node/.style={minimum width=20mm, minimum height=9mm}]
-    \node[io]        (f1) {Fold 1 (uji)};
-    \node[procplain]  (f2) [right=of f1] {Fold 2 (latih)};
-    \node[procplain]  (f3) [right=of f2] {Fold 3 (latih)};
-    \node[procplain]  (f4) [right=of f3] {Fold 4 (latih)};
-    \node[procplain]  (f5) [right=of f4] {Fold 5 (latih)};
-  \end{tikzpicture}
-  }
-  \caption{Ilustrasi satu putaran validasi silang k-fold ($k=5$); peran
-    fold sebagai data uji bergantian pada setiap putaran hingga kelima
-    fold pernah menjadi data uji}
-  \label{fig:2.kfold}
-\end{figure}
-
-Teknik ini menghasilkan $k$ observasi akurasi dan F1-score, satu untuk
-setiap fold, sehingga memungkinkan pengujian konsistensi performa
-antar-fold untuk setiap strategi yang diuji, bukan hanya satu nilai
-tunggal dari satu kali pengujian. Untuk menguji apakah perbedaan
-performa antarstrategi bersifat signifikan secara statistik, $k$
-observasi tersebut terlebih dahulu diuji normalitasnya menggunakan uji
-Shapiro-Wilk (Shapiro and Wilk, 1965). Apabila data berdistribusi
-normal, pengujian dilanjutkan dengan \emph{paired t-test}, yang
-menghitung statistik uji $t$ dari selisih berpasangan $d_i$ antara dua
-strategi pada fold yang sama, sebagaimana Persamaan \ref{eq:2.ttest}.
-
-\begin{equation}
-  t = \frac{\bar{d}}{s_d / \sqrt{n}}
-  \label{eq:2.ttest}
-\end{equation}
-
-\noindent
-di mana $\bar{d}$ adalah rata-rata selisih berpasangan, $s_d$ adalah
-simpangan baku selisih tersebut, dan $n$ adalah jumlah fold. Apabila
-data tidak berdistribusi normal, digunakan \emph{Wilcoxon signed-rank
-test} sebagai alternatif non-parametrik yang tidak mengasumsikan
-distribusi tertentu (Wilcoxon, 1945).
-
-% ── 2.9 Akurasi, Presisi, Recall, dan F1-Score ───────────────────────
-\section{Akurasi, Presisi, Recall, dan F1-Score}
-\label{sec:2.9}
+% ── 2.11 Evaluasi Model ──────────────────────────────────────────────
+\section{Evaluasi Model}
+\label{sec:2.11}
 
 Akurasi, presisi, recall, dan F1-score adalah empat metrik yang umum
 digunakan untuk mengevaluasi performa model klasifikasi (Powers, 2011).
@@ -562,5 +582,65 @@ sebagaimana Persamaan \ref{eq:2.f1}.
 
 Keempat metrik ini digunakan bersama dalam penelitian ini untuk
 memberikan gambaran performa yang lebih menyeluruh terhadap setiap
-strategi \emph{fine-tuning} yang dibandingkan, mengingat skema kelas
-emosi yang digunakan berpotensi tidak seimbang antarkelas.
+kondisi yang dibandingkan. Meskipun skema kelas emosi pada dataset yang
+digunakan dalam penelitian ini seimbang antarkelas, akurasi saja tidak
+menunjukkan pola kesalahan per kelas, sedangkan presisi, recall, dan
+F1-score memberikan gambaran lebih rinci mengenai kelas emosi mana yang
+lebih sering tertukar atau lebih sulit dikenali model.
+
+% ── 2.12 Validasi Silang K-Fold ───────────────────────────────────────
+\section{Validasi Silang K-Fold}
+\label{sec:2.12}
+
+Validasi silang k-fold adalah teknik evaluasi yang membagi data menjadi
+$k$ bagian (\emph{fold}) berukuran relatif sama, dengan setiap bagian
+secara bergantian digunakan sebagai data uji sementara $k-1$ bagian
+lainnya digunakan sebagai data latih, sehingga setiap bagian data pernah
+menjadi data uji tepat satu kali (Kohavi, 1995). Gambar
+\ref{fig:2.kfold} menggambarkan skema tersebut untuk $k=5$.
+
+\begin{figure}[H]
+  \centering
+  \gambarbesar{%
+  \begin{tikzpicture}[node distance=3mm, every node/.style={minimum width=20mm, minimum height=9mm}]
+    \node[io]        (f1) {Fold 1 (uji)};
+    \node[procplain]  (f2) [right=of f1] {Fold 2 (latih)};
+    \node[procplain]  (f3) [right=of f2] {Fold 3 (latih)};
+    \node[procplain]  (f4) [right=of f3] {Fold 4 (latih)};
+    \node[procplain]  (f5) [right=of f4] {Fold 5 (latih)};
+  \end{tikzpicture}
+  }
+  \caption{Ilustrasi satu putaran validasi silang k-fold ($k=5$); peran
+    fold sebagai data uji bergantian pada setiap putaran hingga kelima
+    fold pernah menjadi data uji}
+  \label{fig:2.kfold}
+\end{figure}
+
+Teknik ini menghasilkan $k$ observasi akurasi dan F1-score, satu untuk
+setiap fold, sehingga memungkinkan pengujian konsistensi performa
+antar-fold untuk setiap kondisi yang diuji, bukan hanya satu nilai
+tunggal dari satu kali pengujian.
+
+% ── 2.13 Pengujian Signifikansi Statistik ────────────────────────────
+\section{Pengujian Signifikansi Statistik}
+\label{sec:2.13}
+
+Untuk menguji apakah perbedaan performa antarkondisi hasil validasi
+silang k-fold bersifat signifikan secara statistik, $k$ observasi yang
+diperoleh terlebih dahulu diuji normalitasnya menggunakan uji
+Shapiro-Wilk (Shapiro and Wilk, 1965). Apabila data berdistribusi
+normal, pengujian dilanjutkan dengan \emph{paired t-test}, yang
+menghitung statistik uji $t$ dari selisih berpasangan $d_i$ antara dua
+kondisi pada fold yang sama, sebagaimana Persamaan \ref{eq:2.ttest}.
+
+\begin{equation}
+  t = \frac{\bar{d}}{s_d / \sqrt{n}}
+  \label{eq:2.ttest}
+\end{equation}
+
+\noindent
+di mana $\bar{d}$ adalah rata-rata selisih berpasangan, $s_d$ adalah
+simpangan baku selisih tersebut, dan $n$ adalah jumlah fold. Apabila
+data tidak berdistribusi normal, digunakan \emph{Wilcoxon signed-rank
+test} sebagai alternatif non-parametrik yang tidak mengasumsikan
+distribusi tertentu (Wilcoxon, 1945).

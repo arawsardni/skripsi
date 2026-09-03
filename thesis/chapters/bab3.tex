@@ -8,17 +8,18 @@
 \label{sec:3.1}
 
 Penelitian ini merupakan penelitian non-implementatif analitik dengan
-pendekatan kuantitatif, karena berfokus pada analisis pengaruh strategi
-\emph{fine-tuning} terhadap akurasi klasifikasi emosi ucapan, bukan pada
+pendekatan kuantitatif, karena berfokus pada analisis pengaruh skema
+pembagian data terhadap akurasi klasifikasi emosi ucapan, bukan pada
 pengembangan sistem atau perangkat lunak siap pakai. Sifat analitik
 ditunjukkan melalui pengolahan data hasil observasi akurasi dan F1-score
-dari setiap strategi \emph{fine-tuning} untuk mengkaji hubungan antara
-strategi yang diterapkan dan performa klasifikasi emosi yang dihasilkan.
-Pendekatan kuantitatif digunakan karena data berupa nilai numerik hasil
-evaluasi model yang dianalisis menggunakan metrik akurasi, F1-score, dan
-pengujian signifikansi statistik. Model-model yang di-\emph{fine-tune}
-pada penelitian ini berfungsi sebagai instrumen untuk menghasilkan data
-observasi tersebut, bukan sebagai produk/artefak utama penelitian.
+dari setiap kondisi eksperimen untuk mengkaji hubungan antara skema
+pembagian data yang digunakan dan performa klasifikasi emosi yang
+dihasilkan. Pendekatan kuantitatif digunakan karena data berupa nilai
+numerik hasil evaluasi model yang dianalisis menggunakan metrik akurasi,
+F1-score, dan pengujian signifikansi statistik. Model-model yang
+dilatih pada penelitian ini berfungsi sebagai instrumen untuk
+menghasilkan data observasi tersebut, bukan sebagai produk/artefak
+utama penelitian.
 
 \begin{figure}[H]
   \centering
@@ -26,17 +27,15 @@ observasi tersebut, bukan sebagai produk/artefak utama penelitian.
     \node[term] (mulai)   {Mulai};
     \node[proc] (studi)   [below=of mulai]    {Studi Literatur};
     \node[proc] (data)    [below=of studi]    {Pengumpulan Data};
-    \node[proc] (sumber)  [below=of data]     {Fine-Tuning Sumber};
-    \node[proc] (target)  [below=of sumber]   {Fine-Tuning Target};
-    \node[proc] (evaluasi)[below=of target]   {Evaluasi K-Fold};
+    \node[proc] (rancang) [below=of data]     {Perancangan Algoritma};
+    \node[proc] (evaluasi)[below=of rancang]  {Evaluasi K-Fold};
     \node[proc] (analisis)[below=of evaluasi] {Analisis Hasil};
     \node[term] (selesai) [below=of analisis] {Selesai};
 
     \draw[arr] (mulai)    -- (studi);
     \draw[arr] (studi)    -- (data);
-    \draw[arr] (data)     -- (sumber);
-    \draw[arr] (sumber)   -- (target);
-    \draw[arr] (target)   -- (evaluasi);
+    \draw[arr] (data)     -- (rancang);
+    \draw[arr] (rancang)  -- (evaluasi);
     \draw[arr] (evaluasi) -- (analisis);
     \draw[arr] (analisis) -- (selesai);
   \end{tikzpicture}
@@ -47,120 +46,144 @@ observasi tersebut, bukan sebagai produk/artefak utama penelitian.
 Diagram alir metode penelitian ini ditunjukkan pada Gambar
 \ref{fig:3.alur}. Tahap awal penelitian diawali dengan studi literatur,
 yang bertujuan untuk mengkaji teori, metode, serta penelitian terdahulu
-yang relevan dengan SER, pembelajaran \emph{self-supervised}, dan
-\emph{cross-lingual transfer}. Tahap berikutnya adalah pengumpulan data,
-yaitu proses pengumpulan korpus emosi berbahasa Inggris sebagai sumber
-dan dataset SER berbahasa Indonesia sebagai target. Data yang telah
-diperoleh selanjutnya diproses pada tahap \emph{fine-tuning} sumber
-untuk melatih backbone \emph{self-supervised} mengenali pola akustik
-emosi secara umum. Setelah itu dilakukan \emph{fine-tuning} target untuk
-mengadaptasi model dasar ke data Indonesia melalui beberapa skema
-strategi. Tahap berikutnya adalah evaluasi k-fold untuk menilai performa
-setiap strategi menggunakan skema validasi silang dan pengujian
-signifikansi statistik. Hasil evaluasi tersebut kemudian digunakan
-sebagai dasar pada tahap analisis hasil, yang merangkum temuan
-penelitian serta menjawab rumusan masalah yang telah dipaparkan.
+yang relevan dengan SER dan kebocoran data pada skema evaluasi. Tahap
+berikutnya adalah pengumpulan data, yaitu proses pengumpulan dataset SER
+berbahasa Indonesia yang digunakan dalam penelitian ini. Data yang telah
+diperoleh selanjutnya diproses pada tahap perancangan algoritma, yaitu
+merancang algoritma \emph{baseline} berbasis fitur tangan dan algoritma
+SOTA berbasis representasi pralatih. Tahap berikutnya adalah evaluasi
+k-fold untuk menilai performa setiap kondisi eksperimen menggunakan
+skema validasi silang dan pengujian signifikansi statistik. Hasil
+evaluasi tersebut kemudian digunakan sebagai dasar pada tahap analisis
+hasil, yang merangkum temuan penelitian serta menjawab rumusan masalah
+yang telah dipaparkan.
 
 \section{Studi Literatur}
 \label{sec:3.2}
 
 Studi literatur merupakan tahap awal penelitian yang bertujuan untuk
 mempelajari dan memahami teori, konsep, serta hasil penelitian terdahulu
-yang berkaitan dengan SER, pembelajaran \emph{self-supervised},
-representasi Wav2Vec2/XLSR, dan \emph{cross-lingual transfer}. Pada
-tahap ini dilakukan pengkajian terhadap jurnal, prosiding konferensi,
-dan sumber ilmiah relevan untuk memastikan celah penelitian pada Bab 2
-Landasan Kepustakaan belum terjawab oleh penelitian lain, sekaligus
-menentukan backbone model dan skema \emph{fine-tuning} yang sesuai
+yang berkaitan dengan SER, kebocoran data pada skema evaluasi, fitur
+\emph{hand-crafted} MFCC, \emph{convolutional neural network}, representasi
+\emph{self-supervised} Wav2Vec2/XLSR-53, dan \emph{Low-Rank Adaptation}
+(LoRA). Pada tahap ini dilakukan pengkajian terhadap jurnal, prosiding
+konferensi, dan sumber ilmiah relevan untuk memastikan celah penelitian
+pada Bab 2 Landasan Kepustakaan belum terjawab oleh penelitian lain,
+sekaligus menentukan algoritma dan skema pembagian data yang sesuai
 dengan tujuan penelitian.
 
 \section{Pengumpulan Data}
 \label{sec:3.3}
 
-Tahap ini mengumpulkan dua kelompok data, yaitu korpus emosi berbahasa
-Inggris sebagai sumber pada tahap \emph{fine-tuning} pertama
-(RAVDESS/CREMA-D), dan dataset E-SERAVD (Santoso, Budianto and Dutono,
-2026) sebagai target berbahasa Indonesia pada tahap \emph{fine-tuning}
-kedua. Skema kelas emosi pada korpus sumber disesuaikan dengan skema
-empat kelas yang tersedia pada E-SERAVD (marah, senang, netral, sedih),
-sehingga perbandingan antarstrategi \emph{fine-tuning} dapat dilakukan
-secara adil.
-
-Karakteristik masing-masing korpus dijelaskan sebagai berikut. RAVDESS
-adalah korpus ucapan emosional berbahasa Inggris yang direkam oleh 24
-aktor profesional (12 perempuan, 12 laki-laki), mencakup 8 kategori
-emosi (netral, tenang, senang, sedih, marah, takut, jijik, dan terkejut)
-(Livingstone and Russo, 2018). CREMA-D adalah korpus ucapan emosional
-berbahasa Inggris yang direkam oleh 91 aktor dengan latar belakang usia
-dan etnis yang beragam, mencakup 6 kategori emosi (marah, jijik, takut,
-senang, netral, dan sedih) (Cao et al., 2014). Kedua korpus ini dipilih
-sebagai sumber karena tersedia secara publik, telah banyak digunakan
-pada penelitian SER sebelumnya, dan mencakup kategori emosi yang secara
-umum beririsan dengan skema kelas pada dataset target. Tabel
-\ref{tab:3.dataset} merangkum karakteristik ketiga dataset yang
-digunakan.
+Tahap ini mengumpulkan dataset E-SERAVD v1.1 (Santoso, Budianto and
+Dutono, 2026), yaitu dataset SER berbahasa Indonesia yang bersumber dari
+6 judul film Indonesia: Ada Apa Dengan Cinta (AADC), Dilan 1990 (D1990),
+Dua Hati Biru (DHB), Habibie \& Ainun 3 (HA3), Home Sweet Loan (HSL), dan
+The Architecture of Love (TAOL). Dataset ini terdiri atas 1.200 klip
+ucapan emosional, seimbang sempurna pada 4 kelas emosi (marah, sedih,
+netral, bahagia) dengan 300 klip per kelas. Durasi klip berkisar
+0,83--6,87 detik dengan rata-rata sekitar 2,6 detik, dalam format audio
+44.100 Hz, 32-bit float, 2 channel. Tabel \ref{tab:3.dataset} merangkum
+karakteristik dataset tersebut.
 
 \begin{table}[H]
   \centering
-  \caption{Karakteristik dataset yang digunakan}
+  \caption{Karakteristik dataset E-SERAVD v1.1}
   \label{tab:3.dataset}
-  \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{p{3.8cm} l l p{2.6cm} p{1.8cm}}
+  \begin{tabular}{l l}
     \toprule
-    \textbf{Dataset} & \textbf{Peran} & \textbf{Bahasa} & \textbf{Jumlah Sampel} & \textbf{Jumlah Kelas} \\
+    \textbf{Atribut} & \textbf{Nilai} \\
     \midrule
-    RAVDESS & Sumber & Inggris & 1.440 & 8 \\
-    CREMA-D & Sumber & Inggris & 7.442 & 6 \\
-    E-SERAVD & Target & Indonesia & $\sim$5.049 & 4 \\
+    Bahasa                & Indonesia \\
+    Jumlah klip           & 1.200 \\
+    Jumlah kelas emosi    & 4 (marah, sedih, netral, bahagia) \\
+    Sampel per kelas      & 300 \\
+    Jumlah film sumber    & 6 \\
+    Durasi klip           & 0,83--6,87 detik (rata-rata $\sim$2,6 detik) \\
+    Format audio          & 44.100 Hz, 32-bit float, 2 channel \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\noindent
+Dataset E-SERAVD memiliki 3 versi berbeda. Versi v1.0 (PENS-SER Dataset)
+dan versi v1.1 (E-SERAVD) identik secara \emph{byte-for-byte}, keduanya
+berisi 1.200 klip dengan 4 kelas dan 6 film yang sama. Versi v1.2
+merupakan versi lebih baru yang mengklaim 3.000 klip pada 6 kelas emosi
+(menambahkan kelas jijik dan takut) dari 11 film, tetapi ditemukan
+anomali pada tabel Fleiss Kappa dalam dokumentasinya yang secara
+matematis tidak konsisten dengan jumlah klip tervalidasi yang diklaim,
+sehingga validitas anotasinya belum dapat dipastikan. Penelitian ini
+menggunakan v1.1 karena identik dengan v1.0 yang telah diverifikasi
+langsung terhadap dokumentasi spesifikasinya, dan sesuai dengan dataset
+yang digunakan Santoso, Budianto and Dutono (2026) untuk menetapkan
+\emph{baseline} yang direplikasi pada penelitian ini.
+
+E-SERAVD v1.1 tidak menyediakan fitur akustik siap pakai, sehingga
+koefisien MFCC diekstraksi langsung dari berkas audio pada penelitian
+ini. Dataset SER Indonesia lain seperti IndoWaveSentiment (Nugroho et
+al., 2025) tidak digunakan pada penelitian ini karena skala dan skema
+kelasnya berbeda dari E-SERAVD, namun disebutkan kembali sebagai arah
+pengembangan pada Bab 6.
+
+Sebaran film sumber pada dataset ini tidak merata antarkelas emosi,
+sebagaimana dirangkum pada Tabel \ref{tab:3.confound}.
+
+\begin{table}[H]
+  \centering
+  \caption{Distribusi jumlah klip per film dan kelas emosi}
+  \label{tab:3.confound}
+  \begin{adjustbox}{max width=\textwidth}
+  \begin{tabular}{l c c c c c c}
+    \toprule
+    \textbf{Kelas} & \textbf{AADC} & \textbf{D1990} & \textbf{DHB} & \textbf{HA3} & \textbf{HSL} & \textbf{TAOL} \\
+    \midrule
+    Netral  & 50 & 50 & 50  & 50 & 50 & 50 \\
+    Marah   & 54 & 35 & 54  & 51 & 53 & 53 \\
+    Sedih   & 58 & 7  & 106 & 32 & 55 & 42 \\
+    Bahagia & 12 & 74 & 41  & 73 & 64 & 36 \\
     \bottomrule
   \end{tabular}
   \end{adjustbox}
 \end{table}
 
 \noindent
-Jumlah sampel untuk RAVDESS dan CREMA-D di atas mengacu pada dokumentasi
-resmi masing-masing korpus. E-SERAVD memiliki sekitar 5.049 sampel
-dengan distribusi 1.202 marah, 1.228 senang, 2.075 netral, dan 899 sedih
-(Santoso, Budianto and Dutono, 2026); angka ini masih perlu diverifikasi
-ulang terhadap dokumentasi resmi dataset sebelum benar-benar diperoleh.
-Dataset SER Indonesia lain seperti IndoWaveSentiment (Nugroho et al.,
-2025) tidak digunakan sebagai target pada penelitian ini karena skala
-dan skema kelasnya berbeda dari E-SERAVD, namun disebutkan kembali
-sebagai arah pengembangan pada Bab 6.
+Kelas netral tersebar rata sempurna antarfilm, tetapi kelas sedih
+didominasi oleh film DHB (106 dari 300 klip, 35\%) dan kelas bahagia
+didominasi oleh film D1990 dan HA3 (147 dari 300 klip, 49\%). Apabila
+pembagian data latih dan uji dilakukan secara acak murni, klip dari film
+yang sama berisiko muncul pada kedua sisi sekaligus, sehingga model
+berpotensi mempelajari gaya produksi atau karakteristik rekaman film
+tertentu sebagai proxy kelas emosi, bukan pola akustik emosi yang
+genuinely general. Risiko ini menjadi dasar bagi penelitian ini untuk
+menguji secara eksplisit pengaruh skema pembagian data -- \emph{random}
+dibandingkan \emph{movie-independent} -- terhadap performa klasifikasi
+emosi.
 
-\section{Fine-Tuning Sumber}
+\section{Perancangan Algoritma}
 \label{sec:3.4}
 
-Backbone yang digunakan adalah model dasar XLSR-53
-(\path{facebook/wav2vec2-large-xlsr-53}) tanpa \emph{fine-tuning}
-tambahan dari pihak lain untuk Bahasa Indonesia -- berbeda dari
-pendekatan Nugroho et al. (2025) yang menguji model dasar XLSR-Wav2Vec2
-yang sudah di-\emph{fine-tune} untuk ucapan Indonesia (lihat Subbab
-\ref{sec:2.4}). Pemilihan ini disengaja: dengan titik awal yang identik
-di keempat kondisi eksperimen (Subbab \ref{sec:3.5}), perbedaan performa
-yang teramati dapat ditarik ke strategi \emph{fine-tuning} yang diuji
-dalam penelitian ini, bukan tercampur dengan efek \emph{fine-tuning}
-pihak lain yang sudah menempel pada checkpoint.
+Tahap ini merancang dua algoritma yang dibandingkan pada penelitian ini
+dari dataset yang sama, masing-masing mengikuti pendekatan aslinya,
+supaya Kondisi A menjadi replikasi yang setia terhadap konfigurasi
+Santoso, Budianto and Dutono (2026).
 
-Tahap ini melatih backbone \emph{self-supervised} (Wav2Vec2/XLSR-53)
-pada korpus emosi berbahasa Inggris agar model mampu mengenali pola
-akustik emosi secara umum, menghasilkan model dasar yang selanjutnya
-akan diadaptasi ke data target pada tahap berikutnya. Tahap ini
-dijalankan sekali saja; bobot hasilnya dipakai ulang sebagai titik awal
-untuk semua fold pada Kondisi C dan D (Subbab \ref{sec:3.5}), bukan
-diulang per-fold, karena \emph{fine-tuning} tahap sumber tidak
-bergantung pada pembagian fold data target.
+Algoritma \emph{baseline} mengekstraksi koefisien MFCC dari klip audio,
+kemudian mengklasifikasikannya menggunakan \emph{convolutional neural
+network} (CNN) yang dilatih dari nol, mengikuti pendekatan Santoso,
+Budianto and Dutono (2026).
 
-\section{Fine-Tuning Target}
-\label{sec:3.5}
+Algoritma SOTA mengekstraksi representasi dari backbone XLSR-53
+(\path{facebook/wav2vec2-large-xlsr-53}), dengan bobot dasar backbone
+dibekukan (\emph{frozen}) dan matriks adaptasi berperingkat rendah
+(LoRA) disisipkan pada lapisan-lapisan Transformer-nya. Matriks adaptasi
+tersebut dilatih bersama \emph{classification head} secara
+\emph{end-to-end} pada data target, berbeda dari pendekatan Nugroho et
+al. (2025) yang menguji model dasar XLSR-Wav2Vec2 yang sudah
+di-\emph{fine-tune} penuh untuk ucapan Indonesia oleh pihak lain.
 
-Tahap ini mengadaptasi model ke data Indonesia melalui dua axis desain
-yang independen: (1) \emph{stage}, yaitu apakah model melalui
-\emph{fine-tuning} dua tahap atau langsung dilatih pada data target
-(\emph{single-stage}); dan (2) metode adaptasi, yaitu \emph{full
-fine-tuning} yang memperbarui seluruh parameter model, atau LoRA yang
-hanya memperbarui parameter tambahan berjumlah kecil. Kombinasi kedua
-axis tersebut menghasilkan empat kondisi eksperimen sebagaimana
+Kedua algoritma ini dirancang dan dilatih secara independen di bawah dua
+skema pembagian data, menghasilkan empat kondisi eksperimen sebagaimana
 dirangkum pada Tabel \ref{tab:3.kondisi}.
 
 \begin{table}[H]
@@ -169,151 +192,121 @@ dirangkum pada Tabel \ref{tab:3.kondisi}.
   \label{tab:3.kondisi}
   \begin{tabular}{c l l}
     \toprule
-    \textbf{Kondisi} & \textbf{Stage} & \textbf{Metode Adaptasi} \\
+    \textbf{Kondisi} & \textbf{Algoritma} & \textbf{Skema Pembagian Data} \\
     \midrule
-    A & Single-stage & Full Fine-Tuning \\
-    B & Single-stage & LoRA \\
-    C & Two-stage    & Full Fine-Tuning \\
-    D & Two-stage    & LoRA \\
+    A & CNN + MFCC          & Random \\
+    B & CNN + MFCC          & Movie-Independent \\
+    C & XLSR-53 + LoRA      & Random \\
+    D & XLSR-53 + LoRA      & Movie-Independent \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 \noindent
-Backbone yang digunakan sama persis (XLSR-53, Subbab \ref{sec:3.4}) di
-keempat kondisi -- yang berbeda hanya resep \emph{fine-tuning}-nya --
-supaya perbedaan hasil antarkondisi dapat ditarik ke strategi
-\emph{fine-tuning} yang diuji, bukan ke perbedaan arsitektur atau titik
-awal model. Kondisi A dan B tidak melalui tahap \emph{fine-tuning}
-sumber (Subbab \ref{sec:3.4}) dan langsung dilatih pada data target,
-sedangkan Kondisi C dan D memakai bobot hasil \emph{fine-tuning} sumber
-sebagai titik awal. Validasi silang k-fold (Subbab \ref{sec:3.6})
-diterapkan pada level adaptasi target ini untuk keempat kondisi. Sebagai
-mitigasi risiko, direkomendasikan menjalankan \emph{pilot run} (1
-kondisi $\times$ 1 fold) pada perangkat keras sebenarnya sebelum
-menjalankan grid eksperimen penuh, untuk memverifikasi estimasi waktu
-dan VRAM pada Subbab \ref{sec:3.9.2} dengan data riil.
+Kondisi A berfungsi sebagai replikasi konfigurasi Santoso, Budianto and
+Dutono (2026); performa yang mendekati \emph{baseline} 86\% akurasi dan
+86\% F1-macro pada kondisi ini menjadi indikator bahwa metodologi
+replikasi telah dilakukan secara benar. Selisih performa antara Kondisi
+B dan A, serta antara Kondisi D dan C, masing-masing mengukur besar
+penurunan performa akibat skema pembagian data yang lebih ketat untuk
+algoritma \emph{baseline} dan algoritma SOTA. Perbandingan kedua selisih
+tersebut menjawab pertanyaan inti penelitian: apakah algoritma SOTA
+lebih tahan terhadap kebocoran data dibandingkan algoritma
+\emph{baseline}.
 
 \section{Evaluasi K-Fold}
-\label{sec:3.6}
+\label{sec:3.5}
 
-Tahap ini mengevaluasi setiap kondisi eksperimen menggunakan skema
-validasi silang k-fold, sehingga diperoleh beberapa observasi akurasi
-dan F1-score per fold untuk masing-masing kondisi. Data hasil observasi
-tersebut kemudian diuji normalitasnya menggunakan uji Shapiro-Wilk. Jika
-data berdistribusi normal, pengujian dilanjutkan dengan \emph{paired
-t-test}; jika tidak, digunakan \emph{Wilcoxon signed-rank test}.
-Pengujian ini bertujuan untuk mengetahui signifikansi statistik
-perbedaan performa antarkondisi eksperimen.
+Tahap ini mengevaluasi keempat kondisi eksperimen menggunakan dua skema
+pembagian data. Skema \emph{random} membagi seluruh klip secara acak ke
+dalam $k=6$ \emph{fold} tanpa mempertimbangkan sumber film. Skema
+\emph{movie-independent} membagi klip berdasarkan film sumber, dengan
+$k=6$ -- satu film sebagai \emph{fold} uji secara bergantian, sedangkan
+kelima film lainnya digunakan sebagai data latih; skema ini dipilih
+karena persis 6 film tersedia pada dataset, sehingga setiap film dapat
+menjadi \emph{fold} tersendiri tanpa perlu menggabungkan beberapa film
+secara arbitrer. Jumlah \emph{fold} yang sama ($k=6$) digunakan pada
+kedua skema, supaya perbedaan hasil yang teramati dapat ditarik ke
+skema pembagian data yang diuji, bukan ke perbedaan granularitas
+\emph{fold}. Tahap ini menghasilkan beberapa observasi akurasi dan
+F1-score per fold untuk masing-masing kondisi.
 
 \section{Analisis Hasil}
-\label{sec:3.7}
+\label{sec:3.6}
 
-Tahap ini menafsirkan hasil pengujian signifikansi statistik untuk
-menjawab rumusan masalah penelitian, serta menyusun rekomendasi
-strategi \emph{fine-tuning} yang paling sesuai untuk pengembangan SER
-berbahasa Indonesia berdasarkan temuan yang diperoleh.
+Data hasil observasi dari validasi silang k-fold terlebih dahulu diuji
+normalitasnya menggunakan uji Shapiro-Wilk. Jika data berdistribusi
+normal, pengujian dilanjutkan dengan \emph{paired t-test}; jika tidak,
+digunakan \emph{Wilcoxon signed-rank test}. Pengujian signifikansi
+dilakukan pada dua tingkat: pertama, antara Kondisi A dan B, serta
+antara Kondisi C dan D, untuk mengetahui pengaruh skema pembagian data
+terhadap performa pada masing-masing algoritma (Rumusan Masalah 1);
+kedua, dengan membandingkan besar selisih performa Kondisi B terhadap A
+dengan besar selisih performa Kondisi D terhadap C, untuk mengetahui
+apakah pengaruh tersebut konsisten antaralgoritma (Rumusan Masalah 2).
+
+Tahap ini kemudian menafsirkan hasil pengujian signifikansi statistik
+tersebut untuk menjawab rumusan masalah penelitian, serta menyusun
+rekomendasi metodologis dan algoritma yang paling sesuai untuk
+pengembangan SER berbahasa Indonesia berdasarkan temuan yang diperoleh.
 
 \section{Kesimpulan dan Saran}
-\label{sec:3.8}
+\label{sec:3.7}
 
 Penarikan kesimpulan dilaksanakan setelah seluruh tahap evaluasi dan
 analisis hasil selesai. Kesimpulan memuat jawaban atas rumusan masalah
 yang telah dituliskan sebelumnya, mengacu pada hasil pengujian
-signifikansi statistik dari setiap strategi \emph{fine-tuning} yang
-dibandingkan. Selain kesimpulan, disusun pula saran sebagai bahan
-pertimbangan dan perbaikan untuk penelitian selanjutnya, misalnya
-perluasan cakupan korpus sumber atau backbone model yang diuji.
+signifikansi statistik atas pengaruh skema pembagian data dan
+konsistensinya antaralgoritma yang dibandingkan. Selain kesimpulan,
+disusun pula saran sebagai bahan pertimbangan dan perbaikan untuk
+penelitian selanjutnya, misalnya augmentasi data atau pengujian
+algoritma lain di luar CNN+MFCC dan XLSR-53+LoRA.
 
 \section{Peralatan Pendukung}
-\label{sec:3.9}
+\label{sec:3.8}
 
 Peralatan pendukung yang digunakan dalam penelitian ini terdiri atas
 perangkat lunak (\emph{software}) dan perangkat keras (\emph{hardware}).
 
 \subsection{Perangkat Lunak (Software)}
-\label{sec:3.9.1}
+\label{sec:3.8.1}
 
 Perangkat lunak yang digunakan dalam mendukung penelitian ini sebagai
 berikut.
 
 \begin{enumerate}
   \item Bahasa pemrograman Python.
-  \item Kerangka kerja \emph{deep learning} untuk pelatihan dan
-        \emph{fine-tuning} model Wav2Vec2/XLSR.
+  \item Kerangka kerja \emph{deep learning} untuk pelatihan CNN dan
+        \emph{fine-tuning} XLSR-53 dengan LoRA.
+  \item Pustaka ekstraksi fitur MFCC (mis. \texttt{librosa}).
   \item Pustaka untuk implementasi LoRA.
-  \item Pustaka optimizer 8-bit (\texttt{bitsandbytes}) untuk mitigasi
-        VRAM pada kondisi \emph{full fine-tuning}.
   \item Pustaka statistik untuk pengujian normalitas dan uji
         signifikansi.
   \item GitHub untuk pengelolaan versi kode sumber dan eksperimen.
 \end{enumerate}
 
 \subsection{Perangkat Keras (Hardware)}
-\label{sec:3.9.2}
+\label{sec:3.8.2}
 
 Perangkat keras yang digunakan dalam mendukung penelitian ini sebagai
 berikut.
 
 \begin{enumerate}
-  \item 2 unit GPU NVIDIA GeForce RTX 3060 6GB (server lab, dipinjamkan).
+  \item 1 unit GPU NVIDIA GeForce RTX 3060 6GB (server lab, dipinjamkan).
   \item RAM dan penyimpanan: [\emph{diisi sesuai spesifikasi server lab
         yang sebenarnya dipakai}].
 \end{enumerate}
 
-Kecukupan VRAM \emph{per kartu} dianalisis terhadap ukuran backbone
-(sekitar 317 juta parameter), sebagaimana dirangkum pada Tabel
-\ref{tab:3.vram}.
-
-\begin{table}[H]
-  \centering
-  \caption{Estimasi kecukupan VRAM per kartu (6GB)}
-  \label{tab:3.vram}
-  \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{l l l l}
-    \toprule
-    \textbf{Komponen} & \textbf{Full-FT (naif)} & \textbf{Full-FT + 8-bit Adam} & \textbf{LoRA} \\
-    \midrule
-    Bobot + master + gradien + optimizer & $\sim$5 GB & $\sim$1,9 GB & $\sim$0,6--0,7 GB \\
-    Sisa untuk aktivasi (dari 6 GB)      & $\sim$1 GB & $\sim$4 GB   & $\sim$5,3 GB \\
-    \bottomrule
-  \end{tabular}
-  \end{adjustbox}
-\end{table}
-
-\noindent
-Estimasi ``naif'' (optimizer Adam presisi-penuh standar) menyisakan
-hanya sekitar 1 GB untuk aktivasi -- terlalu mepet untuk aman, karena
-\emph{overhead} CUDA dan fragmentasi memori berisiko menghabiskan sisa
-tersebut sebelum sempat dipakai aktivasi. Mitigasi yang digunakan untuk
-Kondisi A dan C (\emph{full fine-tuning}) adalah optimizer Adam 8-bit
-(\texttt{bitsandbytes}), yang memangkas kebutuhan memori optimizer
-menjadi sekitar 1,9 GB dan menyisakan sekitar 4 GB untuk aktivasi --
-jauh lebih aman. Dengan mitigasi ini, \emph{full fine-tuning}
-diperkirakan tetap memerlukan \emph{batch size} kecil (sekitar 1--2),
-dengan \emph{gradient checkpointing} dan \emph{gradient accumulation}
-sebagai cadangan opsional jika 4 GB masih belum cukup pada praktiknya.
-Skema LoRA (Kondisi B dan D) memiliki ruang gerak yang jauh lebih
-longgar, dengan \emph{batch size} 8--16 yang tetap realistis tanpa
-teknik tambahan. Keterbatasan ini sekaligus menjadi ilustrasi konkret
-argumen efisiensi LoRA yang diuji dalam penelitian ini (Subbab
-\ref{sec:2.7}): pada perangkat keras yang benar-benar terbatas, LoRA
-bukan hanya lebih hemat secara teoretis, tetapi menjadi opsi yang jauh
-lebih praktis dijalankan.
-
-Strategi 2 GPU yang digunakan bukan \emph{distributed training} (model
-sudah muat pada 1 kartu), melainkan 2 \emph{run} independen paralel,
-satu per GPU (diatur lewat \texttt{CUDA\_VISIBLE\_DEVICES}), karena grid
-eksperimen (4 kondisi $\times$ k fold) bersifat \emph{embarrassingly
-parallel}.
-
-Rekomendasi teknis lain: \emph{mixed precision} (fp16/bf16) untuk
-mengurangi jejak memori, serta membekukan \emph{CNN feature extractor}
-(praktik standar pada \emph{fine-tuning} wav2vec2). Dengan skala dataset
-target diperkirakan sekitar 5 ribu sampel (Subbab \ref{sec:3.3}),
-estimasi kasar waktu per-\emph{run} berkisar puluhan menit hingga
-beberapa jam -- kemungkinan lebih lama untuk kondisi \emph{full
-fine-tuning} karena \emph{batch size} yang lebih kecil -- sehingga total
-waktu penelitian ($k=5$, sekitar 21 \emph{run}) diperkirakan selesai
-dalam hitungan hari dengan pemanfaatan 2 GPU secara paralel. Estimasi
-ini bersifat kasar dan perlu diverifikasi pada uji coba awal.
+Algoritma \emph{baseline} (CNN+MFCC) ringan secara komputasi karena
+dilatih dari nol pada fitur berdimensi kecil. Algoritma SOTA
+(XLSR-53+LoRA) membutuhkan VRAM tambahan untuk menyimpan gradien
+matriks adaptasi LoRA selama pelatihan, tetapi jauh lebih ringan
+dibandingkan \emph{full fine-tuning} karena bobot dasar backbone (317
+juta parameter) tetap dibekukan dan tidak diperbarui. Estimasi kasar
+waktu total penelitian (pelatihan dan evaluasi keempat kondisi
+eksperimen pada $k=6$ \emph{fold} di kedua skema pembagian data)
+berkisar dari beberapa menit hingga beberapa jam pada GPU tunggal untuk
+algoritma \emph{baseline}, dan kemungkinan lebih lama untuk algoritma
+SOTA karena melibatkan \emph{backpropagation} melalui backbone
+Transformer. Estimasi ini bersifat kasar dan perlu diverifikasi pada
+uji coba awal.
