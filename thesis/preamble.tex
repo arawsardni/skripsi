@@ -35,9 +35,15 @@
 
 % ── Tata letak halaman ───────────────────────────────────────────────
 \usepackage[a4paper,left=4cm,right=3cm,top=3cm,bottom=3cm]{geometry}
-% parskip dihapus — atur manual agar inden paragraf tetap aktif
 \setlength{\parindent}{1.27cm}
-\setlength{\parskip}{0pt plus 1pt}
+\setlength{\parskip}{8pt plus 2pt minus 2pt}   % jarak vertikal antarparagraf, mengikuti template resmi
+
+% ── Kerapatan daftar bernomor/berpoin ────────────────────────────────
+% enumitem dipakai supaya jarak antarbutir enumerate/itemize tidak ikut
+% melebar akibat \parskip di atas -- tanpa ini, tiap butir daftar akan
+% mendapat jarak sebesar \parskip juga, jauh lebih lebar dari yang wajar.
+\usepackage{enumitem}
+\setlist{itemsep=2pt, parsep=0pt, topsep=4pt, partopsep=0pt}
 
 % ── Tabel & gambar ───────────────────────────────────────────────────
 \usepackage{graphicx}
@@ -63,17 +69,28 @@
 %     \caption{Judul diagram}
 %   \end{diagram}
 
-% ── Tabel full-border (pakai \hline + kolom |c|c|) ───────────────────
-% Template tabel full-border:
-%   \begin{table}[H]
+% ── Tabel full-border, boleh sambung ke halaman berikutnya ───────────
+% Iterasi 10 item 11: semua tabel pakai longtable (bukan table+tabular)
+% supaya baris otomatis lanjut ke halaman berikutnya kalau kepanjangan,
+% dengan header berulang di tiap halaman lanjutan. Garis vertikal
+% (|c|c|) dan \hline di tiap baris dipertahankan di semua tabel --
+% booktabs/adjustbox TIDAK dipakai lagi untuk tabel isi bab.
+% Template:
+%   \begin{longtable}{|p{4cm}|p{9cm}|}
 %     \caption{Judul Tabel}
-%     \centering
-%     \begin{tabular}{|p{4cm}|p{9cm}|}
-%       \hline
-%       \textbf{Kolom 1} & \textbf{Kolom 2} \\ \hline
-%       Isi baris        & Isi baris        \\ \hline
-%     \end{tabular}
-%   \end{table}
+%     \label{tab:label} \\
+%     \hline
+%     \textbf{Kolom 1} & \textbf{Kolom 2} \\ \hline
+%     \endfirsthead
+%     \hline
+%     \textbf{Kolom 1} & \textbf{Kolom 2} \\ \hline
+%     \endhead
+%     \hline
+%     \endfoot
+%     \hline
+%     \endlastfoot
+%     Isi baris & Isi baris \\ \hline
+%   \end{longtable}
 
 % ── Matematika ───────────────────────────────────────────────────────
 \usepackage{amsmath}
@@ -92,23 +109,60 @@
 % KOSONG (isi .toc/.lof/.lot tetap benar, cuma tidak ke-render ke halaman).
 % Tanpa opsi shape (default titlesec), tampilan visualnya identik tapi TOC
 % normal. Sudah diverifikasi lewat isolasi bug, jangan tambahkan [block] lagi.
+% Ukuran font heading (Iterasi 10 item 4): bab 16pt, subbab 14pt, sub-subbab 12pt
 \titleformat{\chapter}
-  {\normalfont\normalsize\bfseries\centering}
+  {\normalfont\fontsize{16}{20}\selectfont\bfseries\centering}
   {BAB \thechapter\space}
   {0pt}
   {\MakeUppercase}
-\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+\titlespacing*{\chapter}{0pt}{-40pt}{20pt}
 % Subbab: "X.Y Judul" bold, left-aligned, jarak label-judul normal
 \titleformat{\section}
-  {\normalfont\normalsize\bfseries}
+  {\normalfont\fontsize{14}{17}\selectfont\bfseries}
   {\thesection}
   {1em}
   {}
 \titleformat{\subsection}
-  {\normalfont\normalsize\bfseries}
+  {\normalfont\fontsize{12}{15}\selectfont\bfseries}
   {\thesubsection}
   {1em}
   {}
+
+% \titleformat{\chapter} above only reliably restyles the NUMBERED form.
+% \chapter* (used by \tableofcontents/\listoffigures/\listoftables and by
+% "Daftar Referensi") falls back to the class's own \@makeschapterhead,
+% which is left-aligned/not-uppercase by default -- Iterasi 10 item 1
+% flagged exactly this mismatch against "BAB 1 PENDAHULUAN"'s style.
+% Redefine it directly so every unnumbered chapter heading matches: centered,
+% same 16pt size, uppercase, same 20pt space-after as numbered chapters.
+\makeatletter
+\renewcommand{\@makeschapterhead}[1]{%
+  {\parindent\z@ \centering \normalfont\fontsize{16}{20}\selectfont\bfseries
+   \MakeUppercase{#1}\par\nobreak\vskip 20pt}%
+}
+\makeatother
+
+% ── Daftar Isi / Daftar Gambar / Daftar Tabel ────────────────────────
+\usepackage{tocloft}
+% Tanpa bold di semua entri (termasuk level bab, yang default-nya bold)
+\renewcommand{\cftchapfont}{\normalfont}
+\renewcommand{\cftchappagefont}{\normalfont}
+% Entri bab di daftar isi ikut menuliskan "BAB X", sama seperti heading aslinya
+\renewcommand{\cftchappresnum}{BAB\space}
+\setlength{\cftchapnumwidth}{3em}
+% Titik-titik penghubung ke nomor halaman juga muncul di level bab
+% (default kelas report: level bab tanpa titik-titik, cuma section ke bawah)
+\renewcommand{\cftchapdotsep}{\cftdotsep}
+% Titik-titik lebih rapat di semua level
+\renewcommand{\cftdotsep}{1}
+% Jarak vertikal antarentri dipersempit lagi (Iterasi 13 item 1 -- 2pt masih
+% dirasa lebar setelah dicoba) -- 0pt di semua level: bab (Daftar Isi),
+% gambar (Daftar Gambar), tabel (Daftar Tabel), dan section (baris "X.Y
+% Judul" di dalam Daftar Isi, belum pernah disentuh sebelumnya)
+\setlength{\cftbeforechapskip}{0pt}
+\setlength{\cftbeforefigskip}{0pt}
+\setlength{\cftbeforetabskip}{0pt}
+\setlength{\cftbeforesecskip}{0pt}
 
 % ── Mikrografi & hyperlink ───────────────────────────────────────────
 \usepackage{microtype}
@@ -117,7 +171,7 @@
 \PassOptionsToPackage{hyphens}{url}
 \usepackage[hidelinks]{hyperref}
 \hypersetup{
-  pdftitle={Pengaruh Skema Pembagian Data Berbasis Film terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD},
+  pdftitle={Pengaruh Skema Pembagian Data Berbasis Film pada Dataset E-SERAVD terhadap Performa Klasifikasi Pengenalan Emosi Ucapan Berbahasa Indonesia},
   pdfauthor={Gaung Taqwa Indraswara},
 }
 
@@ -209,7 +263,7 @@
 \doctypesubtitlefalse
 
 % ── Metadata dokumen ─────────────────────────────────────────────────
-\title{Pengaruh Skema Pembagian Data Berbasis Film terhadap Akurasi
-  Pengenalan Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD}
+\title{Pengaruh Skema Pembagian Data Berbasis Film pada Dataset E-SERAVD
+  terhadap Performa Klasifikasi Pengenalan Emosi Ucapan Berbahasa Indonesia}
 \author{Gaung Taqwa Indraswara}
 \date{\the\year}

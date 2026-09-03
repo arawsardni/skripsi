@@ -3,7 +3,7 @@
 %  BAB 3 — METODOLOGI PENELITIAN
 % =====================================================================
 
-\chapter{Metodologi Penelitian}
+\chapter{\MakeUppercase{Metodologi Penelitian}}
 
 \section{Tipe Penelitian}
 \label{sec:3.1}
@@ -51,8 +51,8 @@ yang relevan dengan SER dan kebocoran data pada skema evaluasi. Tahap
 berikutnya adalah pengumpulan data, yaitu proses pengumpulan dataset SER
 berbahasa Indonesia yang digunakan dalam penelitian ini. Data yang telah
 diperoleh selanjutnya diproses pada tahap perancangan algoritma, yaitu
-merancang algoritma \emph{baseline} berbasis fitur tangan dan algoritma
-SOTA berbasis representasi pralatih. Tahap berikutnya adalah evaluasi
+merancang algoritma \emph{baseline} berbasis fitur \emph{hand-crafted} dan algoritma
+SOTA berbasis representasi \emph{self-supervised}. Tahap berikutnya adalah evaluasi
 k-fold untuk menilai performa setiap kondisi eksperimen menggunakan
 skema validasi silang dan pengujian signifikansi statistik. Hasil
 evaluasi tersebut kemudian digunakan sebagai dasar pada tahap analisis
@@ -87,24 +87,31 @@ netral, bahagia) dengan 300 klip per kelas. Durasi klip berkisar
 44.100 Hz, 32-bit float, 2 channel. Tabel \ref{tab:3.dataset} merangkum
 karakteristik dataset tersebut.
 
-\begin{table}[H]
-  \centering
+{\renewcommand{\arraystretch}{1.3}\setlength{\tabcolsep}{10pt}
+\begin{longtable}{|p{0.36\textwidth}|p{0.50\textwidth}|}
   \caption{Karakteristik dataset E-SERAVD v1.1}
-  \label{tab:3.dataset}
-  \begin{tabular}{l l}
-    \toprule
-    \textbf{Atribut} & \textbf{Nilai} \\
-    \midrule
-    Bahasa                & Indonesia \\
-    Jumlah klip           & 1.200 \\
-    Jumlah kelas emosi    & 4 (marah, sedih, netral, bahagia) \\
-    Sampel per kelas      & 300 \\
-    Jumlah film sumber    & 6 \\
-    Durasi klip           & 0,83--6,87 detik (rata-rata $\sim$2,6 detik) \\
-    Format audio          & 44.100 Hz, 32-bit float, 2 channel \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+  \label{tab:3.dataset} \\
+  \hline
+  \textbf{Atribut} & \textbf{Nilai} \\
+  \hline
+  \endfirsthead
+  \hline
+  \textbf{Atribut} & \textbf{Nilai} \\
+  \hline
+  \endhead
+  \hline
+  \endfoot
+  \hline
+  \endlastfoot
+  Bahasa                & Indonesia \\ \hline
+  Jumlah klip           & 1.200 \\ \hline
+  Jumlah kelas emosi    & 4 (marah, sedih, netral, bahagia) \\ \hline
+  Sampel per kelas      & 300 \\ \hline
+  Jumlah film sumber    & 6 \\ \hline
+  Durasi klip           & 0,83--6,87 detik (rata-rata $\sim$2,6 detik) \\ \hline
+  Format audio          & 44.100 Hz, 32-bit float, 2 channel \\
+\end{longtable}
+}
 
 \noindent
 Dataset E-SERAVD memiliki 3 versi berbeda. Versi v1.0 (PENS-SER Dataset)
@@ -130,23 +137,28 @@ pengembangan pada Bab 6.
 Sebaran film sumber pada dataset ini tidak merata antarkelas emosi,
 sebagaimana dirangkum pada Tabel \ref{tab:3.confound}.
 
-\begin{table}[H]
-  \centering
+{\renewcommand{\arraystretch}{1.3}\setlength{\tabcolsep}{11pt}
+\begin{longtable}{|l|c|c|c|c|c|c|}
   \caption{Distribusi jumlah klip per film dan kelas emosi}
-  \label{tab:3.confound}
-  \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{l c c c c c c}
-    \toprule
-    \textbf{Kelas} & \textbf{AADC} & \textbf{D1990} & \textbf{DHB} & \textbf{HA3} & \textbf{HSL} & \textbf{TAOL} \\
-    \midrule
-    Netral  & 50 & 50 & 50  & 50 & 50 & 50 \\
-    Marah   & 54 & 35 & 54  & 51 & 53 & 53 \\
-    Sedih   & 58 & 7  & 106 & 32 & 55 & 42 \\
-    Bahagia & 12 & 74 & 41  & 73 & 64 & 36 \\
-    \bottomrule
-  \end{tabular}
-  \end{adjustbox}
-\end{table}
+  \label{tab:3.confound} \\
+  \hline
+  \textbf{Kelas} & \textbf{AADC} & \textbf{D1990} & \textbf{DHB} & \textbf{HA3} & \textbf{HSL} & \textbf{TAOL} \\
+  \hline
+  \endfirsthead
+  \hline
+  \textbf{Kelas} & \textbf{AADC} & \textbf{D1990} & \textbf{DHB} & \textbf{HA3} & \textbf{HSL} & \textbf{TAOL} \\
+  \hline
+  \endhead
+  \hline
+  \endfoot
+  \hline
+  \endlastfoot
+  Netral  & 50 & 50 & 50  & 50 & 50 & 50 \\ \hline
+  Marah   & 54 & 35 & 54  & 51 & 53 & 53 \\ \hline
+  Sedih   & 58 & 7  & 106 & 32 & 55 & 42 \\ \hline
+  Bahagia & 12 & 74 & 41  & 73 & 64 & 36 \\
+\end{longtable}
+}
 
 \noindent
 Kelas netral tersebar rata sempurna antarfilm, tetapi kelas sedih
@@ -187,21 +199,28 @@ Kedua algoritma ini dirancang dan dilatih secara independen di bawah dua
 skema pembagian data, menghasilkan empat kondisi eksperimen sebagaimana
 dirangkum pada Tabel \ref{tab:3.kondisi}.
 
-\begin{table}[H]
-  \centering
+{\renewcommand{\arraystretch}{1.3}\setlength{\tabcolsep}{14pt}
+\begin{longtable}{|c|l|l|}
   \caption{Empat kondisi eksperimen (desain 2$\times$2)}
-  \label{tab:3.kondisi}
-  \begin{tabular}{c l l}
-    \toprule
-    \textbf{Kondisi} & \textbf{Algoritma} & \textbf{Skema Pembagian Data} \\
-    \midrule
-    A & CNN + MFCC          & Random \\
-    B & CNN + MFCC          & Movie-Independent \\
-    C & XLSR-53 + LoRA      & Random \\
-    D & XLSR-53 + LoRA      & Movie-Independent \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+  \label{tab:3.kondisi} \\
+  \hline
+  \textbf{Kondisi} & \textbf{Algoritma} & \textbf{Skema Pembagian Data} \\
+  \hline
+  \endfirsthead
+  \hline
+  \textbf{Kondisi} & \textbf{Algoritma} & \textbf{Skema Pembagian Data} \\
+  \hline
+  \endhead
+  \hline
+  \endfoot
+  \hline
+  \endlastfoot
+  A & CNN + MFCC          & Random \\ \hline
+  B & CNN + MFCC          & Movie-Independent \\ \hline
+  C & XLSR-53 + LoRA      & Random \\ \hline
+  D & XLSR-53 + LoRA      & Movie-Independent \\
+\end{longtable}
+}
 
 \noindent
 Kondisi A berfungsi sebagai replikasi konfigurasi Santoso, Budianto and
@@ -262,52 +281,3 @@ konsistensinya antaralgoritma yang dibandingkan. Selain kesimpulan,
 disusun pula saran sebagai bahan pertimbangan dan perbaikan untuk
 penelitian selanjutnya, misalnya augmentasi data atau pengujian
 algoritma lain di luar CNN+MFCC dan XLSR-53+LoRA.
-
-\section{Peralatan Pendukung}
-\label{sec:3.8}
-
-Peralatan pendukung yang digunakan dalam penelitian ini terdiri atas
-perangkat lunak (\emph{software}) dan perangkat keras (\emph{hardware}).
-
-\subsection{Perangkat Lunak (Software)}
-\label{sec:3.8.1}
-
-Perangkat lunak yang digunakan dalam mendukung penelitian ini sebagai
-berikut.
-
-\begin{enumerate}
-  \item Bahasa pemrograman Python.
-  \item Kerangka kerja \emph{deep learning} untuk pelatihan CNN dan
-        \emph{fine-tuning} XLSR-53 dengan LoRA.
-  \item Pustaka ekstraksi fitur MFCC (mis. \texttt{librosa}).
-  \item Pustaka untuk implementasi LoRA.
-  \item Pustaka statistik untuk pengujian normalitas dan uji
-        signifikansi.
-  \item GitHub untuk pengelolaan versi kode sumber dan eksperimen.
-\end{enumerate}
-
-\subsection{Perangkat Keras (Hardware)}
-\label{sec:3.8.2}
-
-Perangkat keras yang digunakan dalam mendukung penelitian ini sebagai
-berikut.
-
-\begin{enumerate}
-  \item 1 unit GPU NVIDIA GeForce RTX 3060 6GB (server lab, dipinjamkan).
-  \item RAM dan penyimpanan: [\emph{diisi sesuai spesifikasi server lab
-        yang sebenarnya dipakai}].
-\end{enumerate}
-
-Algoritma \emph{baseline} (CNN+MFCC) ringan secara komputasi karena
-dilatih dari nol pada fitur berdimensi kecil. Algoritma SOTA
-(XLSR-53+LoRA) membutuhkan VRAM tambahan untuk menyimpan gradien
-matriks adaptasi LoRA selama pelatihan, tetapi jauh lebih ringan
-dibandingkan \emph{full fine-tuning} karena bobot dasar backbone (317
-juta parameter) tetap dibekukan dan tidak diperbarui. Estimasi kasar
-waktu total penelitian (pelatihan dan evaluasi keempat kondisi
-eksperimen pada $k=6$ \emph{fold} di kedua skema pembagian data)
-berkisar dari beberapa menit hingga beberapa jam pada GPU tunggal untuk
-algoritma \emph{baseline}, dan kemungkinan lebih lama untuk algoritma
-SOTA karena melibatkan \emph{backpropagation} melalui backbone
-Transformer. Estimasi ini bersifat kasar dan perlu diverifikasi pada
-uji coba awal.

@@ -3,7 +3,7 @@
 %  BAB 1 — PENDAHULUAN
 % =====================================================================
 
-\chapter{Pendahuluan}
+\chapter{\MakeUppercase{Pendahuluan}}
 
 \section{Latar Belakang}
 \label{sec:1.1}
@@ -29,58 +29,57 @@ sebagai permasalahan penelitian yang penting sekaligus menantang.
 
 Menjawab kesenjangan tersebut, Santoso, Budianto and Dutono (2026)
 mengembangkan E-SERAVD, dataset SER berbahasa Indonesia yang bersumber
-dari rekaman film Indonesia, sekaligus menetapkan \emph{baseline}
+dari dialog rekaman film Indonesia, sekaligus menetapkan \emph{baseline}
 performa 86\% akurasi dan 86\% F1-macro menggunakan model CNN
-konvensional dengan fitur tangan MFCC. \emph{Baseline} tersebut,
+konvensional dengan fitur \emph{hand-crafted} MFCC. \emph{Baseline} tersebut,
 meskipun berguna, dilaporkan tanpa menyebutkan kontrol terhadap sumber
 film pada pembagian data latih dan uji. Padahal, E-SERAVD terbukti
-memiliki sebaran film yang tidak merata antarkelas emosi -- 106 dari 300
+memiliki sebaran film yang tidak merata antarkelas emosi. Terdapat 106 dari 300
 klip kelas sedih berasal dari satu film yang sama, dan 147 dari 300 klip
-kelas bahagia berasal dari dua film yang sama (lihat Subbab
-\ref{sec:3.3}). Apabila pembagian data latih dan uji dilakukan secara
+kelas bahagia berasal dari dua film yang sama. Apabila pembagian data latih dan uji dilakukan secara
 acak tanpa mengontrol sumber film, klip dari film yang sama berisiko
 muncul pada kedua sisi sekaligus, sehingga model berpotensi mempelajari
 ciri produksi atau karakteristik rekaman film tertentu sebagai proxy
-kelas emosi, bukan pola akustik emosi yang genuinely general. Risiko ini
+kelas emosi, bukan pola akustik emosi secara umum. 
+
+Risiko tersebut
 dikenal sebagai kebocoran data (\emph{data leakage}) (Kapoor and
 Narayanan, 2023), dan berpotensi membuat performa yang dilaporkan
 terlihat lebih baik daripada performa sesungguhnya pada data yang
 benar-benar baru. Pada domain SER secara spesifik, kegagalan mengontrol
 tumpang tindih identitas penutur antara data latih dan uji telah
 terbukti menghasilkan estimasi performa yang lebih optimistis
-dibandingkan skema evaluasi yang independen (Antoniou et al., 2023).
+dibandingkan skema evaluasi yang independen (Antoniou et al., 2023). Pada domain SER
+secara umum, kegagalan mengontrol kebocoran semacam ini dilaporkan
+memengaruhi sebagian besar penelitian yang diterbitkan. Lebih dari
+80\% studi SER tidak dapat direproduksi secara memadai, dan skema
+partisi data yang tidak terkontrol dilaporkan menghasilkan peningkatan
+performa semu hingga sekitar 4\% (Wu et al., 2024).
 
 Di sisi lain, representasi \emph{self-supervised} kini banyak dianggap
 sebagai pendekatan performa terbaik (\emph{state-of-the-art}) untuk SER,
 termasuk untuk bahasa Indonesia. Atmaja and Sasou (2022) menunjukkan
 bahwa representasi \emph{self-supervised} secara konsisten mengungguli
-fitur tangan pada lima dataset SER berbahasa Inggris dan Jepang, dengan
-signifikansi statistik yang kuat (uji Friedman, $p<10^{-10}$), meskipun
+fitur \emph{hand-crafted} pada lima dataset SER berbahasa Inggris dan Jepang, dengan
+signifikansi statistik yang kuat, meskipun
 XLSR-53 secara spesifik sempat berperforma lebih rendah dibandingkan
 model monolingual berbahasa Inggris pada studi yang sama. Pada konteks
 SER berbahasa Indonesia secara spesifik, Nugroho et al. (2025)
 menunjukkan bahwa model dasar XLSR-Wav2Vec2 yang telah di-\emph{fine-tune}
 untuk ucapan Indonesia dapat mencapai akurasi SER hingga 91,67\%,
-mengungguli metode klasik berbasis fitur tangan. Bukti-bukti ini
+mengungguli metode klasik berbasis fitur \emph{hand-crafted}. Bukti-bukti ini
 menempatkan XLSR-53 sebagai backbone \emph{self-supervised} yang paling
-relevan untuk diadaptasi pada tugas SER berbahasa Indonesia saat ini.
-
-Kekhawatiran ini bukan sekadar spekulasi metodologis: pada domain SER
-secara umum, kegagalan mengontrol kebocoran semacam ini dilaporkan
-memengaruhi sebagian besar penelitian yang diterbitkan -- lebih dari
-80\% studi SER tidak dapat direproduksi secara memadai, dan skema
-partisi data yang tidak terkontrol dilaporkan menghasilkan peningkatan
-performa semu hingga sekitar 4\% (Wu et al., 2024). Akan tetapi, belum
+relevan untuk diadaptasi pada tugas SER berbahasa Indonesia saat ini. Akan tetapi, belum
 ada studi yang menguji ketahanan algoritma \emph{baseline} (CNN+MFCC)
 maupun algoritma SOTA (XLSR-53 yang diadaptasi dengan LoRA) terhadap
-risiko kebocoran data berbasis film yang terbukti ada pada E-SERAVD. Penelusuran terhadap 924 skripsi Teknik
-Informatika FILKOM UB yang tersedia secara \emph{open-access} juga belum
-menemukan satu pun yang mengangkat SER berbasis audio, apalagi
-menyentuh isu validitas skema evaluasinya. Berdasarkan uraian tersebut,
+risiko kebocoran data berbasis film yang terbukti ada pada E-SERAVD.
+
+Berdasarkan uraian diatas,
 diperlukan kajian analitik mengenai pengaruh skema pembagian data
 berbasis film terhadap akurasi pengenalan emosi ucapan berbahasa
 Indonesia, serta apakah pengaruh tersebut konsisten pada algoritma
-berbasis fitur tangan maupun algoritma berbasis representasi pralatih,
+berbasis fitur \emph{hand-crafted} maupun algoritma berbasis representasi
+\emph{self-supervised},
 yang akan dianalisis dalam skripsi ini.
 
 \section{Rumusan Masalah}
@@ -91,12 +90,12 @@ dalam penelitian ini dapat dirumuskan sebagai berikut.
 
 \begin{enumerate}
   \item Bagaimana pengaruh skema pembagian data berbasis film
-        (\emph{random} dibandingkan \emph{movie-independent}) terhadap
+        (\emph{random} dibandingkan \emph{movie-independent}) pada dataset E-SERAVD terhadap
         performa klasifikasi pengenalan emosi ucapan berbahasa
         Indonesia?
   \item Apakah pengaruh tersebut konsisten pada algoritma berbasis
-        fitur tangan (CNN+MFCC) maupun algoritma berbasis representasi
-        pralatih (XLSR-53+LoRA)?
+        fitur \emph{hand-crafted} (MFCC+CNN) maupun algoritma berbasis representasi
+        \emph{self-supervised} (XLSR-53)?
 \end{enumerate}
 
 \section{Tujuan}
@@ -113,8 +112,8 @@ dipaparkan, maka penelitian ini memiliki tujuan sebagai berikut.
   \item Menganalisis konsistensi pengaruh skema pembagian data berbasis
         film (\emph{random split} dibandingkan \emph{movie-independent
         split}) terhadap akurasi pengenalan emosi ucapan berbahasa
-        Indonesia pada algoritma berbasis fitur tangan (CNN+MFCC) dan
-        algoritma berbasis representasi pralatih (XLSR-53+LoRA).
+        Indonesia pada algoritma berbasis fitur \emph{hand-crafted} (MFCC+CNN) dan
+        algoritma berbasis representasi \emph{self-supervised} (XLSR-53).
 \end{enumerate}
 
 \section{Manfaat}
@@ -129,8 +128,8 @@ Penelitian ini diharapkan dapat memberikan manfaat sebagai berikut.
         metodologis bagi peneliti lain yang menggunakan dataset ini
         pada penelitian selanjutnya.
   \item Memberikan bukti empiris mengenai ketahanan algoritma berbasis
-        representasi pralatih dibandingkan algoritma berbasis fitur
-        tangan terhadap skema pembagian data yang lebih ketat, sehingga
+        representasi \emph{self-supervised} dibandingkan algoritma berbasis fitur
+        \emph{hand-crafted} terhadap skema pembagian data yang lebih ketat, sehingga
         dapat membantu peneliti maupun praktisi dalam memilih algoritma
         yang lebih andal untuk SER berbahasa Indonesia.
   \item Berkontribusi pada pengembangan riset komputasi cerdas berbahasa
@@ -148,15 +147,15 @@ adalah sebagai berikut.
   \item Dataset dibatasi pada E-SERAVD v1.1, mencakup 1.200 klip ucapan
         emosional berbahasa Indonesia dari 6 film sumber, dengan 4
         kelas emosi (marah, sedih, netral, bahagia).
-  \item Algoritma \emph{baseline} dibatasi pada CNN dengan fitur tangan
+  \item Algoritma \emph{baseline} dibatasi pada CNN dengan fitur \emph{hand-crafted}
         MFCC, mengikuti pendekatan Santoso, Budianto and Dutono (2026).
-  \item Algoritma SOTA dibatasi pada backbone XLSR-53 yang diadaptasi
+  \item Algoritma pembanding dibatasi pada backbone XLSR-53 yang diadaptasi
         menggunakan LoRA (\emph{Low-Rank Adaptation}), bukan
         \emph{full fine-tuning} pada seluruh parameter backbone.
   \item Skema pembagian data dibatasi pada dua skema: \emph{random} dan
         \emph{movie-independent}, keduanya menggunakan $k=6$
         \emph{fold}.
-  \item Evaluasi performa dibatasi pada metrik kualitas klasifikasi --
+  \item Evaluasi performa dibatasi pada metrik kualitas klasifikasi yaitu
         akurasi, presisi, recall, dan F1-score.
   \item Signifikansi statistik diuji menggunakan uji Shapiro-Wilk untuk
         normalitas, dilanjutkan uji \emph{paired t-test} atau
@@ -167,49 +166,53 @@ adalah sebagai berikut.
 \section{Sistematika Pembahasan}
 \label{sec:1.6}
 
-\textbf{Bab 1 Pendahuluan} membahas mengenai latar belakang penelitian
+\textbf{Bab 1 Pendahuluan}
+
+Membahas mengenai latar belakang penelitian
 ini diangkat, rumusan masalah, tujuan dan manfaat penelitian, batasan
 masalah, serta sistematika pembahasan penulisan penelitian yang
-berjudul Pengaruh Skema Pembagian Data Berbasis Film terhadap Akurasi
-Pengenalan Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD.
+berjudul Pengaruh Skema Pembagian Data Berbasis Film pada Dataset E-SERAVD terhadap Performa Klasifikasi
+Pengenalan Emosi Ucapan Berbahasa Indonesia.
 
-\textbf{Bab 2 Landasan Kepustakaan} membahas tentang kajian pustaka dan
+\textbf{Bab 2 Landasan Kepustakaan}
+
+Membahas tentang kajian pustaka dan
 dasar teori. Kajian pustaka berisi referensi mengenai
 penelitian-penelitian sebelumnya yang terkait dengan SER dan kebocoran
 data pada skema evaluasi. Dasar teori membahas konsep-konsep yang
-mendasari metode yang digunakan, meliputi kebocoran data (\emph{data
-leakage}), fitur \emph{hand-crafted}, Mel-Frequency Cepstral
-Coefficients (MFCC), \emph{convolutional neural network} (CNN),
-pembelajaran \emph{self-supervised}, Wav2Vec2, XLSR-53, \emph{Low-Rank
-Adaptation} (LoRA), evaluasi model, validasi silang k-fold, serta
-pengujian signifikansi statistik.
+mendasari metode yang digunakan.
 
-\textbf{Bab 3 Metodologi Penelitian} membahas tipe penelitian serta
+\textbf{Bab 3 Metodologi Penelitian}
+
+Membahas tipe penelitian serta
 tahapan penelitian yang dilaksanakan mulai dari studi literatur,
 pengumpulan data, perancangan algoritma, evaluasi k-fold, hingga
 analisis hasil dan penarikan kesimpulan.
 
-\textbf{Bab 4 Perancangan} membahas perancangan sistem serta algoritme
+\textbf{Bab 4 Perancangan}
+
+Membahas perancangan sistem serta algoritme
 yang digunakan dalam eksperimen penelitian ini, meliputi rancangan
-sistem klasifikasi untuk algoritma \emph{baseline} dan algoritma SOTA,
-desain keempat kondisi eksperimen (kombinasi algoritma dan skema
-pembagian data, lihat Subbab \ref{sec:3.4}), serta rancangan skema
+sistem klasifikasi untuk algoritma \emph{baseline} dan algoritma pembanding,
+rancangan keempat kondisi eksperimen, serta rancangan skema
 validasi silang k-fold.
 
-\textbf{Bab 5 Implementasi} membahas implementasi kode-kode esensial
-dari perancangan yang telah diuraikan pada Bab 4, meliputi implementasi
+\textbf{Bab 5 Implementasi}
+
+Membahas implementasi kode-kode esensial
+dari perancangan yang telah diuraikan pada Bab sebelumnya, meliputi implementasi
 ekstraksi fitur, pelatihan model, dan pengujian signifikansi statistik.
 
-\textbf{Bab 6 Hasil dan Pembahasan} menyajikan hasil pelaksanaan keempat
+\textbf{Bab 6 Hasil dan Pembahasan}
+
+Menyajikan hasil pelaksanaan keempat
 kondisi eksperimen, meliputi observasi akurasi, presisi, recall, dan
 F1-score per fold, beserta hasil pengujian normalitas dan signifikansi
 statistiknya, serta pembahasan yang menerjemahkan makna hasil tersebut
-untuk menjawab rumusan masalah penelitian -- mencakup interpretasi
-pengaruh skema pembagian data terhadap performa klasifikasi emosi dan
-konsistensinya antaralgoritma, serta kaitannya dengan landasan teori dan
-penelitian terdahulu yang telah diuraikan pada Bab 2.
+untuk menjawab rumusan masalah penelitian.
 
-\textbf{Bab 7 Penutup} memuat kesimpulan yang menjawab rumusan masalah
+\textbf{Bab 7 Penutup}
+
+Memuat kesimpulan yang menjawab rumusan masalah
 berdasarkan hasil dan pembahasan penelitian, serta saran untuk
-pengembangan penelitian selanjutnya, misalnya augmentasi data atau
-algoritma lain di luar CNN+MFCC dan XLSR-53+LoRA.
+pengembangan penelitian selanjutnya.

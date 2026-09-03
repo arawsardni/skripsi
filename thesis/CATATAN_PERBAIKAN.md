@@ -106,7 +106,7 @@ saya akan mengevaluasi hasil generate latex main_proposal.pdf kondisi saat ini s
 16. paragraf 2 di evaluasi kfold kan membahas uji signifikansi ini seharunsya berada di sub bab analisis hasil
 17. di semua sub bab dari bab 2 dan 3 jangna suka memention hal hal di bab lain jika ingin menjelaskan jelaskan lagi di sub bab tersebu, jangan sampai setiap sub bab me linking sesuatu di luar sub bab nya
 
-# Review Iterasi 9 (3-9-2026) ((done))
+# Review Iterasi 9 (3-9-2026 10.00) ((done))
 
 1. tambah 5 sitasi baru soal group leakage dan lora-pada-ucapan, hasil websearch dari sesi claude chat terpisah (websearch/webfetch di claude code masih error)
 2. kapoor and narayanan (2023) jadi sitasi definisi data leakage/group leakage di latar belakang paragraf 2 dan bab 2.3, sebelumnya istilah itu gak ada sitasinya sama sekali
@@ -114,3 +114,42 @@ saya akan mengevaluasi hasil generate latex main_proposal.pdf kondisi saat ini s
 4. wu et al. (2024) emo-superb nambahin angka skala-lapangan ke latar belakang paragraf 4, 80% studi ser gak reproducible dan leakage bikin performa naik semu ~4%
 5. wang et al. (2023) dan lashkarashvili et al. (2024) nambahin bukti lora spesifik ke wav2vec2-family dan ser di bab 2.10, sebelumnya cuma nyitasi hu et al. yang general-purpose nlp
 6. sitasi baru ini gak diverifikasi ulang di claude code karena websearch/webfetch masih error, dipercaya di level yang sama kayak riset skripsi_context.md
+
+# Review Iterasi 10 (3-9-2026 17.00) (review manual formatting dan isi proposal) ((done))
+
+1. cover udah aku formatting manual secara seksama agar lebih mirip dengan template resmi docx yg diberikan fakultas X
+2. pendahuluan sudah diedit agar lebih mudah dan menyenangkan untuk dibaca X
+3. dibagian penahuluan maupun bagian yang memuat paragraf lainnya , memerlukan formattingjarak vertikal / line space antar paragraf agar mirip template
+4. judul heaeder 1 seperti daftar isi, daftar tabel, daftar gambar, bab 1 pendahuluan, memiliki ukuran font 16, judul sub bab header 2 dan 3 14, dan sub bab header 3 12
+5. di daftar isi tulsi juga "BAB X" nya dan jangan ada yang bold di dalam daftar isi dan pastikan setiap baris ada titik titik ke nomornya
+6. buat titik titik di daftar isi lebih padat
+7. masukan halaman daftar isi ke daftar isi (halaman ii)
+8. sistemmatika pembahasan berikan enter setelah judul bab ke penjelasan nya
+9. jarak antar numbering terlalu jauh
+10. satukan istilah yang akan digunakana yaitu hand crafted daripada fitur tangan, lalu self-supervised daripada representasi praltih
+11. untuk tiap tabel yang dibuat buat agar style tabelnya seperti tabel biasa dimana garis vertikal terlihat jelas dan juga bisa terpotong ditengah tabel apabila tabel terlalu panjang dan dilanjutkan di halaman berikutnya
+12. udah aku tambahin beberapa gambar di /assets, mfcc diagrma dari paper ini (A Deep Learning Approach for Identifying and Discriminating Spoken Arabic Among Other Languages), SER overviw dari papernya der dan dalbubu, Basic CNN Diagram dari sini (A High-Accuracy Model Average Ensemble of Convolutional Neural Networks for Classification of Cloud Image Patches on Small Datasets), SSL diagram dari (Applications of Self-Supervised Learning to Biomedical Signals: where are we now), wav2vec2 diagram dari (Real-Time Transcriptionist Based on Artificial Intelligence to Facilitate Learning for People with Hearing Disabilities in Virtual Classes), regular fine tune vs lora diagram dari (FDLoRA: Personalized Federated Learning of Large Language Model via Dual LoRA Tuning), dan Kfold diagram dari (Introduction to Support Vector Machines and Kernel Methods)
+13. bolehrefactor bahasan di sub bab dengan gambar gambar baru juga sesuai kontkes gambar agar menyengakan unutk dibaca
+14. hapus aja dulu peralatan pendukung
+
+# Review Iterasi 11 (3-9-2026, feedback chat langsung atas hasil iterasi 10) ((done))
+
+1. judul daftar isi/daftar tabel/daftar gambar ternyata gak ikut style bab (gara-gara tocloft ambil alih heading-nya sendiri, bukan titleformat) -- sekarang center, uppercase, 16pt sama kayak bab lain, ditulis manual pakai @starttoc
+2. jarak antar entri level-bab di daftar isi dirapatkan lagi
+3. atribusi sumber gambar dipindah keluar dari judul gambar, jadi baris terpisah dibawah caption, gak bold, format "Sumber : ..."
+4. halaman lampiran dihapus total dari main_proposal.tex (bukan cuma dikosongin kayak sebelumnya), file lampiran.tex masih ada tapi gak di-include
+5. sistematika pembahasan sekarang beneran jadi paragraf terpisah (enter + indentasi otomatis) bukan cuma line break, kalimat penjelas juga dikapitalkan
+6. tabel kajian pustaka font-nya dikecilin (\small) plus judul kolom di-center, tabel-tabel lain (3.1-3.3) malah dibesarin (arraystretch + tabcolsep) karena kelihatan sempit
+7. rumus shapiro-wilk dan wilcoxon ditambahin di sub bab 2.13, sebelumnya cuma disebut nama doang tanpa rumus
+
+# Review Iterasi 12 (3-9-2026, feedback chat lagi atas hasil iterasi 11) ((done))
+
+1. daftar isi, daftar gambar, daftar tabel sekarang masing-masing di halaman terpisah (clearpage), sebelumnya bisa numpuk di 1 halaman kalau daftar gambar pendek
+2. bukan cuma judul halamannya, tulisan "BAB 1 PENDAHULUAN" dkk di DALAM daftar isi juga di-uppercase sekarang, sebelumnya cuma judul halaman aslinya yang uppercase
+3. jarak antar baris di daftar isi/gambar/tabel dirapatkan lagi (masih kelihatan lebar walau udah dirapatkan di iterasi 11)
+4. sumber 6 gambar yang sebelumnya cuma judul paper diganti jadi nama penulis+tahun asli -- ketemu semua pakai browser tool (bukan websearch/webfetch yang emang beneran rusak), referensi lengkapnya ditambahin ke referensi.tex
+
+# Review Iterasi 13 (3-9-2026, feedback chat lagi soal spacing) ((done))
+
+1. jarak antar baris di daftar isi/gambar/tabel masih dirasa lebar walau udah dirapatkan 2x sebelumnya -- sekarang di-nolkan semua (chapter, section, figure, table level)
+2. ada spasi vertikal di atas tulisan tiap bab (bab 1 dst) di luar margin halaman -- titlespacing before yang tadinya 0pt ternyata masih nyisain jarak, diperbaiki pakai nilai negatif (-40pt) sampai pas rata margin secara visual

@@ -4,7 +4,7 @@
 %  (istilah resmi Panduan Skripsi Filkom UB v3.0; bukan "Tinjauan Pustaka")
 % =====================================================================
 
-\chapter{Landasan Kepustakaan}
+\chapter{\MakeUppercase{Landasan Kepustakaan}}
 
 % ── 2.1 Kajian Pustaka ───────────────────────────────────────────────
 \section{Kajian Pustaka}
@@ -16,31 +16,34 @@ mendapatkan informasi yang relevan dengan topik penelitian ini. Tabel
 \ref{tab:2.penelitian_terdahulu} memaparkan penelitian-penelitian yang
 terkait dengan subjek yang diteliti.
 
-\begin{table}[H]
-  \centering
+{\small
+\begin{longtable}{|p{0.17\textwidth}|p{0.18\textwidth}|p{0.30\textwidth}|p{0.19\textwidth}|}
   \caption{Daftar penelitian terdahulu}
-  \label{tab:2.penelitian_terdahulu}
-  \begin{adjustbox}{max width=\textwidth}
-  \begin{tabular}{p{4.0cm} p{4.2cm} p{5.4cm} p{4.2cm}}
-    \toprule
-    \textbf{Judul Penelitian} & \textbf{Masalah} & \textbf{Metode} & \textbf{Hasil} \\
-    \midrule
+  \label{tab:2.penelitian_terdahulu} \\
+  \hline
+  \centering\arraybackslash\textbf{Judul\newline Penelitian} & \centering\arraybackslash\textbf{Masalah} & \centering\arraybackslash\textbf{Metode} & \centering\arraybackslash\textbf{Hasil} \\
+  \hline
+  \endfirsthead
+  \hline
+  \centering\arraybackslash\textbf{Judul\newline Penelitian} & \centering\arraybackslash\textbf{Masalah} & \centering\arraybackslash\textbf{Metode} & \centering\arraybackslash\textbf{Hasil} \\
+  \hline
+  \endhead
+  \hline
+  \endfoot
+  \hline
+  \endlastfoot
     Development of a Speech Emotion Recognition Dataset for Indonesian
     (Santoso, Budianto and Dutono, 2026)
     &
-    Dataset SER berbahasa Indonesia dengan \emph{baseline} performa yang
-    terdokumentasi masih terbatas.
+    Dataset publik SER berbahasa Indonesia untuk penelitian masih sangat terbatas, dataset yang tersedia tidak mengakomodasi intonasi lokal, berskala kecil, terfragmentasi dan di rekam secara tidak natural.
     &
-    Pengembangan dataset E-SERAVD dari rekaman film Indonesia beranotasi
-    emosi. Performa dasar diuji menggunakan model CNN yang dilatih dari
-    nol dengan fitur tangan MFCC, tanpa melibatkan model pra-latih
-    \emph{self-supervised} maupun kontrol eksplisit terhadap sumber film
+    Pembuatan dataset E-SERAVD melalui ekstraksi dan pembersihan audio dialog dari film komersial Indonesia, yang kemudian divalidasi ke dalam empat kelas emosi dasar oleh tiga penilai manusia. Dataset tersebut selanjutnya diproses menggunakan ekstraksi fitur MFCC dan dievaluasi kinerjanya menggunakan model CNN, tanpa melibatkan kontrol eksplisit terhadap sumber film
     pada pembagian data latih dan uji.
     &
-    Model CNN dasar mencapai akurasi 86\% dan F1-macro 86\% pada subset
-    seimbang (1.000 sampel, 250/kelas).
+    Dataset memiliki kualitas annotasi yang kuat. Model CNN dasar mencapai akurasi dan F1-score sebesar 86\% pada subset
+    seimbang (1.000 sampel, 250/kelas), dengan emosi yg paling benar diprediksi adalah "Sedih"
     \\
-    \midrule
+    \hline
     End-to-End Transfer Learning for Speaker-Independent Cross-Language
     and Cross-Corpus Speech Emotion Recognition (Tang et al., 2023)
     &
@@ -58,7 +61,7 @@ terkait dengan subjek yang diteliti.
     performa yang lebih andal dibandingkan skema yang tidak mengontrol
     identitas penutur.
     \\
-    \midrule
+    \hline
     Designing and Evaluating Speech Emotion Recognition Systems: A
     Reality Check Case Study with IEMOCAP (Antoniou et al., 2023)
     &
@@ -76,16 +79,16 @@ terkait dengan subjek yang diteliti.
     HuBERT pada penelitian yang sama melaporkan 79,58\% (SD) berbanding
     73,01\% (SI) pada metrik \emph{weighted accuracy}.
     \\
-    \midrule
+    \hline
     Evaluating Self-Supervised Speech Representations for Speech
     Emotion Recognition (Atmaja and Sasou, 2022)
     &
     Belum diketahui apakah keunggulan representasi \emph{self-supervised}
-    atas fitur tangan pada SER berlaku universal lintas model dan
+    atas fitur \emph{hand-crafted} pada SER berlaku universal lintas model dan
     bahasa.
     &
     Evaluasi sistematis 19 representasi \emph{self-supervised} dan 1
-    fitur tangan (filterbank) pada 5 dataset SER berbahasa Inggris dan
+    fitur \emph{hand-crafted} (filterbank) pada 5 dataset SER berbahasa Inggris dan
     Jepang. Setiap representasi diuji dengan \emph{classifier
     feed-forward} yang identik, kemudian signifikansi antarrepresentasi
     diuji memakai uji Friedman dan dihitung \emph{effect size}-nya.
@@ -94,7 +97,7 @@ terkait dengan subjek yang diteliti.
     rank terakhir dari 20), namun XLSR-53 spesifik kalah dari model
     monolingual Inggris; tidak ada dataset Indonesia diuji.
     \\
-    \midrule
+    \hline
     Advancing End-to-End Indonesian Speech Emotion Recognition Using
     XLSR-Wav2Vec2 (Nugroho et al., 2025)
     &
@@ -112,10 +115,8 @@ terkait dengan subjek yang diteliti.
     Indonesia mencapai akurasi tertinggi sebesar 91,67\%, mengungguli
     metode klasik.
     \\
-    \bottomrule
-  \end{tabular}
-  \end{adjustbox}
-\end{table}
+\end{longtable}
+}
 
 % ── 2.2 Speech Emotion Recognition ───────────────────────────────────
 \section{Speech Emotion Recognition (SER)}
@@ -126,31 +127,31 @@ berupaya mengenali kondisi emosi seseorang secara otomatis dari sinyal
 ucapannya, dengan memanfaatkan ciri-ciri akustik seperti intonasi, nada
 dasar (\emph{pitch}), energi, dan ritme bicara yang secara empiris
 berkorelasi dengan keadaan emosional penutur (Dar and Delhibabu, 2024).
-Secara umum, sistem SER bekerja melalui tiga tahap utama: (1) ekstraksi
-representasi dari sinyal ucapan mentah, baik berupa fitur akustik
-tangan (\emph{hand-crafted features}) maupun representasi yang
-dipelajari (\emph{learned representations}); (2) pemetaan representasi
-tersebut ke ruang fitur yang relevan dengan kelas emosi; dan (3)
-klasifikasi ke salah satu kategori emosi yang telah ditentukan (mis.
-senang, sedih, marah, netral). Gambar \ref{fig:2.ser} menggambarkan alur
-umum tersebut.
+Gambar \ref{fig:2.ser} merangkum cakupan bidang SER dari tiga sisi
+utama, yaitu sumber data, jenis fitur, dan jenis \emph{classifier} yang
+digunakan. Dari sisi sumber data, rekaman ucapan emosional dapat
+diperoleh secara \emph{acted} (diperankan aktor mengikuti skenario
+emosi tertentu), \emph{elicited} (dipancing muncul secara spontan
+melalui stimulus atau situasi tertentu), maupun \emph{natural} (diambil
+langsung dari situasi nyata tanpa rekayasa, misalnya dari dialog film
+seperti yang digunakan pada penelitian ini). Dari sisi fitur,
+representasi yang diekstraksi dari sinyal ucapan terbagi menjadi fitur
+akustik (\emph{acoustic}, mis. \emph{prosodic}, spektral, dan kualitas
+suara) dan fitur non-akustik (\emph{non-acoustic}, mis. linguistik,
+wacana, serta ekspresi wajah dan gestur pada modalitas multimodal). Dari
+sisi \emph{classifier}, metode yang digunakan terbagi menjadi metode
+pembelajaran mesin konvensional (\emph{machine learning based}, mis.
+SVM, HMM, KNN) dan metode pembelajaran mendalam (\emph{deep learning
+based}, mis. CNN, RNN, LSTM). Penelitian ini berada pada irisan data
+\emph{natural} berbasis film, fitur akustik, dan \emph{classifier}
+berbasis pembelajaran mendalam.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=10mm]
-    \node[io]        (sinyal) {Sinyal Ucapan};
-    \node[procplain]  (fitur)  [right=of sinyal] {Ekstraksi Representasi};
-    \node[procplain]  (model)  [right=of fitur]  {Model Klasifikasi};
-    \node[io]        (label)  [right=of model] {Label Emosi};
-
-    \draw[arr] (sinyal) -- (fitur);
-    \draw[arr] (fitur)  -- (model);
-    \draw[arr] (model)  -- (label);
-  \end{tikzpicture}
-  }
-  \caption{Alur umum sistem speech emotion recognition}
+  \gambarbesar{\includegraphics{SER-Overview-Der-Delbabu-2024.png}}
+  \caption{Cakupan basis data, fitur, dan \emph{classifier} pada SER}
   \label{fig:2.ser}
+  \normalfont Sumber : Dar and Delhibabu (2024)
 \end{figure}
 
 Cakupan penerapan SER terus meluas, mulai dari asisten virtual yang
@@ -159,7 +160,7 @@ dapat mendeteksi frustrasi penelepon, hingga sistem pemantauan kesehatan
 mental yang menandai perubahan pola emosi dari waktu ke waktu.
 Perkembangan representasi \emph{self-supervised} seperti Wav2Vec2 dan
 XLSR-53 menjadi salah satu pendorong utama peningkatan akurasi SER
-dibandingkan pendekatan fitur tangan konvensional.
+dibandingkan pendekatan fitur \emph{hand-crafted} konvensional.
 
 % ── 2.3 Data Leakage / Group Leakage ──────────────────────────────────
 \section{Data Leakage / Group Leakage}
@@ -210,7 +211,7 @@ kedua skema tersebut -- \emph{random} dan \emph{movie-independent} --
 untuk mengukur secara langsung seberapa besar performa yang dilaporkan
 berpotensi terinflasi oleh \emph{group leakage} berbasis film, dan
 apakah besar inflasi tersebut berbeda antara algoritma berbasis fitur
-tangan dan algoritma berbasis representasi pralatih.
+\emph{hand-crafted} dan algoritma berbasis representasi \emph{self-supervised}.
 
 % ── 2.4 Fitur Hand-Crafted ────────────────────────────────────────────
 \section{Fitur Hand-Crafted}
@@ -236,14 +237,14 @@ tidak memerlukan data pra-latih berskala besar dan relatif murah secara
 komputasi untuk diekstraksi. Salah satu fitur \emph{hand-crafted} yang
 paling umum digunakan pada pemrosesan ucapan adalah Mel-Frequency
 Cepstral Coefficients (MFCC), yang digunakan sebagai representasi fitur
-tangan pada penelitian ini.
+\emph{hand-crafted} pada penelitian ini.
 
 % ── 2.5 Mel-Frequency Cepstral Coefficients (MFCC) ───────────────────
 \section{Mel-Frequency Cepstral Coefficients (MFCC)}
 \label{sec:2.5}
 
 Mel-Frequency Cepstral Coefficients (MFCC) adalah representasi fitur
-akustik tangan yang secara luas digunakan pada tugas pemrosesan ucapan,
+akustik \emph{hand-crafted} yang secara luas digunakan pada tugas pemrosesan ucapan,
 dirancang untuk meniru cara sistem pendengaran manusia mempersepsikan
 frekuensi bunyi secara tidak linear (Davis and Mermelstein, 1980).
 Alih-alih menggunakan skala frekuensi linear (Hz), MFCC memetakan
@@ -278,28 +279,10 @@ akhir.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=8mm]
-    \node[io]        (sinyal)  {Sinyal Ucapan};
-    \node[procplain]  (pre)     [right=of sinyal] {Pre-Emphasis};
-    \node[procplain]  (frame)   [right=of pre]     {Framing \& Windowing};
-    \node[procplain]  (fft)     [right=of frame]   {FFT};
-    \node[procplain]  (mel)     [below=of frame]   {Filter Bank Mel};
-    \node[procplain]  (log)     [right=of mel]     {Logaritma};
-    \node[procplain]  (dct)     [right=of log]     {DCT};
-    \node[io]        (mfcc)    [right=of dct]      {Koefisien MFCC};
-
-    \draw[arr] (sinyal) -- (pre);
-    \draw[arr] (pre)    -- (frame);
-    \draw[arr] (frame)  -- (fft);
-    \draw[arr] (fft)    -- (mel);
-    \draw[arr] (mel)    -- (log);
-    \draw[arr] (log)    -- (dct);
-    \draw[arr] (dct)    -- (mfcc);
-  \end{tikzpicture}
-  }
+  \gambarbesar{\includegraphics{MFCC-Block-DIagram.png}}
   \caption{Pipeline ekstraksi Mel-Frequency Cepstral Coefficients (MFCC)}
   \label{fig:2.mfcc}
+  \normalfont Sumber : Alashban and Alotaibi (2023)
 \end{figure}
 
 Berbeda dengan representasi yang dipelajari model dari data
@@ -329,26 +312,18 @@ jaringan lebih tahan terhadap pergeseran kecil pada data masukan dan
 lebih efisien secara komputasi; dan (3) lapisan terhubung penuh
 (\emph{fully-connected layer}), yang menggabungkan seluruh fitur yang
 telah diekstraksi untuk menghasilkan keluaran akhir, misalnya
-probabilitas kelas pada tugas klasifikasi.
+probabilitas kelas pada tugas klasifikasi. Secara garis besar, lapisan
+konvolusi dan \emph{pooling} membentuk tahap ekstraksi fitur
+(\emph{feature extraction}), sedangkan lapisan terhubung penuh membentuk
+tahap klasifikasi (\emph{classification}), sebagaimana ditunjukkan pada
+Gambar \ref{fig:2.cnn}.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=8mm]
-    \node[io]        (input)  {Fitur MFCC};
-    \node[procplain]  (conv)   [right=of input] {Lapisan Konvolusi};
-    \node[procplain]  (pool)   [right=of conv]  {Lapisan Pooling};
-    \node[procplain]  (fc)     [right=of pool]  {Lapisan Terhubung Penuh};
-    \node[io]        (output) [right=of fc]    {Label Emosi};
-
-    \draw[arr] (input) -- (conv);
-    \draw[arr] (conv)  -- (pool);
-    \draw[arr] (pool)  -- (fc);
-    \draw[arr] (fc)    -- (output);
-  \end{tikzpicture}
-  }
-  \caption{Arsitektur umum convolutional neural network (CNN)}
+  \gambarbesar{\includegraphics{Basic-CNN-Diagram.png}}
+  \caption{Arsitektur umum Convolutional Neural Network (CNN)}
   \label{fig:2.cnn}
+  \normalfont Sumber : Phung and Rhee (2019)
 \end{figure}
 
 Kemampuan lapisan konvolusi mendeteksi pola lokal menjadikan CNN cocok
@@ -359,7 +334,7 @@ struktur lokal pada grid tersebut, misalnya perubahan energi pada
 rentang waktu dan pita frekuensi tertentu. Karakteristik inilah yang
 mendasari penggunaan CNN sebagai \emph{classifier} pada algoritma
 \emph{baseline} dalam penelitian ini, mengikuti pendekatan yang sudah
-banyak digunakan pada penelitian SER berbasis fitur tangan.
+banyak digunakan pada penelitian SER berbasis fitur \emph{hand-crafted}.
 
 % ── 2.7 Pembelajaran Self-Supervised ─────────────────────────────────
 \section{Pembelajaran Self-Supervised}
@@ -372,28 +347,20 @@ memerlukan label yang dianotasi manusia (Liu et al., 2023). Model
 dilatih untuk menyelesaikan \emph{pretext task}, yaitu tugas bantu yang
 dirancang agar penyelesaiannya mengharuskan model mempelajari struktur
 dan pola yang mendasari data, misalnya memprediksi bagian data yang
-disembunyikan dari bagian yang tersisa. Representasi yang dipelajari
-selama proses ini kemudian dapat digunakan atau diadaptasi
-(\emph{fine-tuned}) untuk tugas hilir (\emph{downstream task}) yang
-sesungguhnya, seperti klasifikasi emosi pada penelitian ini. Gambar
-\ref{fig:2.ssl} menggambarkan alur umum tersebut.
+disembunyikan dari bagian yang tersisa. Sebagaimana ditunjukkan pada
+Gambar \ref{fig:2.ssl}, bobot \emph{encoder} yang telah dilatih pada
+\emph{pretext task} menggunakan data tanpa label kemudian ditransfer
+(\emph{transfer weights}) sebagai titik awal model pada tugas hilir
+(\emph{downstream task}) yang sesungguhnya, sebelum diadaptasi lebih
+lanjut (\emph{fine-tuned}) menggunakan data berlabel, seperti
+klasifikasi emosi pada penelitian ini.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=10mm]
-    \node[io]        (data)   {Data Tanpa Label};
-    \node[procplain]  (pretext)[right=of data]  {Pra-latih \emph{Pretext Task}};
-    \node[io]        (repr)   [right=of pretext] {Representasi Umum};
-    \node[procplain]  (ft)     [right=of repr]    {\emph{Fine-Tuning} Hilir};
-
-    \draw[arr] (data)    -- (pretext);
-    \draw[arr] (pretext) -- (repr);
-    \draw[arr] (repr)    -- (ft);
-  \end{tikzpicture}
-  }
-  \caption{Alur umum pembelajaran self-supervised}
+  \gambarbesar{\includegraphics{Self-Supervised-Diagram.png}}
+  \caption{Alur umum pembelajaran Self-Supervised}
   \label{fig:2.ssl}
+  \normalfont Sumber : Del Pup and Atzori (2023)
 \end{figure}
 
 Keunggulan utama paradigma ini adalah kemampuannya memanfaatkan data
@@ -422,25 +389,10 @@ kuantisasi yang benar dari sejumlah pengganggu (\emph{distractors}).
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=9mm]
-    \node[io]        (wave)  {Gelombang Ucapan Mentah};
-    \node[procplain]  (cnn)   [right=of wave] {\emph{CNN Feature Encoder}};
-    \node[procplain]  (ctx)   [right=of cnn, xshift=6mm]  {\emph{Transformer Context Network}};
-    \node[io]        (out)   [right=of ctx, xshift=6mm]  {Representasi $C$};
-    \node[procplain]  (quant) [below=of cnn] {Modul Kuantisasi};
-    \node[io]        (q)     [below=of ctx]  {Target $Q$};
-
-    \draw[arr] (wave) -- (cnn);
-    \draw[arr] (cnn)  -- node[flbl,above]{$Z$} (ctx);
-    \draw[arr] (ctx)  -- (out);
-    \draw[arr] (cnn)  -- (quant);
-    \draw[arr] (quant)-- (q);
-    \draw[arr, dashed] (q) -- node[flbl,below]{\emph{contrastive loss} (pra-latih)} (ctx);
-  \end{tikzpicture}
-  }
+  \gambarbesar{\includegraphics{WAV2VEC2-Diagram.png}}
   \caption{Arsitektur Wav2Vec2}
   \label{fig:2.wav2vec2}
+  \normalfont Sumber : Ovalle et al. (2024)
 \end{figure}
 
 Representasi $C$ yang dihasilkan oleh \emph{context network} inilah yang
@@ -486,30 +438,20 @@ lapisan tersebut untuk masukan $x$ dihitung sebagaimana Persamaan
 \end{equation}
 
 \noindent
-Gambar \ref{fig:2.lora} menggambarkan arsitektur tersebut: masukan $x$
-diproses melalui dua jalur paralel, yaitu bobot dasar $W_0$ yang beku
-dan jalur berperingkat rendah $A$ diikuti $B$, yang hasilnya dijumlahkan
-menjadi keluaran $h$.
+Gambar \ref{fig:2.lora} membandingkan skema tersebut dengan \emph{full
+fine-tuning} konvensional. Pada \emph{full fine-tuning} (kiri),
+pembaruan bobot $\Delta W$ dilatih penuh sebagai satu matriks padat
+berukuran sama dengan $W_0$. Pada LoRA (kanan), bobot dasar $W_0$
+dibekukan (ditandai ikon salju) sementara hanya matriks $A$ dan $B$
+berperingkat rendah yang dilatih (ditandai ikon api), sebelum hasil
+keduanya dijumlahkan menjadi keluaran $h$.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=9mm]
-    \node[io]        (x)     {Masukan $x$};
-    \node[procplain]  (w0)    [above right=6mm and 16mm of x] {$W_0$ (beku)};
-    \node[procplain]  (a)     [below right=6mm and 16mm of x] {$A$ (turun-peringkat)};
-    \node[procplain]  (b)     [right=of a]                     {$B$ (naik-peringkat)};
-    \node[io]        (h)     [right=28mm of w0 |- x]           {Keluaran $h$};
-
-    \draw[arr] (x) -- (w0);
-    \draw[arr] (x) -- (a);
-    \draw[arr] (a) -- (b);
-    \draw[arr] (w0) -- node[flbl,above]{$+$} (h);
-    \draw[arr] (b)  -- (h);
-  \end{tikzpicture}
-  }
-  \caption{Arsitektur Low-Rank Adaptation (LoRA)}
+  \gambarbesar{\includegraphics{Regular-Fine-TUne-VS-LoRA-diagram-.png}}
+  \caption{Perbandingan full fine-tuning dan LoRA}
   \label{fig:2.lora}
+  \normalfont Sumber : Lu et al. (2024)
 \end{figure}
 
 Karena jumlah parameter pada $A$ dan $B$ jauh lebih sedikit daripada
@@ -598,21 +540,18 @@ $k$ bagian (\emph{fold}) berukuran relatif sama, dengan setiap bagian
 secara bergantian digunakan sebagai data uji sementara $k-1$ bagian
 lainnya digunakan sebagai data latih, sehingga setiap bagian data pernah
 menjadi data uji tepat satu kali (Kohavi, 1995). Gambar
-\ref{fig:2.kfold} menggambarkan skema tersebut untuk $k=5$.
+\ref{fig:2.kfold} mengilustrasikan mekanisme umum tersebut: \emph{fold}
+uji (biru) berpindah bergiliran pada tiap iterasi sementara \emph{fold}
+sisanya berperan sebagai data latih, dengan hasil evaluasi $E_i$ dari
+tiap iterasi dirata-ratakan menjadi estimasi performa akhir $E$.
+Penelitian ini secara spesifik menggunakan $k=6$.
 
 \begin{figure}[H]
   \centering
-  \gambarbesar{%
-  \begin{tikzpicture}[node distance=3mm, every node/.style={minimum width=20mm, minimum height=9mm}]
-    \node[io]        (f1) {Fold 1 (uji)};
-    \node[procplain]  (f2) [right=of f1] {Fold 2 (latih)};
-    \node[procplain]  (f3) [right=of f2] {Fold 3 (latih)};
-    \node[procplain]  (f4) [right=of f3] {Fold 4 (latih)};
-    \node[procplain]  (f5) [right=of f4] {Fold 5 (latih)};
-  \end{tikzpicture}
-  }
-  \caption{Ilustrasi satu putaran validasi silang k-fold ($k=5$)}
+  \gambarbesar{\includegraphics{K-Fold-Diagram.png}}
+  \caption{Ilustrasi mekanisme validasi silang k-fold}
   \label{fig:2.kfold}
+  \normalfont Sumber : Ashfaque and Iqbal (2019)
 \end{figure}
 
 Teknik ini menghasilkan $k$ observasi akurasi dan F1-score, satu untuk
@@ -627,10 +566,26 @@ tunggal dari satu kali pengujian.
 Untuk menguji apakah perbedaan performa antarkondisi hasil validasi
 silang k-fold bersifat signifikan secara statistik, $k$ observasi yang
 diperoleh terlebih dahulu diuji normalitasnya menggunakan uji
-Shapiro-Wilk (Shapiro and Wilk, 1965). Apabila data berdistribusi
-normal, pengujian dilanjutkan dengan \emph{paired t-test}, yang
-menghitung statistik uji $t$ dari selisih berpasangan $d_i$ antara dua
-kondisi pada fold yang sama, sebagaimana Persamaan \ref{eq:2.ttest}.
+Shapiro-Wilk, yang menghitung statistik $W$ sebagaimana Persamaan
+\ref{eq:2.shapirowilk} (Shapiro and Wilk, 1965).
+
+\begin{equation}
+  W = \frac{\left(\sum_{i=1}^{n} a_i x_{(i)}\right)^2}{\sum_{i=1}^{n} (x_i - \bar{x})^2}
+  \label{eq:2.shapirowilk}
+\end{equation}
+
+\noindent
+di mana $x_{(i)}$ adalah nilai observasi ke-$i$ setelah diurutkan
+menaik (statistik urutan), $\bar{x}$ adalah rata-rata observasi, $n$
+adalah jumlah observasi (jumlah fold), dan $a_i$ adalah konstanta yang
+diturunkan dari rata-rata, ragam, dan kovarians statistik urutan sampel
+berdistribusi normal berukuran $n$. Nilai $W$ yang mendekati 1
+mengindikasikan data mendekati distribusi normal.
+
+Apabila data berdistribusi normal, pengujian dilanjutkan dengan
+\emph{paired t-test}, yang menghitung statistik uji $t$ dari selisih
+berpasangan $d_i$ antara dua kondisi pada fold yang sama, sebagaimana
+Persamaan \ref{eq:2.ttest}.
 
 \begin{equation}
   t = \frac{\bar{d}}{s_d / \sqrt{n}}
@@ -642,4 +597,16 @@ di mana $\bar{d}$ adalah rata-rata selisih berpasangan, $s_d$ adalah
 simpangan baku selisih tersebut, dan $n$ adalah jumlah fold. Apabila
 data tidak berdistribusi normal, digunakan \emph{Wilcoxon signed-rank
 test} sebagai alternatif non-parametrik yang tidak mengasumsikan
-distribusi tertentu (Wilcoxon, 1945).
+distribusi tertentu, dengan statistik uji $W$ sebagaimana Persamaan
+\ref{eq:2.wilcoxon} (Wilcoxon, 1945).
+
+\begin{equation}
+  W = \sum_{i=1}^{n} \operatorname{sgn}(d_i) \, R_i
+  \label{eq:2.wilcoxon}
+\end{equation}
+
+\noindent
+di mana $d_i$ adalah selisih berpasangan pada fold ke-$i$, $R_i$ adalah
+peringkat (\emph{rank}) dari $|d_i|$ di antara seluruh selisih mutlak
+$|d_1|, \dots, |d_n|$, dan $\operatorname{sgn}(d_i)$ bernilai $+1$
+apabila $d_i>0$ dan $-1$ apabila $d_i<0$.

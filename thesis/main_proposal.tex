@@ -11,10 +11,10 @@
 %    frontmatter/cover.tex       ← cover (label "PROPOSAL SKRIPSI" diisi di bawah)
 %    chapters/bab1–bab3.tex      ← Pendahuluan, Landasan Kepustakaan, Metodologi
 %    backmatter/referensi.tex    ← daftar pustaka (Harvard, gaya UB)
-%    backmatter/lampiran.tex     ← halaman lampiran (sengaja kosong, lihat CATATAN_PERBAIKAN.md iterasi 2)
 %
-%  Cakupan proposal skripsi Filkom UB = Bab 1–3 + Daftar Referensi +
-%  Lampiran (lihat CATATAN_PERBAIKAN.md untuk rasionalnya).
+%  Cakupan proposal skripsi Filkom UB = Bab 1–3 + Daftar Referensi.
+%  Lampiran dihapus dari cakupan (Iterasi 10 item 4) -- backmatter/lampiran.tex
+%  masih ada di repo tapi tidak lagi di-\include (lihat CATATAN_PERBAIKAN.md).
 %  Bab 4 dst. baru ditulis setelah proposal disetujui pembimbing — build
 %  itu ada di main_skripsi.tex, bukan berkas ini.
 % =====================================================================
@@ -37,11 +37,34 @@
 \pagenumbering{roman}
 \setcounter{page}{1}
 
-\tableofcontents
-\listoffigures
-\addcontentsline{toc}{chapter}{Daftar Gambar}
-\listoftables
-\addcontentsline{toc}{chapter}{Daftar Tabel}
+% Daftar Isi/Gambar/Tabel dipanggil manual (bukan \tableofcontents dkk. polos)
+% karena paket tocloft menggantikan mekanisme heading ketiga perintah itu
+% sendiri dan TIDAK ikut gaya \titleformat{\chapter} (16pt, center, uppercase)
+% seperti "BAB 1 PENDAHULUAN"/"DAFTAR REFERENSI" -- Iterasi 10 item 1.
+% \@starttoc{<ext>} adalah bagian dari \tableofcontents dkk. yang membaca isi
+% berkas .toc/.lof/.lot; heading di atasnya sekarang ditulis manual sendiri.
+% \clearpage eksplisit di antara ketiganya (Iterasi 12 item 1) -- tocloft
+% tidak clearpage otomatis seperti \chapter*, jadi tanpa ini Daftar Gambar
+% dan Daftar Tabel bisa berbagi satu halaman kalau Daftar Gambar pendek.
+% Entri TOC-nya sendiri juga di-\MakeUppercase (Iterasi 12 item 2).
+\makeatletter
+{\centering\normalfont\fontsize{16}{20}\selectfont\bfseries
+  \MakeUppercase{Daftar Isi}\par\nobreak\vskip 20pt}
+\addcontentsline{toc}{chapter}{\MakeUppercase{Daftar Isi}}
+\@starttoc{toc}
+
+\clearpage
+{\centering\normalfont\fontsize{16}{20}\selectfont\bfseries
+  \MakeUppercase{Daftar Gambar}\par\nobreak\vskip 20pt}
+\addcontentsline{toc}{chapter}{\MakeUppercase{Daftar Gambar}}
+\@starttoc{lof}
+
+\clearpage
+{\centering\normalfont\fontsize{16}{20}\selectfont\bfseries
+  \MakeUppercase{Daftar Tabel}\par\nobreak\vskip 20pt}
+\addcontentsline{toc}{chapter}{\MakeUppercase{Daftar Tabel}}
+\@starttoc{lot}
+\makeatother
 
 \clearpage
 \pagenumbering{arabic}
@@ -52,8 +75,10 @@
 \include{chapters/bab2}
 \include{chapters/bab3}
 
-% ── Daftar pustaka & lampiran ────────────────────────────────────────
+% ── Daftar pustaka ───────────────────────────────────────────────────
+% Lampiran dihapus dari cakupan proposal (Iterasi 10 item 4) -- lampiran.tex
+% masih ada di backmatter/ (tidak di-include) kalau pembacaan ini
+% direvisi lagi nanti.
 \include{backmatter/referensi}
-\include{backmatter/lampiran}
 
 \end{document}
