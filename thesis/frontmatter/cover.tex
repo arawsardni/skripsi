@@ -4,35 +4,37 @@
 %  Ganti semua teks dalam kurung siku [ ] sesuai data Anda.
 % =====================================================================
 
+% Template-ProposalSkripsi-v3.0.docx (style "Title"/"Institution" section 1).
+\newgeometry{top=3cm,bottom=3cm,left=4cm,right=3cm}
 \begin{titlepage}
 \centering
 
-% ── Judul (lebih besar dari label jenis karya di bawahnya) ─────────────
-\vspace*{1cm}
-{\large\bfseries Pengaruh Skema Pembagian Data Berbasis Film terhadap Akurasi Pengenalan Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD}\\[1.2cm]
+% ── Judul (16pt bold, sesuai style "Title" template) ────────────────────
+{\fontsize{16}{20}\selectfont\bfseries Pengaruh Skema Pembagian Data Berbasis Film terhadap Performa Klasifikasi Emosi Ucapan Berbahasa Indonesia pada Dataset E-SERAVD}\\[1.0cm]
 
-% ── Jenis karya (diisi oleh main_proposal.tex atau main_skripsi.tex) ──
-{\normalsize\bfseries \doctypelabel}\\[0.3cm]
+% ── Jenis karya (14pt bold, sesuai style "AcademicLevel") ──────────────
+{\fontsize{14}{17}\selectfont\bfseries \doctypelabel}\\[0.3cm]
 \ifdoctypesubtitle
-  {\normalsize \doctypesubtitle}\\[0.3cm]
+  {\fontsize{14}{17}\selectfont \doctypesubtitle}\\[0.3cm]
 \fi
-\vspace{1.9cm}
+\vspace{2.0cm}
 
-% ── Penulis ───────────────────────────────────────────────────────────
-{\normalsize Disusun oleh:}\\[0.2cm]
-{\normalsize Gaung Taqwa Indraswara}\\[0.1cm]
-{\normalsize NIM: 235150207111043}\\[2.5cm]
+% ── Penulis (14pt, sesuai style "Author"; NIM bold) ─────────────────────
+{\fontsize{14}{17}\selectfont Disusun oleh:}\\[0.15cm]
+{\fontsize{14}{17}\selectfont Gaung Taqwa Indraswara}\\[0.15cm]
+{\fontsize{14}{17}\selectfont NIM: 235150207111043}\\[3.25cm]
 
 % ── Logo ──────────────────────────────────────────────────────────────
-\includegraphics[width=5cm]{assets/ub-logo-small.png}\\[2.5cm]
+\includegraphics[width=5cm]{assets/ub-logo-small.png}\\[4.0cm]
 
-% ── Institusi (all caps) ──────────────────────────────────────────────
-{\normalsize PROGRAM STUDI TEKNIK INFORMATIKA}\\[0.15cm]
-{\normalsize DEPARTEMEN TEKNIK INFORMATIKA}\\[0.15cm]
-{\normalsize FAKULTAS ILMU KOMPUTER}\\[0.15cm]
-{\normalsize UNIVERSITAS BRAWIJAYA}\\[0.15cm]
-{\normalsize MALANG}\\[0.15cm]
-{\normalsize 2026}
+% ── Institusi (14pt, sesuai style "Institution", all caps) ─────────────
+{\fontsize{14}{17}\selectfont PROGRAM STUDI TEKNIK INFORMATIKA}\\[0.15cm]
+{\fontsize{14}{17}\selectfont DEPARTEMEN TEKNIK INFORMATIKA}\\[0.15cm]
+{\fontsize{14}{17}\selectfont FAKULTAS ILMU KOMPUTER}\\[0.15cm]
+{\fontsize{14}{17}\selectfont UNIVERSITAS BRAWIJAYA}\\[0.15cm]
+{\fontsize{14}{17}\selectfont MALANG}\\[0.15cm]
+{\fontsize{14}{17}\selectfont 2026}
 
 \end{titlepage}
+\restoregeometry
 \clearpage
